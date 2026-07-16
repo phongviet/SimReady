@@ -7,9 +7,9 @@ __pycache__/
 .ruff_cache/
 .coverage
 htmlcov/
-data/
-artifacts/
-experiments/
+/data/
+/artifacts/
+/experiments/
 frontend/node_modules/
 frontend/dist/
 frontend/.npm-cache/

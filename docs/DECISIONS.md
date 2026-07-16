@@ -20,3 +20,23 @@ Actual execution date: **2026-10-29 (Asia/Bangkok)**.
    scope; do not add fake dashboards, rendered views, or nonfunctional controls.
 
 Further contract and data decisions will be recorded with implementation.
+
+6. **Coordinates:** canonical world is right-handed Y-up, meters. Camera local
+   axes are OpenCV X-right/Y-down/Z-forward. Transform records are always c2w.
+   gsplat and Open3D receive w2c. Three.js camera local Y-up/-Z-forward is an
+   explicit right multiplication by diag(1,-1,-1,1), without changing world axes.
+7. **Image resize:** integer pixel centers and half-pixel resampling convention:
+   `cx' = (cx + 0.5) * sx - 0.5` (and similarly for cy). Focal lengths scale
+   independently in each axis. No distortion or image resizing importer in M0.
+8. **Immutability:** SHA-256 binds raw serialized split bytes to the manifest,
+   frames bytes to both manifest and splits, and image bytes to frame records.
+   All split groups must be nonempty, disjoint and exhaustive. Frame records,
+   manifest and splits are read-only on disk. Imports refuse overwrite and stage
+   atomically with an exclusive import lock. Hashes detect modification, not a
+   malicious user rewriting all hashes. Future experiments must pin these hashes.
+9. **Synthetic fixture:** analytic textured plane at Z=-2m, eight known camera
+   poses and metric OBJ, not Gaussian reconstruction. Known calibration and
+   transform tests verify mathematical correctness only.
+
+Incremental verification: 54 CPU tests passed after implementing contracts,
+fixture generation and camera math. Final acceptance will be recorded separately.
