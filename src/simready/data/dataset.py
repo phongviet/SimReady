@@ -40,9 +40,10 @@ def block_splits(frames: list[Frame], frames_hash: str) -> Splits:
         raise ValueError("at least four frames needed for train/validation/candidate/test")
     ids = [frame.frame_id for frame in frames]
     # Reserve nonempty contiguous blocks; for five frames this is 2/1/1/1.
-    n_train = max(1, len(ids) // 2)
+    n_train = min(max(1, len(ids) // 2), len(ids) - 3)
     n_other = max(1, (len(ids) - n_train) // 3)
     return Splits(
+        schema_version="1.0",
         frames_sha256=frames_hash,
         train=tuple(ids[:n_train]),
         validation=tuple(ids[n_train : n_train + n_other]),
@@ -63,7 +64,13 @@ def finalize_dataset(root: Path, metadata: dict, frames: list[Frame]) -> Dataset
     splits = block_splits(frames, frames_hash)
     write_json(root / "splits.json", splits.model_dump(mode="json"))
     manifest = DatasetManifest(
-        **metadata, frames_sha256=frames_hash, split_sha256=sha256_file(root / "splits.json")
+        schema_version="1.0",
+        world_units="meters",
+        world_frame="canonical_right_handed_y_up",
+        camera_axes="opencv_x_right_y_down_z_forward",
+        **metadata,
+        frames_sha256=frames_hash,
+        split_sha256=sha256_file(root / "splits.json"),
     )
     write_json(root / "manifest.json", manifest.model_dump(mode="json"))
     validate_scene(root)
@@ -85,15 +92,16 @@ def atomic_dataset(output: Path, reserve_bytes: int) -> Iterator[Path]:
         lock.mkdir()
     except FileExistsError as exc:
         raise ValueError(f"import already in progress: {output}") from exc
-    stage = Path(tempfile.mkdtemp(prefix=f".{output.name}-", dir=output.parent))
+    stage = None
     try:
+        stage = Path(tempfile.mkdtemp(prefix=f".{output.name}-", dir=output.parent))
         yield stage
         check_budget()
         if output.exists():
             raise ValueError(f"output already exists: {output}")
         stage.rename(output)
     finally:
-        if stage.exists():
+        if stage is not None and stage.exists():
             shutil.rmtree(stage)
         lock.rmdir()
 

@@ -30,3 +30,14 @@ def check_budget(
     if used + additional_bytes >= limit:
         raise ValueError(f"storage budget exceeded: {used} + {additional_bytes} >= {limit} bytes")
     return used
+
+
+if __name__ == "__main__":
+    import json
+
+    print(
+        json.dumps(
+            {"root": str(PROJECT_ROOT), "used_bytes": check_budget(), "limit_bytes": BUDGET_BYTES},
+            indent=2,
+        )
+    )

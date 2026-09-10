@@ -6,7 +6,7 @@ import pytest
 from PIL import Image
 from pydantic import ValidationError
 
-from simready.data.dataset import sha256_file, validate_scene
+from simready.data.dataset import block_splits, sha256_file, validate_scene
 from simready.data.schema import DatasetManifest, Frame, ScenePackage, Splits
 from simready.data.synthetic import make_synthetic
 
@@ -54,6 +54,19 @@ def test_refuses_overwrite(scene):
     assert sha256_file(scene / "manifest.json") == before
 
 
+def test_four_frame_minimum_and_smaller_dataset_rejection(scene):
+    frames = [
+        Frame.model_validate_json(line)
+        for line in (scene / "frames.jsonl").read_text().splitlines()
+    ]
+    split = block_splits(frames[:4], "0" * 64)
+    assert all(
+        len(getattr(split, group)) == 1 for group in ("train", "validation", "candidate", "test")
+    )
+    with pytest.raises(ValueError, match="at least four"):
+        block_splits(frames[:3], "0" * 64)
+
+
 @pytest.mark.parametrize(
     "change",
     [
@@ -72,9 +85,12 @@ def test_bad_manifest_rejected(scene, change):
         DatasetManifest(**(data | change))
 
 
-def test_missing_required_manifest_field(scene):
+@pytest.mark.parametrize(
+    "field", ["schema_version", "world_units", "world_frame", "camera_axes", "pose_provenance"]
+)
+def test_missing_required_manifest_field(scene, field):
     data = json.loads((scene / "manifest.json").read_text())
-    del data["pose_provenance"]
+    del data[field]
     with pytest.raises(ValidationError):
         DatasetManifest(**data)
 
@@ -169,7 +185,12 @@ def test_symlink_escape_rejected(scene, tmp_path):
 
 
 def test_scene_package_is_a_draft_contract_only():
-    scene = ScenePackage(scene_id="example", version=1, dataset_manifest="dataset/manifest.json")
+    scene = ScenePackage(
+        schema_version="1.0",
+        scene_id="example",
+        version=1,
+        dataset_manifest="dataset/manifest.json",
+    )
     assert scene.render_asset is None and scene.collision_asset is None
     for change in (
         {"status": "approved"},

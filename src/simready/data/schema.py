@@ -71,13 +71,13 @@ class Source(Contract):
 
 
 class DatasetManifest(Contract):
-    schema_version: Literal["1.0"] = "1.0"
+    schema_version: Literal["1.0"]
     scene_id: Identifier
     kind: Literal["real", "synthetic"]
     source: Source
-    world_units: Literal["meters"] = "meters"
-    world_frame: Literal["canonical_right_handed_y_up"] = "canonical_right_handed_y_up"
-    camera_axes: Literal["opencv_x_right_y_down_z_forward"] = "opencv_x_right_y_down_z_forward"
+    world_units: Literal["meters"]
+    world_frame: Literal["canonical_right_handed_y_up"]
+    camera_axes: Literal["opencv_x_right_y_down_z_forward"]
     cameras: dict[Identifier, Intrinsics] = Field(min_length=1)
     depth: DepthEncoding
     pose_provenance: Nonempty
@@ -129,7 +129,7 @@ class Frame(Contract):
 
 
 class Splits(Contract):
-    schema_version: Literal["1.0"] = "1.0"
+    schema_version: Literal["1.0"]
     strategy: Literal["contiguous_blocks_v1"] = "contiguous_blocks_v1"
     frames_sha256: Digest
     train: tuple[Identifier, ...] = Field(min_length=1)
@@ -148,7 +148,7 @@ class Splits(Contract):
 class ScenePackage(Contract):
     """Metadata contract only; no reconstruction/editor/review behavior in M0."""
 
-    schema_version: Literal["1.0"] = "1.0"
+    schema_version: Literal["1.0"]
     scene_id: Identifier
     version: int = Field(gt=0, strict=True)
     world_units: Literal["meters"] = "meters"

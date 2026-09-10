@@ -40,3 +40,33 @@ Further contract and data decisions will be recorded with implementation.
 
 Incremental verification: 54 CPU tests passed after implementing contracts,
 fixture generation and camera math. Final acceptance will be recorded separately.
+
+10. **Real sample:** use `SampleRedwoodRGBDImages` from Open3D's official release.
+    It is only 3,772,513 compressed bytes and includes five posed, registered
+    RGB-D pairs. Verify publisher MD5 during inspection and pin SHA-256 in the
+    downloader. Use the documented `odometry.log` c2w path rather than guess a
+    direction from the other trajectory file. Source calibration and association
+    files are preserved. Details and original implementation links are in
+    `DATASET_PROTOCOL.md`. Real data was imported and tested locally.
+11. **Reduced protocol:** use contiguous 2/1/1/1 train/validation/candidate/test
+    blocks for the sample. Indices stand in for unavailable capture timestamps.
+    Explicitly disclose near-neighbor overlap, supplied estimated poses and
+    nominal Y-up. This validates import only; no research findings are inferred.
+12. **License status:** the original Redwood page could not be fetched (HTTP 502)
+    during inspection, and the sample descriptor does not establish dataset
+    redistribution terms. Record unverified data terms; fetch locally without
+    committing/publishing sample files. No distribution license is chosen for
+    project code; the generated analytic fixture is explicitly CC0.
+13. **Frontend tools:** Node 20.20.2 supports Vite 8.3.5 and Vitest 4.1.12.
+    An initial Vitest 3 install produced npm vulnerability findings; replace it
+    with the patched version before acceptance. `npm audit` then reported zero.
+    React, TypeScript and all transitive dependencies are pinned by the npm lock.
+14. **CI:** independent CPU, official-sample network integration and frontend
+    jobs. The real-data test fails for an explicitly missing configured sample;
+    ordinary offline tests skip it visibly. CI configuration is provided, but no
+    remote exists and hosted CI execution is not claimed.
+15. **Storage controls:** conservative allocated/logical accounting includes Git,
+    .venv, node_modules and local caches. Make targets keep new uv/npm caches in
+    the project, and fetch checks both bounded acquisition and total budget.
+    Existing system/shared caches outside the project are not counted. No large
+    GPU packages or model artifacts have been acquired.
