@@ -380,3 +380,11 @@ bounded full recount now preserves conservative accounting and fails closed on
 repeated churn. Focused race/package tests passed after the fix. About15.55GB
 total, below30GB. M5's labeled-object companion and two forward recovery fixes
 remain explicit; M6 shipping and optional M7 remain open.
+
+The first audit hardening item is now fixed: cached/missing-stage recovery compares
+the saved full dataset/reference camera records, model digest and render-index
+digest against the requested inputs. An internally hash-consistent report with a
+different saved render digest is rejected.12targeted evaluation/resume tests
+passed, and all15historical study evaluations passed the stronger read-only
+binding check without rerunning inference. Timestamped atomic release completion
+and partial-operation recovery remain pending, alongside the labeled E1 companion.

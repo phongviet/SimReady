@@ -14,7 +14,7 @@ import numpy as np
 from simready.data.dataset import local_file, sha256_file, write_json
 from simready.evaluation.config import EvaluationConfig
 from simready.evaluation.readiness import pose_diagnostics
-from simready.evaluation.runner import evaluate, validate_evaluation, verify_inputs
+from simready.evaluation.runner import evaluate, verify_evaluation_binding
 from simready.reconstruction.contracts import ReconstructionConfig
 from simready.reconstruction.gsplat import (
     GsplatBackend,
@@ -288,16 +288,7 @@ def run(study: Path, phase: str = "all") -> dict:
             }
 
             def validate(path):
-                metadata = validate_evaluation(path)
-                verify_inputs(dataset, artifact, images)
-                summary = json.loads((path / "summary.json").read_text())
-                if (
-                    summary["protocol"] != inputs["config"]
-                    or summary["artifact_sha256"] != inputs["artifact"]
-                    or summary["split"] != split
-                ):
-                    raise ValueError("cached evaluation differs from frozen protocol/model")
-                return metadata
+                return verify_evaluation_binding(path, dataset, artifact, images, evaluation)
 
             cache.run(
                 "eval-" + key + "-" + split,

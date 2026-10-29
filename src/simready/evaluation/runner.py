@@ -79,6 +79,42 @@ def validate_evaluation(root: Path) -> dict:
     return metadata
 
 
+def verify_evaluation_binding(
+    output: Path, scene: Path, artifact: Path, renders: Path, config: EvaluationConfig
+) -> dict:
+    """Bind cached/recovered measurements to the exact requested observations and renders."""
+    metadata = validate_evaluation(output)
+    manifest, _, splits, selected, cameras, _, images = verify_inputs(scene, artifact, renders)
+    expected = {
+        "observations": [
+            {
+                "frame_id": frame.frame_id,
+                "rgb_sha256": frame.rgb_sha256,
+                "depth_sha256": frame.depth_sha256,
+                "camera": camera,
+                "timestamp": frame.timestamp,
+            }
+            for frame, camera in zip(selected, cameras, strict=True)
+        ],
+        "dataset_manifest": manifest.model_dump(mode="json"),
+        "training_frame_ids": list(splits.train),
+        "evaluation_frame_ids": [frame.frame_id for frame in selected],
+        "artifact_sha256": sha256_file(artifact / "artifact.json"),
+        "renders_index_sha256": sha256_file(renders / "renders.json"),
+    }
+    saved = json.loads(local_file(output, "inputs.json").read_text())
+    summary = json.loads(local_file(output, "summary.json").read_text())
+    if (
+        saved != expected
+        or summary["protocol"] != config.model_dump(mode="json")
+        or summary["artifact_sha256"] != expected["artifact_sha256"]
+        or summary["split"] != images["split"]
+        or summary["split_sha256"] != manifest.split_sha256
+    ):
+        raise ValueError("cached evaluation differs from requested references, renders or protocol")
+    return metadata
+
+
 def evaluate(
     scene: Path,
     artifact: Path,
