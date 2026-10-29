@@ -113,16 +113,26 @@ def main(argv: list[str] | None = None) -> int:
     item = research.add_parser("run", help="resume verified sequential acquisition/evaluation")
     item.add_argument("--study", type=Path, required=True)
     item.add_argument("--phase", choices=["acquire", "evaluate", "all"], default="all")
+    item = research.add_parser(
+        "analyze", help="verify raw study and export descriptive figures/report"
+    )
+    item.add_argument("--study", type=Path, required=True)
+    item.add_argument("--out", type=Path, required=True)
     args = parser.parse_args(argv)
     try:
         if args.command == "research":
             from simready.research.runner import prepare, run
 
-            result = (
-                {"study": str(prepare(args.config, args.out))}
-                if args.action == "prepare"
-                else run(args.study, args.phase)
-            )
+            if args.action == "analyze":
+                from simready.research.analysis import analyze
+
+                result = {"analysis": str(analyze(args.study, args.out))}
+            else:
+                result = (
+                    {"study": str(prepare(args.config, args.out))}
+                    if args.action == "prepare"
+                    else run(args.study, args.phase)
+                )
         elif args.command == "storage":
             result = {
                 "root": str(args.root.resolve()),

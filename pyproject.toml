@@ -22,6 +22,9 @@ dependencies = [
 simready = "simready.cli:main"
 
 [project.optional-dependencies]
+research = [
+    "matplotlib==3.11.2",
+]
 geometry = [
     "open3d-cpu==0.19.0",
 ]

@@ -26,7 +26,7 @@ exact tested package versions are recorded in `ENVIRONMENT.md` and the lockfiles
   local API, working splat/orbit editor, conflict handling and browser evidence.
 - [x] M3: perception validation, real held-out report and nine inspected failures; see M3_CHECKLIST.md.
 - [x] M4: readiness, local roles, scoped review/audit, navigation and reviewed exports; see M4_CHECKLIST.md.
-- [ ] M5: frozen research protocol and observation gates in progress; no results yet.
+- [ ] M5: all45experiment stages complete; analysis, audit and dashboard pending.
 - [ ] M6: shipping (not started).
 - [ ] M7: optional integrations (not started).
 
@@ -334,3 +334,20 @@ Access guards passed22targeted tests and the full CPU/geometry regression:
 withheld pixels, named release, metadata-only camera access, strict full validation,
 tampered decision rejection and deterministic selection/calibration arithmetic.
 Its generated values are test fixtures, not experimental results.
+
+### M5 actual acquisition and evaluation completed
+
+Clean6947fb8 curated18new late TUM test pairs, preserving50train/16validation/
+16candidate and excluding all original100observations. All9K4selections were
+sealed before any candidate release. Three base models plus9fresh54frame models
+ran1200steps each; all12models were evaluated on identical18test references.
+All45stages completed with zero recorded failures. Run directory:
+`experiments/tum-recapture-1`. No measured result is inferred from success alone.
+
+Post-run deterministic checks validate every stage/content hash, replay all
+acquisition decisions and216test-view RGB/depth/detector measurements, and verify
+identical test observations, cameras, raw real predictions and fixed configurations.
+Recorded source pins match historical Git objects. Analysis math/adversarial
+tests passed; the fresh same-family semantic audit resumed after a usage-limit
+interruption and has no completed verdict yet. Never treat its partial remarks
+as acceptance. Storage after the raw matrix:15,494,459,790bytes, below30GB.
