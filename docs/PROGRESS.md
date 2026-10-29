@@ -430,3 +430,12 @@ API import with torch/Open3D absent. Isolation confirmed imports came from the
 installed wheel. This does not verify the frontend in a fresh checkout or live
 CPU neural rendering. Initial offline install used the wrong cache and failed;
 using the project-local UV_CACHE_DIR succeeded. See m6-fresh-wheel.json.
+
+M6 now includes a Builder-authenticated queued import endpoint and persistent
+job polling backed by a real subprocess and SQLite state. Sources are controlled
+inbox keys with bounded size/count, no symlinks and before/after digest checks.
+The actual HTTP analytic import passed with8validated frames; anonymous, duplicate,
+traversal and missing-source requests were rejected. Importer/HTTP focused checks
+passed; reconstruction/render HTTP paths remain incomplete. PIPELINE_API.md
+documents this exact current scope rather than implying an editable scene exists
+immediately after import.

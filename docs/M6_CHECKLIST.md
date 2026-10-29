@@ -2,8 +2,9 @@
 
 - [ ] Finish M5 companion integrity review and report; retain real-study negative outcome.
 - [ ] Audit every PLAN.md interface and deliverable against current implementation.
-- [ ] Complete queued import/reconstruction and supplied-camera render HTTP paths.
-      They currently exist as CLI operations, not the listed HTTP endpoints.
+- [x] Queued authenticated import HTTP path and persistent job polling.
+- [ ] Complete queued reconstruction and supplied-camera render HTTP paths.
+      These currently exist as CLI operations, not the listed HTTP endpoints.
 - [x] Fresh installed CPU wheel smoke without torch/Open3D; saved model/report and API import.
 - [ ] Fresh-checkout frontend/API demo, including fallback.
 - [ ] End-to-end current-source regression, browser visual inspection and failure handling.

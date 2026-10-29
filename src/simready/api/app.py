@@ -15,6 +15,7 @@ from pydantic import Field
 from simready.data.schema import Contract
 from simready.evaluation.readiness import readiness
 from simready.evaluation.store import EvaluationRequest, EvaluationStore
+from simready.pipeline.imports import ImportRequest, ImportStore
 from simready.research.store import StudyStore
 from simready.review.auth import AuthenticationError, AuthorizationError, AuthStore, Principal
 from simready.review.export import ExportStore
@@ -43,6 +44,8 @@ def create_app(root: Path | None = None) -> FastAPI:
     app.state.workflow = workflow
     app.state.exports = exports
     research = StudyStore(store.root)
+    imports = ImportStore(store)
+
     app.add_middleware(
         CORSMiddleware,
         allow_origins=["http://127.0.0.1:5173", "http://localhost:5173"],
@@ -136,6 +139,10 @@ def create_app(root: Path | None = None) -> FastAPI:
     def scenes():
         return store.list_scenes()
 
+    @app.post("/api/v1/scenes/import", status_code=202)
+    def import_scene(request: ImportRequest, user: Annotated[Principal, Depends(builder)]):
+        return imports.enqueue(request)
+
     @app.get("/api/v1/research/studies")
     def studies():
         return research.list()
@@ -187,7 +194,10 @@ def create_app(root: Path | None = None) -> FastAPI:
 
     @app.get("/api/v1/jobs/{job_id}")
     def job(job_id: str):
-        return evaluations.job(job_id)
+        try:
+            return evaluations.job(job_id)
+        except KeyError:
+            return imports.job(job_id)
 
     @app.get("/api/v1/scenes/{scene_id}/reports")
     def reports(scene_id: str):
