@@ -1,0 +1,197 @@
+{
+  "audit_skill": "experiment-audit",
+  "verdict": "WARN",
+  "overall_verdict": "warn",
+  "integrity_status": "warn",
+  "raw_evidence_verdict": "pass",
+  "experimental_invalidating_findings": [],
+  "reason_code": "limited_scope_local_chronology_and_future_recovery_hardening",
+  "summary": "The completed M5 raw experiment is internally consistent and traceable. No leakage through the declared pipeline, fabricated ground truth, score inflation, phantom run, or metric mismatch was found. Scientific conclusions remain limited to one correlated capture; risk acquisition is worse than random on LPIPS for all three seeds.",
+  "agent_id": "/root/m5_integrity_audit",
+  "verdict_id": "/root/m5_integrity_audit:2026-10-29T14:08:45Z",
+  "supplemental_reviewer": "/root/m5_integrity_audit/audit_resume_check",
+  "reviewer_model": "gpt-6-astra",
+  "reviewer_reasoning": "ultra",
+  "reviewer_family": "openai",
+  "review_independence": "same-family",
+  "acceptance_status": "provisional",
+  "generated_at": "2026-10-29T14:08:45Z",
+  "date": "2026-10-29",
+  "read_only": true,
+  "trace_path": ".aris/traces/experiment-audit/2026-10-29_run01/",
+  "reviewed_paths_ref": ".aris/traces/experiment-audit/2026-10-29_run01/paths.json",
+  "complete_audited_input_hashes_ref": ".aris/traces/experiment-audit/2026-10-29_run01/audited-input-hashes.json",
+  "audited_input_count": 163,
+  "audited_input_hash_mismatches": [],
+  "audited_input_hashes": {
+    ".aris/traces/experiment-audit/2026-10-29_run01/paths.json": "sha256:9a87b1d28a47d11af74a84b700a3c21d059c4cece27291254c7b79984db36530",
+    ".aris/traces/experiment-audit/2026-10-29_run01/audited-input-hashes.json": "sha256:c129110d12db9e04b27da92901e680fa008833d9e4111581976749901876b1d0",
+    "experiments/tum-recapture-1/protocol.json": "sha256:20a86410c4efd96777e6300f86ec7d148d8fca5419bce4c1539bc3c601a56912",
+    "experiments/tum-recapture-1/curation.json": "sha256:a236722d59f8466554509efdaf0cdae2658d3577c7b48fc0eff4b40c24e3f8ec",
+    "experiments/tum-recapture-1/selections-sealed.json": "sha256:7cbf5f76d68ecb14a5ccb2c867aa7197c22aeee976bae2f86c79dcf2791e866c",
+    "experiments/tum-recapture-1/run-source.json": "sha256:e9e4e5fb4008510cb6ffdb65c6337f8d6cee4d2d9bbcb8edbd80a58131c9cf00",
+    "experiments/tum-recapture-1/stages.json": "sha256:7d08d479ae65dff37495e8be93b33f29574e1e62bd4d683c3c9b068dfeecbeff"
+  },
+  "historical_source": {
+    "commit": "6947fb837b726c54dd4f4b2b17482dd9447ba857",
+    "recorded_dirty": false,
+    "verified_source_files": 50,
+    "git_object_hash_verification": "pass",
+    "current_post_run_drift_in_recorded_files": [
+      "src/simready/cli.py",
+      "uv.lock"
+    ],
+    "impact": "No retrospective invalidation; reproduce with recorded source."
+  },
+  "verified_counts": {
+    "real_captures": 1,
+    "optimization_seeds": 3,
+    "methods": 4,
+    "trained_models": 12,
+    "distinct_checkpoint_hashes": 12,
+    "render_batches": 18,
+    "evaluations": 15,
+    "paired_evaluation_views": 264,
+    "unique_test_views": 18,
+    "vault_images_compared_to_archive": 200,
+    "training_rgbd_tensor_pairs_compared": 636,
+    "render_file_hash_checks": 936,
+    "evaluation_file_hash_checks": 2013,
+    "completed_stages": 45,
+    "recorded_failures": 0,
+    "recovered_stages": 0
+  },
+  "checks": {
+    "gt_provenance": {
+      "status": "pass",
+      "details": "Real RGB-D references byte-match the pinned TUM archive. Detector references are explicitly declared model predictions, not annotations.",
+      "evidence": [
+        "src/simready/research/data.py:52",
+        "src/simready/evaluation/runner.py:105",
+        "src/simready/evaluation/runner.py:175",
+        "workers/perception_worker.py:123",
+        "experiments/tum-recapture-1/evaluations/risk-s42-test/summary.json:137"
+      ]
+    },
+    "score_normalization": {
+      "status": "pass",
+      "details": "No own-output maximum/mean normalization inflates performance. RGB range, geometric scales, masks, completeness denominators and view aggregation are explicit; saved values reproduce.",
+      "evidence": [
+        "src/simready/evaluation/metrics.py:13",
+        "src/simready/evaluation/metrics.py:24",
+        "src/simready/evaluation/metrics.py:99",
+        "src/simready/evaluation/runner.py:242",
+        "src/simready/research/selection.py:116"
+      ]
+    },
+    "result_existence": {
+      "status": "pass",
+      "details": "All four methods and three seeds exist with fixed budgets and common test cameras. Tracker DONE claims match outputs; analysis remains explicitly TODO.",
+      "evidence": [
+        "refine-logs/EXPERIMENT_TRACKER.md:7",
+        "experiments/tum-recapture-1/stages.json:2",
+        "src/simready/reconstruction/gsplat.py:100",
+        "workers/gsplat_worker.py:119",
+        "src/simready/evaluation/runner.py:28"
+      ]
+    },
+    "dead_code": {
+      "status": "pass",
+      "details": "Audited metric, inference, calibration and selection functions are called and have saved outputs. RGB/depth/detection calculations and calibration/selection replay succeeded. Neural inference was not rerun.",
+      "evidence": [
+        "src/simready/evaluation/runner.py:170",
+        "workers/perception_worker.py:112",
+        "src/simready/research/runner.py:329"
+      ]
+    },
+    "scope": {
+      "status": "warn",
+      "details": "One temporally correlated capture and three optimization seeds support a qualified case study only. Existing text is appropriately limited. H1 is unsupported: risk has higher LPIPS than random for every seed.",
+      "evidence": [
+        "refine-logs/EXPERIMENT_PLAN.md:19",
+        "experiments/tum-recapture-1/protocol.json:43",
+        "experiments/tum-recapture-1/evaluations/risk-s42-test/summary.json:149",
+        "experiments/tum-recapture-1/evaluations/risk-s43-test/summary.json:149",
+        "experiments/tum-recapture-1/evaluations/risk-s44-test/summary.json:149"
+      ]
+    },
+    "eval_type": {
+      "status": "pass",
+      "classification": {
+        "rgb_lpips_depth": "real_gt",
+        "detector_agreement": "synthetic_proxy",
+        "candidate_risk": "self_supervised_proxy",
+        "analytic_fixture": "simulation_only",
+        "human_eval": "not_present"
+      },
+      "details": "Detector synthetic_proxy denotes model-generated box references on real images, not a synthetic source capture.",
+      "evidence": [
+        "src/simready/evaluation/runner.py:175",
+        "workers/perception_worker.py:123",
+        "src/simready/research/selection.py:139",
+        "src/simready/data/synthetic.py:18"
+      ]
+    }
+  },
+  "leakage_and_resume": {
+    "declared_method_boundary": "pass",
+    "validation_fit_check_separation": "pass",
+    "all_selection_seal_before_release": "pass_with_local_record_limit",
+    "training_excludes_validation_and_test": "pass",
+    "current_saved_input_bindings": "pass",
+    "completed_run_resume_records": "pass",
+    "future_missing_stage_recovery": "warn",
+    "external_chronology_attestation": "not_available"
+  },
+  "primary_lpips": {
+    "seed_order": [42, 43, 44],
+    "base": [0.41065486603313023, 0.4178885602288776, 0.3971835258934233],
+    "risk": [0.4279378702243169, 0.4146023955610063, 0.406232828895251],
+    "random": [0.4140435391002231, 0.4036632047759162, 0.38688985175556606],
+    "farthest": [0.426405131816864, 0.4117058912913005, 0.39432112872600555],
+    "risk_minus_random": [0.013894331124093773, 0.010939190785090092, 0.019342977139684914],
+    "risk_minus_random_mean": 0.014725499682956259,
+    "risk_minus_random_sample_sd": 0.004263101823009824,
+    "lower_is_better": true
+  },
+  "claims": [
+    {
+      "id": "completed_fixed_budget_run_matrix",
+      "impact": "supported"
+    },
+    {
+      "id": "H1_risk_improves_lpips_more_than_random",
+      "impact": "unsupported",
+      "details": "Risk is worse for all three paired seeds in this capture."
+    },
+    {
+      "id": "detector_accuracy_or_generalization",
+      "impact": "unsupported",
+      "details": "No object annotations or independent-scene replication; not asserted in audited claims."
+    },
+    {
+      "id": "H2_and_E1_E2_diagnostic_conclusions",
+      "impact": "pending_analysis"
+    },
+    {
+      "id": "M5_complete",
+      "impact": "not_established",
+      "details": "Analysis, failure figures and dashboard remain deliverable work, not raw-experiment invalidation."
+    }
+  ],
+  "action_items": [
+    "Preserve raw outputs and historical pins; do not rerun successful arms to improve scores.",
+    "Report the negative H1 outcome, paired seed values, and zero fitted distance/rotation coefficients.",
+    "Complete E1/E2/E4 analysis, failure figures and dashboard before M5 acceptance.",
+    "For future missing-stage recovery, compare saved evaluation render-index hashes with requested render artifacts.",
+    "For future releases, use atomic timestamped begin/completed events and reconcile partial operations."
+  ],
+  "limits": [
+    "Same-family semantic review is provisional.",
+    "Training and neural inference were not rerun.",
+    "Local ledgers and timestamps do not prove absence of access outside the declared interface.",
+    "Archive provenance is a recorded HTTPS-download pin, not publisher-signed attestation.",
+    "One correlated scene does not establish population significance, detector accuracy, real-robot validity, or method novelty.",
+    "Post-run analysis additions were outside this frozen audit."
+  ]
+}
