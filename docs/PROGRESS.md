@@ -411,3 +411,22 @@ hashes were saved before training; detector metadata confirms bench category15.
 See evidence/m5-bench-run.json. This is a synthetic-domain companion, not a
 second real capture. Precision/recall/custom AP50 and true-error correlation
 analysis remain pending; no accuracy result is claimed from pipeline success.
+
+Companion analysis from clean81a8985 now verifies frozen truth hashes and replays
+test masks/boxes from geometry. It computes class-only precision/recall/custom
+101pointAP50 from raw predictions, with hand-calculated perfect/duplicate/false-
+positive tests. All6synthetic bench observations are correctly detected in both
+domains; precision/recall/AP50are1.0here. True-error changes are constant, so both
+correlations are null, and no shared-miss counterexample is observed. This easy
+one-object domain does not establish prediction of errors or real accuracy.
+Evidence: m5-bench-summary.json and m5-bench-comparison.png. A fresh same-family
+companion integrity reviewer is still running; M5 closure waits for that review.
+
+M6 entry audit identifies missing queued import/reconstruction/render HTTP paths
+despite existing CLI operations; these remain required implementation gaps.
+A freshly installed wheel in .cache/m6-fresh-cpu passed saved421Gaussian/2view
+CPU smoke, demo scene/report registration, measured12model snapshot loading and
+API import with torch/Open3D absent. Isolation confirmed imports came from the
+installed wheel. This does not verify the frontend in a fresh checkout or live
+CPU neural rendering. Initial offline install used the wrong cache and failed;
+using the project-local UV_CACHE_DIR succeeded. See m6-fresh-wheel.json.

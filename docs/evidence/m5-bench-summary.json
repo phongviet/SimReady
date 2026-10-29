@@ -1,0 +1,56 @@
+{
+  "analysis_source": {
+    "commit": "81a8985d860953cecd9fcbd90f579bc7d8a9febe",
+    "dirty": false
+  },
+  "confidence_threshold": 0.5,
+  "correlations": {
+    "lpips_vs_true_error_change": {
+      "reason": "constant input; rank correlation undefined",
+      "rho": null
+    },
+    "prediction_disagreement_vs_true_error_change": {
+      "reason": "constant input; rank correlation undefined",
+      "rho": null
+    }
+  },
+  "domains": {
+    "real": {
+      "ap50": 1.0,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "tp": 6
+    },
+    "rendered": {
+      "ap50": 1.0,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "tp": 6
+    }
+  },
+  "frozen_inputs": {
+    "annotations_sha256": "51703163b7935935e227a00314f52539170c8fdd9d11272129da086a11206275",
+    "geometry_sha256": "77b0ce39276b623c1b6cab612f31bc191138f3ff06fa61ede34aa8523a853718",
+    "manifest_sha256": "e20ac1b79b98294a586b9857584e5f29430065d947cedfc17cf48f2aa3149a2c",
+    "plan_sha256": "b9a9ee839d4d3e06e65a4bcbbe1db46fd05d80ea59ac20a16985c34ec90b72d3"
+  },
+  "iou_threshold": 0.5,
+  "label": 15,
+  "metric": "Custom bench-class 101-point AP50; not official COCO mAP.",
+  "schema_version": "1.0",
+  "scope": "One authored synthetic bench; six correlated views. No real-domain inference.",
+  "shared_missed_views": 0,
+  "test_ids": [
+    "frame_00022",
+    "frame_00023",
+    "frame_00024",
+    "frame_00025",
+    "frame_00026",
+    "frame_00027"
+  ],
+  "truth_origin": "Authored geometry ray intersections; no model outputs"
+}

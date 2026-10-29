@@ -11,6 +11,7 @@ __pycache__/
 htmlcov/
 /data/
 /artifacts/
+/dist/
 /experiments/
 frontend/node_modules/
 frontend/dist/

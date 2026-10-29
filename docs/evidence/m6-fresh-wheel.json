@@ -1,0 +1,9 @@
+{
+  "package_source": "/home/phong/simready/.cache/m6-fresh-cpu/lib/python3.12/site-packages/simready/__init__.py",
+  "python": "3.12.3 (main, Jun 19 2026, 12:46:00) [GCC 13.3.0]",
+  "torch_installed": false,
+  "open3d_installed": false,
+  "measured_snapshot_models": 12,
+  "api_routes": 32,
+  "scope": "Installed CPU wheel smoke; no frontend or live neural rendering tested."
+}
