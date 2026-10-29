@@ -70,3 +70,17 @@ fixture generation and camera math. Final acceptance will be recorded separately
     the project, and fetch checks both bounded acquisition and total budget.
     Existing system/shared caches outside the project are not counted. No large
     GPU packages or model artifacts have been acquired.
+
+16. **Expanded authorization (2026-10-29):** user requested completion of the full
+    project after M0. Continue milestone gates; the original M0 acceptance remains
+    historical evidence. M1 begins with the local 6 GB GPU, not paid cloud compute.
+17. **M1 backend:** wrap the stable gsplat 1.5.3 CUDA rasterizer and its upstream
+    DefaultStrategy densification behind a worker protocol. Nerfstudio is the
+    preferred high-level option in PLAN.md, but its broad dependency set (including
+    additional reconstruction and notebook stacks) is unnecessary for a canonical
+    posed RGB-D adapter. This adapter reuses gsplat's algorithms, initializes from
+    training-only RGB-D, and preserves metric coordinates without pose optimization.
+    The official precompiled CPython 3.10 / torch2.4 / cu124 wheel avoids installing
+    a CUDA compiler and keeps CPU and GPU dependencies isolated. Sources:
+    https://docs.gsplat.studio/whl/pt24cu124/gsplat/ and
+    https://github.com/nerfstudio-project/gsplat/tree/v1.5.3/gsplat/strategy .

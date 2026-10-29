@@ -1,0 +1,1 @@
+{"schema_version":"1.0","preset":"smoke","iterations":40,"width":160,"initial_stride":6,"max_initial_gaussians":1500,"max_gaussians":6000,"seed":42,"sh_degree":0,"refine_start":15,"refine_stop":30,"refine_every":10,"depth_loss_weight":0.05}

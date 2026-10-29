@@ -1,4 +1,6 @@
 .venv/
+.venv-gpu/
+.aris/
 .cache/
 __pycache__/
 *.py[cod]

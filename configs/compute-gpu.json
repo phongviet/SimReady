@@ -1,0 +1,46 @@
+{
+  "base": "python3.10 + torch2.4.1 CUDA12.4 runtime; local Linux x86_64 SM75",
+  "system_pkgs": [],
+  "pip_phases": [
+    [
+      "torch==2.4.1",
+      "--index-url",
+      "https://download.pytorch.org/whl/cu124"
+    ],
+    [
+      "numpy==1.26.4",
+      "pillow==11.3.0",
+      "ninja==1.13.0",
+      "jaxtyping==0.3.3",
+      "rich==14.2.0",
+      "packaging==26.3",
+      "setuptools==80.9.0"
+    ],
+    [
+      "https://github.com/nerfstudio-project/gsplat/releases/download/v1.5.3/gsplat-1.5.3%2Bpt24cu124-cp310-cp310-linux_x86_64.whl"
+    ]
+  ],
+  "env": {
+    "OMP_NUM_THREADS": "4",
+    "MKL_NUM_THREADS": "4",
+    "OPENBLAS_NUM_THREADS": "4"
+  },
+  "weight_dirs": {},
+  "smoke": {
+    "import_names": [
+      "torch",
+      "gsplat",
+      "numpy",
+      "PIL"
+    ],
+    "gpu_tests": [
+      {
+        "cmd": ".venv-gpu/bin/python workers/gsplat_worker.py witness",
+        "expect": "WITNESS"
+      }
+    ],
+    "cli_checks": [
+      "nvidia-smi"
+    ]
+  }
+}

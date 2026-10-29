@@ -1,7 +1,7 @@
 export UV_CACHE_DIR := $(CURDIR)/.cache/uv
 export npm_config_cache := $(CURDIR)/frontend/.npm-cache
 
-.PHONY: setup storage lint test test-real demo frontend fetch-example import-example
+.PHONY: setup storage lint test test-real demo frontend fetch-example import-example gpu-setup test-gpu
 
 storage:
 	PYTHONPATH=src python3 -m simready.storage
@@ -13,7 +13,7 @@ setup: storage
 
 lint:
 	uv run --frozen ruff check .
-	uv run --frozen ruff format --check src tests scripts
+	uv run --frozen ruff format --check src tests scripts workers
 
 test: storage lint
 	uv run --frozen pytest -q
@@ -37,3 +37,9 @@ import-example: fetch-example
 
 test-real: import-example
 	SIMREADY_REAL_SAMPLE=data/raw/redwood uv run --frozen pytest -q -m real_data
+
+gpu-setup: storage
+	uv run --frozen python scripts/setup_gpu.py
+
+test-gpu:
+	SIMREADY_GPU_TESTS=1 uv run --frozen pytest -q -m gpu

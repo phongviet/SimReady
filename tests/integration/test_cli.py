@@ -35,8 +35,13 @@ def test_cli_missing_scene_is_actionable(tmp_path):
     assert "Traceback" not in failed.stderr
 
 
-def test_future_commands_are_not_advertised():
+def test_unknown_commands_are_rejected():
     help_result = run("--help")
     assert help_result.returncode == 0
-    assert "recon" not in help_result.stdout
-    assert run("recon", "train").returncode == 2
+    assert run("nonexistent-command").returncode == 2
+
+
+def test_reconstruction_commands_are_discoverable():
+    result = run("recon", "--help")
+    assert result.returncode == 0
+    assert "train" in result.stdout and "render" in result.stdout and "validate" in result.stdout

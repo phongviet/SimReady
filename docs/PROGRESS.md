@@ -14,7 +14,7 @@ exact tested package versions are recorded in `ENVIRONMENT.md` and the lockfiles
 - [x] **M0 complete locally:** repo bootstrap, typed versioned data/scene contracts,
   camera math, analytic fixture, official real RGB-D import, frozen splits, tests,
   frontend shell, CI configuration and documented acceptance.
-- [ ] M1: reconstruction (not started).
+- [ ] M1: reconstruction (in progress after expanded authorization; see M1_CHECKLIST.md).
 - [ ] M2: geometry and editing (not started).
 - [ ] M3: perception validation (not started).
 - [ ] M4: simulation and review (not started).
@@ -65,7 +65,17 @@ not statistically independent. See `DATASET_PROTOCOL.md` and `LIMITATIONS.md`.
 No reconstruction, perception metrics, navigation, approval or recapture
 experiments exist. No experimental results are reported.
 
-**Next task after authorization:** M1, choose and isolate a compatible 3DGS backend,
-validate its actual CUDA/dependency environment on the 6 GB GPU, then genuinely
-train/load/render a small scene with measured provenance. Do not infer CUDA
-training compatibility from nvidia-smi or these M0 tests.
+## Full-project continuation
+
+The user subsequently authorized completing the full project. M0 evidence above
+is historical. M1 now has an isolated Python3.10 / torch2.4.1+cu124 /
+gsplat1.5.3+pt24cu124 worker, with an actual CUDA render/backward witness and a
+fresh-agent documentation pass. A 40-iteration real Redwood RGB-D smoke run
+produced 1,283 learned Gaussians from 935 training-only depth points, exported
+PLY/NPZ, and reloaded to render a validation pose. This is an integration result,
+not a reconstruction-quality finding. The CPU suite passed 93 tests before the
+optional GPU integration test was added. Full M1 acceptance is still in progress.
+
+Scope/status descriptions elsewhere referring to M0 only are historical and are
+being updated incrementally. M2+ remain unimplemented. No perception metrics,
+navigation, approval or recapture experiments have run.
