@@ -1,0 +1,24 @@
+{
+  "approved_version": 7,
+  "export": {
+    "approval_event_id": "5f0832f224a64a109a0f4dcca8d9ef04",
+    "approved_version": 7,
+    "bytes": 27017824,
+    "created_at": "2026-10-29T10:48:37.959237+00:00",
+    "created_by": {
+      "display_name": "Local Reviewer",
+      "role": "reviewer",
+      "user_id": "local-reviewer"
+    },
+    "export_id": "d37f82d792c64ce99a16ad97dec5cfad",
+    "scene_id": "tum-floor-nav",
+    "sha256": "a0ba55cb206c270ea2228f86e9634927709565f52f341706a59555300dba5cc0",
+    "source_version": 5
+  },
+  "git_commit": "b20a2468c72aa9a6191efeedb2568131a8ec0dfb",
+  "git_dirty": false,
+  "kind": "Current code verifies an existing recorded automated fixture approval; no new review decision",
+  "outcome": "usable_for_declared_test",
+  "source_version": 5,
+  "verified_zip_payloads": 213
+}

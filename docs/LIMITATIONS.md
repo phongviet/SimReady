@@ -3,7 +3,7 @@
 - Gaussian training/rendering, independent TSDF and persistent proxy editing are
   verified locally, along with frozen-view perception metrics on 18 real TUM
   test views. Navigation and scoped local review/export are implemented; M4 real-scene
-  acceptance is in progress. Recapture research remains unimplemented.
+  acceptance is verified with automated local-role fixtures. Recapture research remains unimplemented.
 - The short real baseline is blurry and has zero rendered detector predictions
   at the fixed >=0.5 threshold, versus 48 summed per-view real predictions. This
   exposes a failure, not detection accuracy. No annotated GT boxes are available.

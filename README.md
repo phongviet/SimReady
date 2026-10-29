@@ -1,10 +1,10 @@
 # SimReady
 
-`PLAN.md` is the specification. **M0–M3 are complete locally.** The user has
+`PLAN.md` is the specification. **M0–M4 are complete locally.** The user has
 authorized completing the full project.
 The studio supports persistent rigid proxy editing and frozen-view perception
-evaluation. M4 navigation is a verified vertical slice; readiness, review and
-reviewed export are in progress. Recapture research and shipping remain pending.
+evaluation, deterministic navigation and scoped local review/export.
+Recapture research and shipping remain pending.
 
 M0 provides a CPU-only RGB-D import/validation package, explicit camera
 conventions, an analytic fixture with known metric geometry, frozen dataset
@@ -109,6 +109,25 @@ trace to clean source `06114ba` and frozen input hashes. No threshold or pose
 adjustment was made to improve the test result.
 
 ![Actual TUM evaluation explorer](docs/evidence/m3-tum-explorer.png)
+
+## Navigation and scoped review
+
+The Navigation tab saves metric scenarios, blocks unknown floor cells and runs
+A* plus swept replay. Actual TUM coarse-map regression:1.05m baseline,1.15m detour
+around an inserted box, and no route after a barrier. These results concern our
+simplified known map, not real robot performance.
+
+The account bar uses separate local Builder/Reviewer tokens. `--demo` provisions
+`artifacts/studio/local-credentials.json` privately; read it locally and paste the
+appropriate token. Builders edit/run/submit; a distinct Reviewer records a named,
+limited decision. Editing creates a new draft while preserving old approval.
+Reviewed ZIPs separate splats/colliders and carry scope, QA, audit and content
+hashes. The real TUM acceptance uses an explicitly **automated local-role fixture**,
+not human endorsement. Its perception failures and unknowns remain visible.
+
+[Navigation protocol/results](docs/SIMULATION_PROTOCOL.md) ·
+[Accounts, readiness, review and export](docs/REVIEW_PROTOCOL.md) ·
+[M4 acceptance](docs/M4_CHECKLIST.md)
 
 ## Local scene workspace
 

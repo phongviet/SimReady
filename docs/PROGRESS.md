@@ -25,7 +25,7 @@ exact tested package versions are recorded in `ENVIRONMENT.md` and the lockfiles
 - [x] **M2 complete locally:** independent TSDF, versioned proxy edits, controlled
   local API, working splat/orbit editor, conflict handling and browser evidence.
 - [x] M3: perception validation, real held-out report and nine inspected failures; see M3_CHECKLIST.md.
-- [ ] M4: navigation vertical slice verified; readiness, permissions/review and reviewed exports in progress.
+- [x] M4: readiness, local roles, scoped review/audit, navigation and reviewed exports; see M4_CHECKLIST.md.
 - [ ] M5: research experiments (not started).
 - [ ] M6: shipping (not started).
 - [ ] M7: optional integrations (not started).
@@ -284,3 +284,31 @@ tampered evidence, contradictory declared outcomes, exported payload hashes,
 immutable history and edit invalidation. Full real-TUM review/export acceptance
 is the remaining M4 gate. The opt-in authenticated GPU queue regression
 separately passed1test with actual rendering/detection/LPIPS.
+
+## M4 acceptance (2026-10-29)
+
+Full local acceptance passed:158CPU/geometry tests with2opt-in GPU skips,
+1separate actual authenticated GPU evaluation test,5frontend unit tests,
+6browser tests, build/lint/format/lock/diff checks. The real TUM workflow from
+clean3d584ed captures source5, submits6 and records scoped approval7 using
+explicitly automated distinct local-role fixtures. It approves only the declared
+known-map obstruction regression (`no_route`), not perception accuracy or safety.
+The original48-versus0detector predictions,6964mesh boundary edges and5269unknown
+floor cells remain visible. Every payload of a27,017,824byte reviewed ZIP and its
+SHA256 were verified. See REVIEW_PROTOCOL.md and the saved audit/QA/package manifest.
+
+Further guardb20a246 rejects readiness/export if evidence is changed after
+approval. A current-code real-package verification checks the existing recorded
+approval without fabricating a new decision. Historical approved versions remain
+readable/exportable after edits; self-review, client role spoof, wrong scope,
+tampering and concurrent decisions are tested. Local account tokens stay in a
+private0600file and never enter exported payloads. This is not production IAM.
+
+M5 research/targeted recapture and M6 shipping remain unimplemented; the overall
+full-project goal is active. M7 stays optional and conditional on M6.
+
+M4 final current-code verification: cleanb20a246 reads the existing recorded
+fixture approval and rebuilds/verifies all213ZIP payloads. It creates no new review
+decision. Final storage: **14,239,961,486 / 30,000,000,000 bytes** including all
+caches/environments/data/packages/Git before the acceptance commit. Temporary
+HTTP verification server stopped cleanly. No hosted service or CI run is claimed.

@@ -199,7 +199,7 @@ export function App() {
           <span className="local-badge">LOCAL STUDIO</span>
         </div>
         <span className="top-caption">Reconstruct. Inspect. Edit.</span>
-        <span className="milestone-badge">M3 · Validation workspace</span>
+        <span className="milestone-badge">M4 · Scoped experiments</span>
       </header>
       <AccountBar user={user} onUser={setUser} />
       <aside className="library">
