@@ -1,9 +1,13 @@
 # Current limitations
 
-- Gaussian training/rendering and real TUM checkpoint reload are verified locally.
-  No collision geometry, editor,
-  API, perception metrics, simulation, approval workflow or recapture experiments.
-- Frontend is a React/TypeScript scope shell only, with no backend connection.
+- Gaussian training/rendering, independent TSDF and persistent proxy editing are
+  verified locally. No perception metrics, simulation, approval workflow or
+  recapture experiments have run yet.
+- The browser uses a separate Spark renderer and explicit overlay-only mesh pass;
+  splat/mesh occlusion and edited-scene perception realism are unverified.
+- TSDF is an incomplete observed surface proxy, not necessarily watertight or
+  physically exact. Triangle/box contact does not certify solid occupancy.
+- The API binds to loopback and has no review/authentication endpoints yet.
 - Analytic fixture generation, official Open3D Redwood and TUM fr1 desk formats
   are implemented. Other captures, general video and pose recovery are unsupported.
 - Redwood is synthetic ICL-NUIM; the initial M0 real label was wrong and corrected.

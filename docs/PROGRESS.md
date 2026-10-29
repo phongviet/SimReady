@@ -22,7 +22,8 @@ exact tested package versions are recorded in `ENVIRONMENT.md` and the lockfiles
   frontend shell, CI configuration and documented acceptance.
 - [x] **M1 complete locally:** actual real TUM reconstruction, checkpoint/PLY,
   held-out RGB/depth rendering, isolated GPU runtime and CPU demo. See M1_CHECKLIST.md.
-- [ ] M2: geometry and editing (not started).
+- [x] **M2 complete locally:** independent TSDF, versioned proxy edits, controlled
+  local API, working splat/orbit editor, conflict handling and browser evidence.
 - [ ] M3: perception validation (not started).
 - [ ] M4: simulation and review (not started).
 - [ ] M5: research experiments (not started).
@@ -123,6 +124,48 @@ transfer claim. Dataset pose/calibration uncertainty and temporal/spatial overla
 are disclosed. Total conservative storage accounting remains about 11.6 GB,
 under the 30 GB limit. No paid compute or external publication was used.
 
-**Next:** M2, build independent collision geometry from training RGB-D, persist
-non-destructive rigid objects, and implement a working scene editor with tested
-coordinate alignment. Continue toward the full project; M2–M6 remain open.
+## M2 acceptance (2026-10-29)
+
+- Open3D CPU 0.19.0 fused the 50 frozen real TUM training frames into an
+  independent coarse TSDF: **28,007 vertices / 48,828 triangles**, 3cm voxels,
+  identity world transform, no ICP or scene rescaling. Hashes and limitations are
+  in [geometry evidence](evidence/m2-tum-geometry.json). No geometric GT error is claimed.
+- The analytic TSDF surface stays within one voxel of its known 2m plane;
+  numeric tests confirm metric dimensions, rotated box/surface intersection and
+  identical visible/collider transforms.
+- SQLite authoritative immutable revisions and expected-version transactions
+  preserve inserted boxes/barriers, pose, size, visibility, collision flags and
+  deletion history. Concurrent writers produce exactly one winner and one conflict.
+- FastAPI serves registered asset keys with path containment and hashes; malformed
+  edits/status spoofing are rejected. Request IDs and HTTP 409 conflict handling
+  are implemented. Server is local/loopback; review authentication remains M4.
+- The React/Three.js/Spark editor loads actual learned PLY splats, supports orbit,
+  transform gizmos and numeric transforms, reference-camera selection, independent
+  TSDF/collider toggles and save/reload. Saved-camera overlays remain available
+  without WebGL2. An OrbitControls initialization bug was found visually and fixed;
+  a stale save message was also corrected.
+- Final Python suite with geometry installed: **129 passed, 1 optional GPU skip**.
+  One upstream Starlette/httpx deprecation warning remains visible. Ruff passes.
+  Frontend: **3 tests**, TypeScript/Vite build and format checks pass. Actual
+  Playwright browser suite: **3 passed**, including pixel content/orbit changes,
+  edits, reload, hide/delete, stale versions and saved-camera mode.
+- The actual real TUM scene was registered, opened in Chromium, and a visible
+  30cm box was saved at revision 2. No browser page errors were observed.
+  [Real-scene screenshot](evidence/m2-tum-editor.png) (derived TUM data, CC BY 4.0;
+  Sturm et al., IROS 2012) and [analytic box + collider screenshot](evidence/m2-analytic-editor.png)
+  are actual browser captures. Base reconstruction remains unchanged.
+- CI now includes CPU, optional CPU TSDF, official sample and browser jobs;
+  hosted execution remains unverified because no remote is configured.
+- Conservative project storage is about **13.2 GB / 30 GB**, including dependencies,
+  browser runtime/caches and local data/artifacts. Acquisition/install preflights
+  reserve space for optional components.
+
+Rendering limitation: inserted meshes are **overlay-only**, without validated
+splat-depth occlusion. Browser output is not used for scientific perception
+metrics. Coarse mesh holes, uncertain calibration/poses and unknown space remain
+unverified. There is still no evaluation, simulation, approval or recapture result.
+
+**Next:** M3, pin one detector/LPIPS implementation, evaluate camera-aligned real
+and gsplat views on the frozen test split, save raw predictions/per-view metrics,
+and build the evaluation explorer/report with actual failure cases. Continue
+toward the full project; M3–M6 remain open.

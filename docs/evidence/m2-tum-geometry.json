@@ -1,0 +1,121 @@
+{
+  "T_world_geometry": [
+    [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "bounds_max_m": [
+    1.7159230709075928,
+    1.3049999475479126,
+    0.7649999856948853
+  ],
+  "bounds_min_m": [
+    -2.325000047683716,
+    -0.10499999672174454,
+    -2.740605354309082
+  ],
+  "dataset_manifest_sha256": "60805e541107fb5d6a48d12d290925c34bd5dd15cd1f097252f9766bec942ac6",
+  "depth_trunc_m": 5.0,
+  "elapsed_seconds": 2.072076357995684,
+  "files_sha256": {
+    "collision_mesh.json": "fff105052972ee4d7797be595d7e47be4b7b90abee4cf567fe56318559a324ac",
+    "collision_mesh.npz": "c0ae2cd7ae8ff80a785aaa6adb4b0b57ac1c9d70d54e3ce13fbeb99e9348d79b",
+    "collision_mesh.ply": "8e250bc4b7533864f91347d106138c494f432a17b7f65d6ea3a2609cfbf3ffd5"
+  },
+  "frames_sha256": "dd6cca2995ae1f7f8696ecdd56f0cff88c03f3ae09947cfde8551d4348a8bc63",
+  "ground_truth_metrics": null,
+  "limitations": [
+    "Observed surface proxy only; holes and unobserved space are unverified.",
+    "Not necessarily closed/watertight; no physical-accuracy certification.",
+    "No ground-truth geometric error measured.",
+    "ROS pinhole approximation follows publisher advice; residual errors possible.",
+    "Temporal splits may overlap spatially; not independent scenes.",
+    "Nominal mocap Z-up assumed; no accelerometer gravity alignment.",
+    "Uncertainty: interpolated poses, exposure, rolling shutter, holes and dynamics."
+  ],
+  "max_triangles": 50000,
+  "method": "open3d_tsdf",
+  "open3d_version": "0.19.0",
+  "quality": "coarse_proxy",
+  "schema_version": "1.0",
+  "sdf_trunc_m": 0.09,
+  "split_sha256": "7ce96989011152282b0adcaa80e49ab33907f98750cf342d945bab904406cdab",
+  "training_frame_ids": [
+    "frame_00000",
+    "frame_00001",
+    "frame_00002",
+    "frame_00003",
+    "frame_00004",
+    "frame_00005",
+    "frame_00006",
+    "frame_00007",
+    "frame_00008",
+    "frame_00009",
+    "frame_00010",
+    "frame_00011",
+    "frame_00012",
+    "frame_00013",
+    "frame_00014",
+    "frame_00015",
+    "frame_00016",
+    "frame_00017",
+    "frame_00018",
+    "frame_00019",
+    "frame_00020",
+    "frame_00021",
+    "frame_00022",
+    "frame_00023",
+    "frame_00024",
+    "frame_00025",
+    "frame_00026",
+    "frame_00027",
+    "frame_00028",
+    "frame_00029",
+    "frame_00030",
+    "frame_00031",
+    "frame_00032",
+    "frame_00033",
+    "frame_00034",
+    "frame_00035",
+    "frame_00036",
+    "frame_00037",
+    "frame_00038",
+    "frame_00039",
+    "frame_00040",
+    "frame_00041",
+    "frame_00042",
+    "frame_00043",
+    "frame_00044",
+    "frame_00045",
+    "frame_00046",
+    "frame_00047",
+    "frame_00048",
+    "frame_00049"
+  ],
+  "triangles": 48828,
+  "vertices": 28007,
+  "voxel_size_m": 0.03,
+  "world_frame": "canonical_right_handed_y_up",
+  "world_units": "meters"
+}

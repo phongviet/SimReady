@@ -1,8 +1,9 @@
 # SimReady
 
-`PLAN.md` is the specification. **M0 and M1 are complete locally.** The user has
+`PLAN.md` is the specification. **M0–M2 are complete locally.** The user has
 authorized completing the full project.
-Scene editing, perception evaluation, simulation and review remain future milestones.
+The studio supports persistent rigid proxy editing. Perception evaluation,
+simulation and review remain future milestones.
 
 M0 provides a CPU-only RGB-D import/validation package, explicit camera
 conventions, an analytic fixture with known metric geometry, frozen dataset
@@ -86,14 +87,46 @@ hashes, seed, configuration, source revision, GPU/package versions, elapsed time
 and PyTorch allocator memory peaks. Expected rendered depth is axial Z in meters,
 and must be masked by the saved alpha/support image before downstream comparison.
 
-## Frontend shell
+## Local scene workspace
 
 ```bash
-make frontend
+make studio
 ```
 
-Open [the local shell](http://127.0.0.1:5173). It states the M0 scope and CLI
-entry point. It has no backend, scene viewer, fake metrics or editing controls.
+Open [the local scene workspace](http://127.0.0.1:8000). The bundled analytic
+demo needs no CUDA or optional geometry install. Orbit the actual learned splats,
+add a box/barrier, select it, edit position/rotation/size, toggle visibility and
+collider, then save. Reloading preserves the saved version. Stale saves return
+a conflict while keeping local edits. Saved-camera mode supports numeric editing
+when WebGL2 is unavailable. Base splats remain immutable.
+
+The editor explicitly labels mesh insertion as an **overlay preview**. It does
+not claim verified occlusion or edited-scene perception realism. Coarse TSDF
+geometry is independently toggleable; unknown regions remain unverified.
+
+For frontend development, start `uv run --frozen simready api serve --demo` and
+run `make frontend` in another terminal; Vite proxies `/api` to loopback port 8000.
+
+Register the actual real reconstruction after M1 commands:
+
+```bash
+make setup-geometry
+OMP_NUM_THREADS=4 uv run --frozen --extra geometry simready geometry build --scene data/scenes/tum-fr1-desk --out artifacts/geometry/tum-fr1-desk/tsdf
+uv run --frozen simready scene create --id tum-fr1-desk --name "TUM office desk" --dataset data/scenes/tum-fr1-desk --artifact artifacts/scenes/tum-fr1-desk/baseline --geometry artifacts/geometry/tum-fr1-desk/tsdf --renders artifacts/renders/tum-fr1-desk-test
+```
+
+Scene IDs/output paths must be new for registration. See [scene protocol](docs/SCENE_PROTOCOL.md)
+for revision semantics, collision scope and controlled asset serving.
+
+```bash
+make browser-setup
+make test-browser
+```
+
+Browser tests execute the live API and actual WebGL2 renderer, verify nonempty
+rendered pixels and orbit movement, and exercise edits, reload, deletion,
+visibility, conflicts and saved-camera fallback. Hosted CI is configured but
+has not run because no remote is configured.
 
 ## Storage and provenance
 
@@ -102,7 +135,9 @@ The environment is locked in `uv.lock` and `frontend/package-lock.json`.
 dependencies, caches and builds are ignored by Git. The full working project
 has a **30,000,000,000-byte** budget. `make storage` accounts conservatively for
 logical/allocated file sizes, hidden files and directories; acquisition performs
-budget preflight checks. Downloads are capped at 20 MB and extraction at 25 MB.
+budget preflight checks. The small Open3D sample is capped at 20 MB download /
+25 MB extraction; TUM acquisition has a separate 500 MB download cap and bounded
+selected-frame import. No large datasets or model checkpoints are committed.
 This is a guard, not an OS disk quota; check before and after external installs.
 
 The official sample is fetched from the [Open3D release](https://github.com/isl-org/open3d_downloads/releases/tag/20220301-data)
@@ -119,5 +154,5 @@ hosted GitHub Actions has not run because no remote is configured.
 
 M1 has genuinely reconstructed the real TUM sequence and reloaded/rendered all
 18 frozen test cameras. See [M1 acceptance](docs/M1_CHECKLIST.md) for evidence.
-Image/perception quality has not been measured. M2 geometry/editing is next;
+Image/perception quality has not been measured. M3 perception validation is next;
 later milestone completion remains conditional on its own tests.
