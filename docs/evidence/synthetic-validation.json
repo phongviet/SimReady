@@ -1,0 +1,18 @@
+{
+  "scene_id": "synthetic_plane",
+  "kind": "synthetic",
+  "frames": 8,
+  "splits": {
+    "train": 4,
+    "validation": 1,
+    "candidate": 1,
+    "test": 2
+  },
+  "frames_sha256": "40128c0c4ff9a63f7feebd93452ae67c4c4873ca70f83c8d79d620e81998770f",
+  "split_sha256": "44954bd8811e3c4f7032f96516e2c1f838734c9e8e5ce0515a2dc1b29ee816c7",
+  "valid_depth_pixels": 24576,
+  "limitations": [
+    "Synthetic unit-test fixture; not real data or a reconstruction.",
+    "Small split blocks lack spatial separation; not an evaluation benchmark."
+  ]
+}

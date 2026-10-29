@@ -1,17 +1,19 @@
 # Progress
 
-Actual execution: 2026-10-29 (Asia/Bangkok). Assigned Git dates are documented in
-`DECISIONS.md`; they are not experiment timestamps.
+Actual execution: **2026-10-29 (Asia/Bangkok)**. User-requested Git dates across
+June–October are documented in `DECISIONS.md`; they are not experiment timestamps.
 
 ## Initial inspection
 
-Only `PLAN.md` and a Windows download metadata sidecar existed. No Git repository,
-source code, dependency environment, tests, frontend, or sample data existed.
-Environment inspection is recorded in `ENVIRONMENT.md`.
+Only `PLAN.md` and a Windows download metadata sidecar existed. There was no Git
+repository, source, environment, tests, frontend or sample data. Environment and
+exact tested package versions are recorded in `ENVIRONMENT.md` and the lockfiles.
 
 ## Milestones
 
-- [ ] M0: bootstrap, data contracts, mathematical sanity, official sample import.
+- [x] **M0 complete locally:** repo bootstrap, typed versioned data/scene contracts,
+  camera math, analytic fixture, official real RGB-D import, frozen splits, tests,
+  frontend shell, CI configuration and documented acceptance.
 - [ ] M1: reconstruction (not started).
 - [ ] M2: geometry and editing (not started).
 - [ ] M3: perception validation (not started).
@@ -20,4 +22,50 @@ Environment inspection is recorded in `ENVIRONMENT.md`.
 - [ ] M6: shipping (not started).
 - [ ] M7: optional integrations (not started).
 
-Detailed M0 acceptance checklist: `M0_CHECKLIST.md`. No experimental results exist.
+Detailed acceptance criteria: [M0 checklist](M0_CHECKLIST.md).
+
+## Verified commands and evidence
+
+| Command/check | Actual outcome |
+|---|---|
+| `make setup` | Locked Python sync and clean `npm ci` passed |
+| `make test` | 80 Python tests passed (including real input), 1 frontend test passed, TypeScript/Vite production build passed; Ruff lint and format checks passed |
+| `make demo` | Eight-frame analytic fixture validates; 4/1/1/2 splits |
+| `make test-real` | Official sample validated; real integration test passed, 79 deselected |
+| Fresh `simready data import` into `data/scenes/redwood-m0-verified` | Five real RGB-D pairs imported, validated; supplied estimated poses and 2/1/1/1 frozen splits |
+| CLI error and repeat-import checks | Automated tests confirm exit 2, actionable errors and no overwrite |
+| Known point projection | Camera point (0.4,-0.2,2)m projects to pixel (419.5,199.5) for declared test calibration |
+| Transform/pixel round trips | Float64 tests pass at 1e-12 absolute tolerance; proper rotation checks reject invalid poses |
+| Live local Vite HTTP smoke | `/`, `/src/main.tsx`, `/src/App.tsx` returned HTTP 200 with expected content; server stopped afterward |
+| `npm audit` after dependency updates | Zero vulnerabilities reported at verification time |
+| `uv lock --check`, `git diff --check` | Passed |
+| `make storage` | About 0.30 GB including .git/.venv/node_modules/caches/data; below 30 GB decimal |
+
+The official ZIP is 3,772,513 bytes and matched the publisher MD5 plus pinned
+SHA-256. Raw data and imported scenes remain local and gitignored. Small actual
+validation outputs are saved in [evidence](evidence/m0-provenance.json), with
+[real-sample validation](evidence/redwood-validation.json) and
+[synthetic validation](evidence/synthetic-validation.json). These are integrity
+counts/hashes, not reconstruction quality or experimental results.
+
+Development proceeded through bootstrap, camera/contracts (54 passing tests),
+real import/adversarial checks (79 passing tests), then a four-frame split boundary
+regression (final 80 passing tests) and frontend/CI acceptance. The four-frame
+allocation was fixed rather than weakening nonempty split checks. The final
+source tree retains every test.
+
+## Limits and next task
+
+Hosted CI has not run: there is no configured remote and nothing was published.
+The UI is only a scope shell; HTTP smoke is not a visual/browser interaction test.
+Real sample timing uses indices, world-up is nominal, odometry is supplied/estimated,
+data redistribution terms remain unverified, and adjacent tiny split blocks are
+not statistically independent. See `DATASET_PROTOCOL.md` and `LIMITATIONS.md`.
+
+No reconstruction, perception metrics, navigation, approval or recapture
+experiments exist. No experimental results are reported.
+
+**Next task after authorization:** M1, choose and isolate a compatible 3DGS backend,
+validate its actual CUDA/dependency environment on the 6 GB GPU, then genuinely
+train/load/render a small scene with measured provenance. Do not infer CUDA
+training compatibility from nvidia-smi or these M0 tests.

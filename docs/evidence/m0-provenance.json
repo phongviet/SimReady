@@ -1,0 +1,32 @@
+{
+  "actual_execution_date": "2026-10-29",
+  "timezone": "Asia/Bangkok",
+  "scope": "M0 import and mathematical correctness only; no reconstruction or research results",
+  "cpu_source_commit": "3a16be63db16d857e3b3c8130d7d09cdb07a0cbd",
+  "command": [
+    "simready",
+    "data",
+    "import",
+    "--source",
+    "data/raw/redwood",
+    "--format",
+    "open3d_redwood_sample",
+    "--out",
+    "data/scenes/redwood-m0-verified"
+  ],
+  "source_url": "https://github.com/isl-org/open3d_downloads/releases/download/20220301-data/SampleRedwoodRGBDImages.zip",
+  "archive_bytes": 3772513,
+  "archive_md5": "43971c5f690c9cfc52dda8c96a0140ee",
+  "archive_sha256": "4f161ba04d81cbe628fc69dac20552749f1b255b0090fe51c766e5d02355937b",
+  "canonical_manifest_sha256": "6778c089007fe89caae29f7bda435e79763c5910093460fe9fa82c54d65b333d",
+  "python": "3.12.3 (main, Jun 19 2026, 12:46:00) [GCC 13.3.0]",
+  "packages": {
+    "simready": "0.0.1",
+    "numpy": "2.5.4",
+    "pillow": "12.3.0",
+    "pydantic": "2.14.1",
+    "pytest": "9.2.0",
+    "ruff": "0.17.3"
+  },
+  "note": "Raw source and canonical images are local and gitignored. JSON files contain validation counts and hashes, not experimental metrics."
+}
