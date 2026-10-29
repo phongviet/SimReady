@@ -1,0 +1,18 @@
+{
+  "config": {
+    "depth_loss_weight": 0.05,
+    "initial_stride": 6,
+    "iterations": 40,
+    "max_gaussians": 6000,
+    "max_initial_gaussians": 1500,
+    "preset": "smoke",
+    "refine_every": 10,
+    "refine_start": 15,
+    "refine_stop": 30,
+    "schema_version": "1.0",
+    "seed": 42,
+    "sh_degree": 0,
+    "width": 160
+  },
+  "schema_version": "1.0"
+}

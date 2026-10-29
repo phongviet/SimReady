@@ -1,0 +1,2 @@
+Analytic synthetic source and derived demo artifacts: CC0-1.0.
+Genuinely trained with gsplat; no real input images. See reconstruction/artifact.json.

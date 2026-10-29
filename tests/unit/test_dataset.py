@@ -95,6 +95,16 @@ def test_missing_required_manifest_field(scene, field):
         DatasetManifest(**data)
 
 
+def test_legacy_redwood_real_classification_is_rejected(scene):
+    def wrong_source(manifest):
+        manifest["kind"] = "real"
+        manifest["source"]["name"] = "Open3D SampleRedwoodRGBDImages"
+
+    edit_json(scene / "manifest.json", wrong_source)
+    with pytest.raises(ValueError, match="misclassified as real"):
+        validate_scene(scene)
+
+
 def test_split_overlap_and_duplicate_rejected(scene):
     data = json.loads((scene / "splits.json").read_text())
     data["test"] = data["train"]

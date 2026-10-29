@@ -45,3 +45,12 @@ def test_reconstruction_commands_are_discoverable():
     result = run("recon", "--help")
     assert result.returncode == 0
     assert "train" in result.stdout and "render" in result.stdout and "validate" in result.stdout
+
+
+def test_cpu_smoke_loads_genuinely_trained_synthetic_fixture():
+    result = run("recon", "smoke")
+    assert result.returncode == 0, result.stderr
+    record = json.loads(result.stdout)
+    assert record["dataset_kind"] == "synthetic"
+    assert record["gaussians"] > 0 and record["saved_views"] == 2
+    assert record["gpu_used"] is False and record["runtime_rendering_performed"] is False

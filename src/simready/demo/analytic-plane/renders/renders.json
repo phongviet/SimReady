@@ -1,0 +1,115 @@
+{
+  "artifact_sha256": "5ab2a748e131422a114be16e3c92f5f3b93c5de4510772aa38b46c27f68e6839",
+  "cameras": [
+    {
+      "K": [
+        [
+          50.0,
+          0,
+          31.5
+        ],
+        [
+          0,
+          50.0,
+          23.5
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "frame_id": "frame_00006",
+      "height": 48,
+      "viewmat": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -0.125
+        ],
+        [
+          -0.0,
+          -1.0,
+          -0.0,
+          -0.0
+        ],
+        [
+          -0.0,
+          -0.0,
+          -1.0,
+          -0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "width": 64
+    },
+    {
+      "K": [
+        [
+          50.0,
+          0,
+          31.5
+        ],
+        [
+          0,
+          50.0,
+          23.5
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "frame_id": "frame_00007",
+      "height": 48,
+      "viewmat": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -0.17500000000000002
+        ],
+        [
+          -0.0,
+          -1.0,
+          -0.0,
+          -0.0
+        ],
+        [
+          -0.0,
+          -0.0,
+          -1.0,
+          -0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "width": 64
+    }
+  ],
+  "depth_semantics": "Expected alpha-normalized axial Z, meters; mask by alpha.",
+  "files_sha256": {
+    "frame_00006-alpha.npy": "7d9de5cc8b03234e8b579b1c341ca40dbd6f488ca29a9c6dd2d7054ce8cad363",
+    "frame_00006-depth.npy": "9bfb2137a2f5b5592b4ea19080fd328cd83ab10262e44bb4d14c04e157b26c2d",
+    "frame_00006.png": "a484475c498a0e7c3ca24c23dcb15e9f4cd903145003fa756ea1e3b1c29de439",
+    "frame_00007-alpha.npy": "632a58d0f141b831b4ec5c3bcc10d5b84f37251f905c7b0f0e65f0e72ff9462a",
+    "frame_00007-depth.npy": "c788d38ad152e1cd04c1d09d5be9b55d46d7fb54be2600ab28123f02d6b3c624",
+    "frame_00007.png": "1c6236031aa6977c685d88532758d330e0f809fffc54420fdae5ed3103253f1a"
+  },
+  "frames_sha256": "40128c0c4ff9a63f7feebd93452ae67c4c4873ca70f83c8d79d620e81998770f",
+  "renderer": "gsplat",
+  "schema_version": "1.0",
+  "split": "test",
+  "split_sha256": "44954bd8811e3c4f7032f96516e2c1f838734c9e8e5ce0515a2dc1b29ee816c7"
+}

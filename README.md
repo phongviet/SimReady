@@ -1,12 +1,14 @@
 # SimReady
 
-Implemented scope: **Milestone M0 only**. `PLAN.md` is the project
-specification. Reconstruction, scene editing, perception evaluation, simulation,
-and review workflows are planned in later milestones and are not implemented.
+`PLAN.md` is the specification. **M0 is complete; M1 reconstruction is under
+acceptance verification.** The user has authorized completing the full project.
+Scene editing, perception evaluation, simulation and review remain future milestones.
 
 M0 provides a CPU-only RGB-D import/validation package, explicit camera
 conventions, an analytic fixture with known metric geometry, frozen dataset
-splits, and a React/TypeScript shell. See [progress](docs/PROGRESS.md) and the
+splits, and a React/TypeScript shell. M1 adds an isolated gsplat training/render
+adapter and a genuinely trained analytic demo for CPU smoke checks. See
+[progress](docs/PROGRESS.md) and the
 [acceptance checklist](docs/M0_CHECKLIST.md) for actual verification evidence.
 
 ## Setup
@@ -24,15 +26,20 @@ make storage
 `make setup` installs exact locked dependencies. `make test` runs CPU pytest,
 Ruff lint/format checks, the frontend scope test and production build. It uses
 the official sample if present; otherwise that one test skips explicitly.
-`make demo` generates/validates only the eight-frame synthetic fixture and is
-safe to repeat. It is not a reconstruction demo.
+`make demo` generates/validates the eight-frame analytic input fixture and loads
+a small bundled, genuinely trained Gaussian checkpoint plus two saved views.
+The CPU smoke validates saved artifacts; it does not perform live rendering.
 
-## Real RGB-D integration smoke test
+## Small official RGB-D integration sample
+
+**Correction:** Open3D's Redwood sample is synthetic Redwood/ICL-NUIM, not a real
+Kinect capture. The original M0 classification was wrong and is superseded.
+New imports label it synthetic, and old mislabeled records are rejected.
 
 ```bash
 make fetch-example      # optional network access; official ZIP is about 3.8 MB
-make import-example     # import five real RGB-D pairs and supplied odometry
-make test-real          # require the official sample and run its integration test
+make import-example     # import five synthetic RGB-D pairs and supplied poses
+make test-official      # require the official sample and run its integration test
 ```
 
 Equivalent CLI commands (new output directories required for creation):
@@ -40,9 +47,9 @@ Equivalent CLI commands (new output directories required for creation):
 ```bash
 uv run --frozen simready data synthetic --out data/scenes/my_fixture
 uv run --frozen simready data fetch --out data/raw/redwood
-uv run --frozen simready data import --source data/raw/redwood --format open3d_redwood_sample --out data/scenes/redwood
-uv run --frozen simready data validate --scene data/scenes/redwood
-uv run --frozen simready data split --scene data/scenes/redwood
+uv run --frozen simready data import --source data/raw/redwood --format open3d_redwood_sample --out data/scenes/redwood-synthetic-v2
+uv run --frozen simready data validate --scene data/scenes/redwood-synthetic-v2
+uv run --frozen simready data split --scene data/scenes/redwood-synthetic-v2
 ```
 
 Imports generate `manifest.json`, `frames.jsonl`, `splits.json`, RGB and depth
@@ -51,10 +58,33 @@ validation detects content/hash changes, split overlap, bad images, calibration,
 poses and timestamps. `data split` **verifies the frozen split**, without creating
 a new partition. A new dataset version requires a new output directory.
 
-The real sample has 2 train / 1 validation / 1 candidate / 1 test frame. Its
+The official synthetic sample has 2 train / 1 validation / 1 candidate / 1 test frame. Its
 adjacent views, supplied estimated odometry, nominal world-up and frame-index
 timestamps make this an import check, not credible held-out scientific evaluation.
 See [dataset protocol](docs/DATASET_PROTOCOL.md) for conventions and limitations.
+
+## Real capture and GPU reconstruction
+
+The real-data path uses TUM's Kinect `freiburg1_desk` sequence, with original
+timestamps and interpolated motion-capture optical-center poses.
+
+```bash
+uv run --frozen python scripts/fetch_tum_data.py
+uv run --frozen simready data import --source data/raw/rgbd_dataset_freiburg1_desk.tgz --format tum_rgbd --max-frames 100 --out data/scenes/tum-fr1-desk
+make test-real
+make gpu-setup
+uv run --frozen simready recon train --scene data/scenes/tum-fr1-desk --preset local_6gb --out artifacts/scenes/tum-fr1-desk/baseline
+uv run --frozen simready recon render --artifact artifacts/scenes/tum-fr1-desk/baseline --scene data/scenes/tum-fr1-desk --split test --out artifacts/renders/tum-fr1-desk-test
+make test-gpu
+```
+
+GPU setup is optional for CPU smoke and isolated from the core environment.
+See [GPU setup](docs/GPU_SETUP.md) for its exact supported runtime. Training
+initializes only from training RGB-D; exported `gaussians.npz` and Graphdeco SH
+`gaussian.ply` stay in metric coordinates. Saved provenance records source/split
+hashes, seed, configuration, source revision, GPU/package versions, elapsed time,
+and PyTorch allocator memory peaks. Expected rendered depth is axial Z in meters,
+and must be masked by the saved alpha/support image before downstream comparison.
 
 ## Frontend shell
 
@@ -87,5 +117,6 @@ months of work. See [decisions](docs/DECISIONS.md), [environment](docs/ENVIRONME
 and [limitations](docs/LIMITATIONS.md). Local CI-equivalent commands are verified;
 hosted GitHub Actions has not run because no remote is configured.
 
-The next milestone, M1, requires a real reconstruction backend and measured
-provenance on compatible compute. It has not been started.
+The M1 checklist remains open until a verified real capture has been imported,
+trained, reloaded and rendered. Successful training of synthetic input is tracked
+separately. Later milestone completion is always conditional on its own tests.

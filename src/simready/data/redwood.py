@@ -186,13 +186,13 @@ def import_redwood(source: Path, output: Path) -> None:
             )
         metadata = dict(
             scene_id="redwood_sample",
-            kind="real",
+            kind="synthetic",
             source=Source(
                 name="Open3D SampleRedwoodRGBDImages",
                 url=SAMPLE_URL,
                 license="Dataset-specific redistribution terms unverified; local development only",
                 attribution="Redwood indoor dataset / Open3D sample maintainers",
-                description="Five real registered RGB-D pairs from Open3D's official sample. "
+                description="Five RGB-D pairs from the synthetic Redwood/ICL-NUIM scene. "
                 "Archive hash is recorded only when source files match the pinned archive.",
                 archive_sha256=archive_hash,
             ),
@@ -206,6 +206,7 @@ def import_redwood(source: Path, output: Path) -> None:
             capture_conditions="Indoor sample; registered 640x480 RGB and millimeter depth.",
             privacy="Public indoor sample; redistribution not audited. Do not bundle in Git.",
             limitations=(
+                "Synthetic Redwood/ICL-NUIM sample; not a real Kinect capture.",
                 "Only five adjacent views; contiguous 2/1/1/1 split is integration-only.",
                 "Near-duplicate views can span blocks; no meaningful held-out evaluation claims.",
                 "Nominal Y-up from source camera frame, not gravity-calibrated.",

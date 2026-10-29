@@ -3,6 +3,12 @@
 Actual execution: **2026-10-29 (Asia/Bangkok)**. User-requested Git dates across
 June–October are documented in `DECISIONS.md`; they are not experiment timestamps.
 
+**Correction found during M1:** Open3D's Redwood sample is synthetic ICL-NUIM,
+not real capture. The earlier `real` importer label and corresponding M0 wording
+below were incorrect. They are retained as historical execution records, with
+classification explicitly superseded. New imports use `synthetic`; validators
+reject the old mislabeled datasets/artifacts. Real-capture acceptance uses TUM.
+
 ## Initial inspection
 
 Only `PLAN.md` and a Windows download metadata sidecar existed. There was no Git

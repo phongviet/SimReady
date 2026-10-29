@@ -18,7 +18,7 @@ dev = ["pytest>=8,<10", "ruff>=0.11,<1"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-markers = ["real_data: requires the separately downloaded official sample", "gpu: requires the isolated gsplat CUDA worker"]
+markers = ["official_data: requires the official synthetic Open3D sample", "real_data: requires the real TUM RGB-D sequence", "gpu: requires the isolated gsplat CUDA worker"]
 
 [tool.ruff]
 target-version = "py312"

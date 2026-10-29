@@ -1,7 +1,7 @@
 export UV_CACHE_DIR := $(CURDIR)/.cache/uv
 export npm_config_cache := $(CURDIR)/frontend/.npm-cache
 
-.PHONY: setup storage lint test test-real demo frontend fetch-example import-example gpu-setup test-gpu
+.PHONY: setup storage lint test test-real test-official demo frontend fetch-example import-example gpu-setup test-gpu
 
 storage:
 	PYTHONPATH=src python3 -m simready.storage
@@ -24,6 +24,7 @@ test: storage lint
 demo:
 	@if [ ! -d data/scenes/synthetic ]; then uv run --frozen simready data synthetic --out data/scenes/synthetic; fi
 	uv run --frozen simready data validate --scene data/scenes/synthetic
+	uv run --frozen simready recon smoke
 
 frontend:
 	npm --prefix frontend run dev
@@ -32,11 +33,14 @@ fetch-example: storage
 	@if [ ! -d data/raw/redwood ]; then uv run --frozen python scripts/fetch_example_data.py --out data/raw/redwood; fi
 
 import-example: fetch-example
-	@if [ ! -d data/scenes/redwood ]; then uv run --frozen simready data import --source data/raw/redwood --format open3d_redwood_sample --out data/scenes/redwood; fi
-	uv run --frozen simready data validate --scene data/scenes/redwood
+	@if [ ! -d data/scenes/redwood-synthetic-v2 ]; then uv run --frozen simready data import --source data/raw/redwood --format open3d_redwood_sample --out data/scenes/redwood-synthetic-v2; fi
+	uv run --frozen simready data validate --scene data/scenes/redwood-synthetic-v2
 
-test-real: import-example
-	SIMREADY_REAL_SAMPLE=data/raw/redwood uv run --frozen pytest -q -m real_data
+test-official: fetch-example
+	SIMREADY_OFFICIAL_SAMPLE=data/raw/redwood uv run --frozen pytest -q -m official_data
+
+test-real:
+	SIMREADY_TUM_SCENE=data/scenes/tum-fr1-desk uv run --frozen pytest -q -m real_data
 
 gpu-setup: storage
 	uv run --frozen python scripts/setup_gpu.py

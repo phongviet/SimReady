@@ -17,5 +17,7 @@
     "Nominal Y-up from source camera frame, not gravity-calibrated.",
     "No verified distortion/exposure/dynamic masks or original capture timestamps.",
     "License terms not independently confirmed; no sample redistribution."
-  ]
+  ],
+  "superseded_classification": true,
+  "correction": "Originally mislabeled real. This official sample is synthetic Redwood/ICL-NUIM; do not use this historical record as real-capture evidence."
 }

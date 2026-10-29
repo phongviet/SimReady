@@ -1,5 +1,14 @@
 # M0 dataset and coordinate protocol
 
+**Provenance correction discovered during M1 (2026-10-29):** the Open3D Redwood
+sample depicts the synthetic Redwood/ICL-NUIM scene, not a real Kinect capture.
+The original importer incorrectly labeled it `real`. New imports use `synthetic`,
+and validation rejects the old mislabeled imports/artifacts. Historical M0 evidence
+containing `real` is superseded for classification, not evidence of real capture.
+The original Redwood site was reached over HTTP and identifies its indoor scenes
+as a synthetic augmented ICL-NUIM dataset: http://redwood-data.org/indoor/dataset.html .
+The verified real-data path is TUM, described below.
+
 `manifest.json`, `frames.jsonl`, `splits.json` form the version **1.0** contract.
 Pydantic models are in `src/simready/data/schema.py`; unknown fields and versions
 are rejected. Schema version and coordinate metadata must be present explicitly.
@@ -65,7 +74,7 @@ hashes, so experiments must eventually pin hashes separately in run provenance.
 
 ## Official sample provenance
 
-The supported real importer format is `open3d_redwood_sample`, not generic TUM.
+The small official synthetic importer format is `open3d_redwood_sample`.
 The [official sample descriptor](https://github.com/isl-org/Open3D/blob/main/cpp/open3d/data/dataset/SampleRedwoodRGBDImages.cpp)
 identifies the release and publisher MD5 `43971c5f690c9cfc52dda8c96a0140ee`.
 The downloaded 3,772,513-byte ZIP additionally has SHA-256
@@ -93,3 +102,36 @@ The five adjacent views may overlap heavily across splits. Sample license terms
 could not be independently confirmed from the original Redwood site during this
 run; do not redistribute this data or describe Open3D's code license as a data
 license. Data stays ignored in local storage, fetched from its official source.
+
+## Real TUM RGB-D path (M1)
+
+```bash
+uv run --frozen python scripts/fetch_tum_data.py
+uv run --frozen simready data import --source data/raw/rgbd_dataset_freiburg1_desk.tgz --format tum_rgbd --max-frames 100 --out data/scenes/tum-fr1-desk
+make test-real
+```
+
+The [official TUM sequence page](https://cvg.cit.tum.de/data/datasets/rgbd-dataset/download)
+identifies `freiburg1_desk` as a real Kinect office sweep. The [dataset license](https://cvg.cit.tum.de/data/datasets/rgbd-dataset#license)
+is CC BY 4.0, with attribution to Sturm et al., IROS 2012.
+The downloader caps the archive at 500 MB; import caps its uncompressed contents
+at 1.5 GB and extracts only the chosen RGB-D pairs. Links, traversal, duplicates
+and missing indexes/poses are rejected. SHA-256 and the resolved source URL are
+recorded. No raw data is committed to Git.
+
+At most 20ms separates each uniquely associated RGB/depth pair. Optical-center
+c2w poses are interpolated from the original motion-capture trajectory: linear
+translation and quaternion SLERP, no extrapolation or gaps above 50ms. Timestamps
+remain original Unix seconds. Nominal source Z-up is rotated to canonical Y-up;
+accelerometer-based gravity alignment is not performed.
+
+The [publisher's calibration guidance](https://cvg.cit.tum.de/data/datasets/rgbd-dataset/file_formats)
+recommends ROS-default fx=fy=525, cx=319.5, cy=239.5 without further undistortion
+for the pre-registered depth. M0's pinhole contract therefore remains valid, with
+the residual calibration approximation explicitly disclosed. Raw depth is divided
+by 5000; the publisher's prior scale correction is **not applied twice**.
+
+Frames are selected by uniform temporal indices before fitting; the standard
+contiguous split is frozen at import. This avoids image-quality selection but
+does not guarantee spatially independent blocks. All pose/source uncertainty and
+calibration limitations are retained in the manifest and future reports.

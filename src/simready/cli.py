@@ -10,8 +10,9 @@ from pydantic import ValidationError
 from simready.data.dataset import validate_scene
 from simready.data.redwood import fetch_sample, import_redwood
 from simready.data.synthetic import make_synthetic
+from simready.data.tum import import_tum
 from simready.reconstruction.contracts import ReconstructionConfig
-from simready.reconstruction.gsplat import GsplatBackend, validate_artifact
+from simready.reconstruction.gsplat import GsplatBackend, cpu_smoke, validate_artifact
 from simready.storage import BUDGET_BYTES, PROJECT_ROOT, check_budget
 
 
@@ -29,8 +30,9 @@ def main(argv: list[str] | None = None) -> int:
         item.add_argument("--out", type=Path, required=True)
     item = data.add_parser("import")
     item.add_argument("--source", type=Path, required=True)
-    item.add_argument("--format", choices=["open3d_redwood_sample"], required=True)
+    item.add_argument("--format", choices=["open3d_redwood_sample", "tum_rgbd"], required=True)
     item.add_argument("--out", type=Path, required=True)
+    item.add_argument("--max-frames", type=int, default=100)
     recon = commands.add_parser("recon").add_subparsers(dest="action", required=True)
     item = recon.add_parser("train")
     item.add_argument("--scene", type=Path, required=True)
@@ -48,6 +50,7 @@ def main(argv: list[str] | None = None) -> int:
     item.add_argument("--python", type=Path)
     item = recon.add_parser("validate")
     item.add_argument("--artifact", type=Path, required=True)
+    recon.add_parser("smoke", help="CPU-only validation of trained synthetic demo and saved views")
     args = parser.parse_args(argv)
     try:
         if args.command == "storage":
@@ -57,7 +60,9 @@ def main(argv: list[str] | None = None) -> int:
                 "limit_bytes": BUDGET_BYTES,
             }
         elif args.command == "recon":
-            if args.action == "validate":
+            if args.action == "smoke":
+                result = cpu_smoke()
+            elif args.action == "validate":
                 result = validate_artifact(args.artifact)
             elif args.action == "train":
                 config_path = args.config or PROJECT_ROOT / f"configs/recon_{args.preset}.json"
@@ -77,7 +82,10 @@ def main(argv: list[str] | None = None) -> int:
             if args.action == "synthetic":
                 make_synthetic(args.out)
             else:
-                import_redwood(args.source, args.out)
+                if args.format == "tum_rgbd":
+                    import_tum(args.source, args.out, args.max_frames)
+                else:
+                    import_redwood(args.source, args.out)
             result = validate_scene(args.out)
         print(json.dumps(result, indent=2, allow_nan=False))
         return 0

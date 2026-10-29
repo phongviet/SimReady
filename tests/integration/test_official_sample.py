@@ -9,17 +9,17 @@ from simready.data.dataset import validate_scene
 from simready.data.redwood import SAMPLE_SHA256, import_redwood
 
 
-@pytest.mark.real_data
-def test_official_real_rgbd_import_and_supplied_pose(tmp_path):
-    source = Path(os.environ.get("SIMREADY_REAL_SAMPLE", "data/raw/redwood"))
+@pytest.mark.official_data
+def test_official_synthetic_rgbd_import_and_supplied_pose(tmp_path):
+    source = Path(os.environ.get("SIMREADY_OFFICIAL_SAMPLE", "data/raw/redwood"))
     if not source.is_dir():
-        if "SIMREADY_REAL_SAMPLE" in os.environ:
+        if "SIMREADY_OFFICIAL_SAMPLE" in os.environ:
             pytest.fail(f"explicitly configured official sample is missing: {source}")
         pytest.skip("official sample absent: run make fetch-example or make test-real")
     output = tmp_path / "real-scene"
     import_redwood(source, output)
     result = validate_scene(output)
-    assert result["kind"] == "real" and result["frames"] == 5
+    assert result["kind"] == "synthetic" and result["frames"] == 5
     assert result["splits"] == {"train": 2, "validation": 1, "candidate": 1, "test": 1}
     assert result["valid_depth_pixels"] > 0
     manifest = json.loads((output / "manifest.json").read_text())

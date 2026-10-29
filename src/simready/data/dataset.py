@@ -108,6 +108,11 @@ def atomic_dataset(output: Path, reserve_bytes: int) -> Iterator[Path]:
 
 def validate_scene(root: Path) -> dict:
     manifest = DatasetManifest.model_validate_json(local_file(root, "manifest.json").read_text())
+    if manifest.source.name == "Open3D SampleRedwoodRGBDImages" and manifest.kind == "real":
+        raise ValueError(
+            "legacy Redwood sample was misclassified as real; reimport into a new "
+            "directory with the corrected synthetic classification"
+        )
     frame_path = local_file(root, "frames.jsonl")
     split_path = local_file(root, "splits.json")
     if sha256_file(frame_path) != manifest.frames_sha256:

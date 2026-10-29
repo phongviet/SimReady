@@ -1,0 +1,76 @@
+{
+  "backend": "gsplat",
+  "config": {
+    "depth_loss_weight": 0.05,
+    "initial_stride": 6,
+    "iterations": 40,
+    "max_gaussians": 6000,
+    "max_initial_gaussians": 1500,
+    "preset": "smoke",
+    "refine_every": 10,
+    "refine_start": 15,
+    "refine_stop": 30,
+    "schema_version": "1.0",
+    "seed": 42,
+    "sh_degree": 0,
+    "width": 160
+  },
+  "files_sha256": {
+    "gaussian.ply": "05d6191e027c343812f0b70e59242bc425b151c5265d3e26b729cf6df03cee6f",
+    "gaussians.npz": "83d4ecbb48efe20c9da7dfbef7d20f8ff36a81f6b768bd6c83a8369433617861",
+    "train-job.json": "d6bff77e148baa955c75ad18b416aee29c74204fca5226548e1b143842201698",
+    "training-log.jsonl": "bd663d9367bb500fa884c5080490ed612484da855c8d4bebb16ec4a577b1439e"
+  },
+  "git_commit": "c3746f3110779eaf49c15e11bb17d6a2145c6003",
+  "git_dirty": false,
+  "ply_dialect": "Graphdeco SH; wxyz quaternions, log scales, opacity logits",
+  "provenance": {
+    "dataset_kind": "synthetic",
+    "dataset_manifest_sha256": "e177983e6fda8bf4d3bc2439846bf8134ed3890d6e48c7ec5771f8104dec2f5d",
+    "dataset_scene_id": "synthetic_plane",
+    "frames_sha256": "40128c0c4ff9a63f7feebd93452ae67c4c4873ca70f83c8d79d620e81998770f",
+    "initial_points": 352,
+    "initialization": "training-only registered RGB-D points",
+    "limitations": [
+      "Synthetic unit-test fixture; not real data or a reconstruction.",
+      "Small split blocks lack spatial separation; not an evaluation benchmark."
+    ],
+    "source": {
+      "archive_sha256": null,
+      "attribution": "SimReady Development",
+      "description": "Analytic plane at world Z=-2m; no learned rendering.",
+      "license": "CC0-1.0",
+      "name": "SimReady analytic fixture",
+      "url": "local:analytic-plane-v1"
+    },
+    "split_sha256": "44954bd8811e3c4f7032f96516e2c1f838734c9e8e5ce0515a2dc1b29ee816c7",
+    "training_frame_ids": [
+      "frame_00000",
+      "frame_00001",
+      "frame_00002",
+      "frame_00003"
+    ],
+    "world_frame": "canonical_right_handed_y_up",
+    "world_units": "meters"
+  },
+  "schema_version": "1.0",
+  "scope": "Learned 3D Gaussians; visual quality unassessed until M3.",
+  "total_seconds": 5.507176765000622,
+  "worker": {
+    "backend": "gsplat",
+    "cuda": "12.4",
+    "determinism": "Seeded; CUDA floating-point kernels may not be bitwise deterministic.",
+    "final_gaussians": 421,
+    "gpu": "NVIDIA GeForce GTX 1660 Ti",
+    "gsplat": "1.5.3+pt24cu124",
+    "initial_gaussians": 352,
+    "iterations": 40,
+    "loss": "RGB L1 + configured weight * valid axial-depth L1 (meters)",
+    "peak_vram_allocated_bytes": 9233408,
+    "peak_vram_reserved_bytes": 23068672,
+    "python": "3.10.20",
+    "sh_degree": 0,
+    "torch": "2.4.1+cu124",
+    "training_seconds": 2.292303244001232
+  }
+}

@@ -1,4 +1,4 @@
-# Implemented M0 architecture
+# Implemented foundation and reconstruction architecture
 
 ```text
 Analytic fixture generator     Pinned Open3D sample acquisition
@@ -24,4 +24,12 @@ The React/TypeScript frontend is a standalone scope shell with no API connection
 The `ScenePackage` type accepts draft metadata with optional null assets; it
 does not create any reconstruction, collision geometry, editable scene or review.
 
-All other boxes in PLAN.md's system diagram are future work.
+M1 adds CPU preparation of training-only RGB-D inputs and a separate Python3.10
+GPU worker. JSON requests and safe NPZ arrays cross that boundary; the worker
+uses upstream gsplat rasterization and DefaultStrategy, writes learned Gaussian
+parameters and a documented Graphdeco PLY, and renders selected frozen camera
+poses. Artifacts bind dataset/split/config/source provenance to their content.
+There is no torch import in the CPU package. The bundled analytic trained model
+and saved views provide CPU-only validation without pretending to render live.
+
+Other boxes in PLAN.md's system diagram remain future work.

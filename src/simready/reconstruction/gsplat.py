@@ -24,6 +24,44 @@ from simready.storage import PROJECT_ROOT
 SPLIT_NAMES = ("train", "validation", "candidate", "test")
 
 
+def validate_renders(output: Path) -> dict:
+    metadata = json.loads(local_file(output, "renders.json").read_text())
+    if metadata.get("schema_version") != "1.0" or metadata.get("renderer") != "gsplat":
+        raise ValueError("unsupported render artifact")
+    for camera in metadata["cameras"]:
+        name = camera["frame_id"]
+        for filename in (f"{name}.png", f"{name}-depth.npy", f"{name}-alpha.npy"):
+            path = local_file(output, filename)
+            if sha256_file(path) != metadata["files_sha256"].get(filename):
+                raise ValueError(f"render content hash mismatch: {filename}")
+        with Image.open(output / f"{name}.png") as image:
+            if image.size != (camera["width"], camera["height"]) or image.mode != "RGB":
+                raise ValueError("saved RGB dimensions/channels differ from camera")
+        for channel in ("depth", "alpha"):
+            values = np.load(output / f"{name}-{channel}.npy", allow_pickle=False)
+            if values.shape != (camera["height"], camera["width"]) or not np.isfinite(values).all():
+                raise ValueError(f"invalid saved {channel}")
+            if np.any(values < 0) or (channel == "alpha" and np.any(values > 1.0001)):
+                raise ValueError(f"saved {channel} outside valid range")
+    return metadata
+
+
+def cpu_smoke() -> dict:
+    fixture = Path(__file__).resolve().parents[1] / "demo/analytic-plane"
+    artifact = validate_artifact(fixture / "reconstruction")
+    renders = validate_renders(fixture / "renders")
+    if renders["artifact_sha256"] != sha256_file(fixture / "reconstruction/artifact.json"):
+        raise ValueError("CPU fixture render belongs to a different reconstruction")
+    return {
+        "mode": "CPU validation of a trained analytic synthetic checkpoint and saved views",
+        "dataset_kind": artifact["provenance"]["dataset_kind"],
+        "gaussians": artifact["worker"]["final_gaussians"],
+        "saved_views": len(renders["cameras"]),
+        "gpu_used": False,
+        "runtime_rendering_performed": False,
+    }
+
+
 def load_records(scene: Path) -> tuple[DatasetManifest, list[Frame], Splits]:
     validate_scene(scene)
     manifest = DatasetManifest.model_validate_json((scene / "manifest.json").read_text())
@@ -121,6 +159,15 @@ def validate_artifact(artifact: Path) -> dict:
     metadata = json.loads(local_file(artifact, "artifact.json").read_text())
     if metadata.get("schema_version") != "1.0" or metadata.get("backend") != "gsplat":
         raise ValueError("unsupported reconstruction artifact version/backend")
+    provenance = metadata.get("provenance", {})
+    if (
+        provenance.get("source", {}).get("name") == "Open3D SampleRedwoodRGBDImages"
+        and provenance.get("dataset_kind") == "real"
+    ):
+        raise ValueError(
+            "legacy Redwood reconstruction has incorrect real-data provenance; "
+            "retrain from the corrected synthetic import or use the real TUM capture"
+        )
     required = {"gaussians.npz", "gaussian.ply", "training-log.jsonl", "train-job.json"}
     if not required.issubset(metadata.get("files_sha256", {})):
         raise ValueError("reconstruction artifact is missing required content digests")

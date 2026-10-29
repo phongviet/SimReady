@@ -84,3 +84,10 @@ fixture generation and camera math. Final acceptance will be recorded separately
     a CUDA compiler and keeps CPU and GPU dependencies isolated. Sources:
     https://docs.gsplat.studio/whl/pt24cu124/gsplat/ and
     https://github.com/nerfstudio-project/gsplat/tree/v1.5.3/gsplat/strategy .
+18. **Source classification correction:** during visual inspection of M1's
+    learned render, the Open3D sample appeared synthetic. The original Redwood
+    HTTP site confirms synthetic augmented ICL-NUIM indoor scenes. The initial
+    M0 `real` label was wrong; correct the importer to `synthetic`, reject legacy
+    mislabeled records, annotate prior evidence, and use the official real TUM
+    Kinect desk capture for the actual real-scene gate. Do not rewrite frozen
+    source manifests or treat successful synthetic training as real reconstruction.

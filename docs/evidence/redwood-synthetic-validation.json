@@ -1,0 +1,22 @@
+{
+  "scene_id": "redwood_sample",
+  "kind": "synthetic",
+  "frames": 5,
+  "splits": {
+    "train": 2,
+    "validation": 1,
+    "candidate": 1,
+    "test": 1
+  },
+  "frames_sha256": "6cc8c075889ae89f402691031b1846415ce395d9e155d66700aa6b5b44b93a42",
+  "split_sha256": "2d45c9d3d50fd8b2d623bc61aa66df34f8f2b9aab91dbea0e905f469e5f9de8c",
+  "valid_depth_pixels": 1340711,
+  "limitations": [
+    "Synthetic Redwood/ICL-NUIM sample; not a real Kinect capture.",
+    "Only five adjacent views; contiguous 2/1/1/1 split is integration-only.",
+    "Near-duplicate views can span blocks; no meaningful held-out evaluation claims.",
+    "Nominal Y-up from source camera frame, not gravity-calibrated.",
+    "No verified distortion/exposure/dynamic masks or original capture timestamps.",
+    "License terms not independently confirmed; no sample redistribution."
+  ]
+}
