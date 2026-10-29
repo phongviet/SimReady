@@ -18,7 +18,7 @@ exact tested package versions are recorded in `ENVIRONMENT.md` and the lockfiles
 ## Milestones
 
 - [x] **M0 complete locally:** repo bootstrap, typed versioned data/scene contracts,
-  camera math, analytic fixture, official real RGB-D import, frozen splits, tests,
+  camera math, analytic fixture, official synthetic RGB-D sample import, frozen splits, tests,
   frontend shell, CI configuration and documented acceptance.
 - [x] **M1 complete locally:** actual real TUM reconstruction, checkpoint/PLY,
   held-out RGB/depth rendering, isolated GPU runtime and CPU demo. See M1_CHECKLIST.md.
@@ -32,7 +32,12 @@ exact tested package versions are recorded in `ENVIRONMENT.md` and the lockfiles
 
 Detailed acceptance criteria: [M0 checklist](M0_CHECKLIST.md).
 
-## Verified commands and evidence
+Latest M0-only verification: [M0_REVERIFICATION.md](M0_REVERIFICATION.md).
+The foundation passed 101 targeted CPU tests, five frontend unit tests, build,
+lint/format and live dataset validation. Preexisting later milestone work was
+preserved. These checks do not establish M5 acceptance or hosted CI execution.
+
+## Historical M0 commands and evidence (source classification superseded above)
 
 | Command/check | Actual outcome |
 |---|---|

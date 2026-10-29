@@ -41,13 +41,14 @@ Further contract and data decisions will be recorded with implementation.
 Incremental verification: 54 CPU tests passed after implementing contracts,
 fixture generation and camera math. Final acceptance will be recorded separately.
 
-10. **Real sample:** use `SampleRedwoodRGBDImages` from Open3D's official release.
+10. **Official sample (initial real classification superseded by decision 18):**
+    use `SampleRedwoodRGBDImages` from Open3D's official release.
     It is only 3,772,513 compressed bytes and includes five posed, registered
     RGB-D pairs. Verify publisher MD5 during inspection and pin SHA-256 in the
     downloader. Use the documented `odometry.log` c2w path rather than guess a
     direction from the other trajectory file. Source calibration and association
     files are preserved. Details and original implementation links are in
-    `DATASET_PROTOCOL.md`. Real data was imported and tested locally.
+    `DATASET_PROTOCOL.md`. This import was tested locally, but is synthetic.
 11. **Reduced protocol:** use contiguous 2/1/1/1 train/validation/candidate/test
     blocks for the sample. Indices stand in for unavailable capture timestamps.
     Explicitly disclose near-neighbor overlap, supplied estimated poses and
@@ -162,3 +163,9 @@ fixture generation and camera math. Final acceptance will be recorded separately
     approval; historical scoped approvals remain inspectable/exportable. Export
     validates captured content/evidence and separates render/collision assets with
     complete payload digests and source attribution. No weights/accounts/DB exported.
+32. **M0-only re-verification:** the latest request is checked against M0's exact
+    definition of done. Preserve existing M1–M4 history and unfinished M5 changes;
+    do not silently reset or commit unrelated work. Record current targeted checks
+    separately from historical M0 evidence and correct misleading source labels.
+    The June–October author/committer date range already satisfies the requested
+    history range; use the actual October date for this documentation update.

@@ -1,5 +1,8 @@
 # Working agreement
 
+- For an M0-only request, verify that milestone and preserve any preexisting
+  later-milestone commits or unfinished changes. Do not include unrelated work
+  in its acceptance commit. Current verification is in `docs/M0_REVERIFICATION.md`.
 - Read `PLAN.md` as the specification. The user has now authorized completing the
   full project. Advance through M1–M6 with verified milestone gates; M5 research
   and M7 integrations retain the priorities/conditions in PLAN.md.
