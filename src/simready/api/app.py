@@ -3,14 +3,21 @@
 import logging
 import uuid
 from pathlib import Path
+from typing import Annotated
 
-from fastapi import FastAPI, Request
+from fastapi import Depends, FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
+from pydantic import Field
 
+from simready.data.schema import Contract
+from simready.evaluation.readiness import readiness
 from simready.evaluation.store import EvaluationRequest, EvaluationStore
+from simready.review.auth import AuthenticationError, AuthorizationError, AuthStore, Principal
+from simready.review.export import ExportStore
+from simready.review.workflow import ReviewRequest, SubmitRequest, Workflow
 from simready.scene.models import ObjectUpdate
 from simready.scene.store import SceneStore, VersionConflict
 from simready.simulation.models import ScenarioUpdate, SimulationRequest
@@ -18,19 +25,27 @@ from simready.simulation.store import SimulationStore
 from simready.storage import PROJECT_ROOT
 
 
+class ExportRequest(Contract):
+    version: int = Field(ge=1, strict=True)
+
+
 def create_app(root: Path | None = None) -> FastAPI:
     store = SceneStore(root or PROJECT_ROOT / "artifacts/studio")
     evaluations = EvaluationStore(store)
     simulations = SimulationStore(store)
+    auth, workflow, exports = AuthStore(store), Workflow(store), ExportStore(store)
     app = FastAPI(title="SimReady local studio", version="0.1.0")
     app.state.store = store
     app.state.evaluations = evaluations
     app.state.simulations = simulations
+    app.state.auth = auth
+    app.state.workflow = workflow
+    app.state.exports = exports
     app.add_middleware(
         CORSMiddleware,
         allow_origins=["http://127.0.0.1:5173", "http://localhost:5173"],
         allow_methods=["GET", "PUT", "POST"],
-        allow_headers=["Content-Type"],
+        allow_headers=["Content-Type", "Authorization"],
     )
 
     @app.middleware("http")
@@ -52,6 +67,31 @@ def create_app(root: Path | None = None) -> FastAPI:
                 }
             },
         )
+
+    @app.exception_handler(AuthenticationError)
+    async def unauthenticated(request: Request, exc: AuthenticationError):
+        response = error(request, 401, "authentication_required", str(exc))
+        response.headers["WWW-Authenticate"] = "Bearer"
+        return response
+
+    @app.exception_handler(AuthorizationError)
+    async def unauthorized(request: Request, exc: AuthorizationError):
+        return error(request, 403, "permission_denied", str(exc))
+
+    def current_user(request: Request) -> Principal:
+        return auth.authenticate(request.headers.get("Authorization"))
+
+    def builder(user: Annotated[Principal, Depends(current_user)]) -> Principal:
+        auth.require(user, "builder")
+        return user
+
+    def reviewer(user: Annotated[Principal, Depends(current_user)]) -> Principal:
+        auth.require(user, "reviewer")
+        return user
+
+    @app.get("/api/v1/auth/me")
+    def identity(user: Annotated[Principal, Depends(current_user)]):
+        return user.model_dump(mode="json")
 
     @app.exception_handler(VersionConflict)
     async def version_conflict(request: Request, exc: VersionConflict):
@@ -87,7 +127,7 @@ def create_app(root: Path | None = None) -> FastAPI:
         return {
             "status": "ok",
             "service": "SimReady local scene editor",
-            "scope": "loopback development; review authentication not implemented yet",
+            "scope": "loopback local accounts; scoped review only; not production IAM",
         }
 
     @app.get("/api/v1/scenes")
@@ -99,7 +139,7 @@ def create_app(root: Path | None = None) -> FastAPI:
         return store.get(scene_id)
 
     @app.put("/api/v1/scenes/{scene_id}/objects")
-    def objects(scene_id: str, change: ObjectUpdate):
+    def objects(scene_id: str, change: ObjectUpdate, user: Annotated[Principal, Depends(builder)]):
         return store.update_objects(scene_id, change)
 
     @app.get("/api/v1/scenes/{scene_id}/history")
@@ -116,7 +156,9 @@ def create_app(root: Path | None = None) -> FastAPI:
         return FileResponse(path, filename=path.name, headers={"Cache-Control": "no-cache"})
 
     @app.post("/api/v1/scenes/{scene_id}/evaluate", status_code=202)
-    def start_evaluation(scene_id: str, request: EvaluationRequest):
+    def start_evaluation(
+        scene_id: str, request: EvaluationRequest, user: Annotated[Principal, Depends(builder)]
+    ):
         return evaluations.enqueue(scene_id, request)
 
     @app.get("/api/v1/scenes/{scene_id}/jobs")
@@ -146,11 +188,15 @@ def create_app(root: Path | None = None) -> FastAPI:
         )
 
     @app.put("/api/v1/scenes/{scene_id}/scenarios")
-    def scenarios(scene_id: str, change: ScenarioUpdate):
+    def scenarios(
+        scene_id: str, change: ScenarioUpdate, user: Annotated[Principal, Depends(builder)]
+    ):
         return store.update_scenarios(scene_id, change)
 
     @app.post("/api/v1/scenes/{scene_id}/scenarios/run", status_code=201)
-    def run_scenario(scene_id: str, request: SimulationRequest):
+    def run_scenario(
+        scene_id: str, request: SimulationRequest, user: Annotated[Principal, Depends(builder)]
+    ):
         return simulations.run(scene_id, request.scenario_id, request.expected_version)
 
     @app.get("/api/v1/scenes/{scene_id}/simulations")
@@ -165,6 +211,35 @@ def create_app(root: Path | None = None) -> FastAPI:
     def simulation_asset(scene_id: str, run_id: str, name: str):
         path = simulations.asset(scene_id, run_id, name)
         return FileResponse(path, filename=path.name, content_disposition_type="inline")
+
+    @app.get("/api/v1/scenes/{scene_id}/readiness")
+    def scene_readiness(scene_id: str, version: int | None = None):
+        return readiness(store, scene_id, version)
+
+    @app.post("/api/v1/scenes/{scene_id}/submit")
+    def submit(scene_id: str, request: SubmitRequest, user: Annotated[Principal, Depends(builder)]):
+        return workflow.submit(scene_id, request, user)
+
+    @app.post("/api/v1/scenes/{scene_id}/review")
+    def review(
+        scene_id: str, request: ReviewRequest, user: Annotated[Principal, Depends(reviewer)]
+    ):
+        return workflow.decide(scene_id, request, user)
+
+    @app.get("/api/v1/scenes/{scene_id}/audit")
+    def audit(scene_id: str):
+        return workflow.records(scene_id)
+
+    @app.post("/api/v1/scenes/{scene_id}/export", status_code=201)
+    def export(
+        scene_id: str, request: ExportRequest, user: Annotated[Principal, Depends(current_user)]
+    ):
+        return exports.build(scene_id, request.version, user)
+
+    @app.get("/api/v1/scenes/{scene_id}/exports/{export_id}")
+    def export_asset(scene_id: str, export_id: str):
+        path = exports.asset(scene_id, export_id)
+        return FileResponse(path, filename=f"{scene_id}-reviewed.zip")
 
     build = PROJECT_ROOT / "frontend/dist"
     if build.is_dir():

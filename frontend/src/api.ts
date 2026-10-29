@@ -1,3 +1,5 @@
+import type { Readiness, AuditEvent } from "./review";
+import { accountToken, type Principal } from "./auth";
 import type {
   Scenario,
   SimulationRun,
@@ -23,7 +25,11 @@ export class ApiError extends Error {
   }
 }
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
-  const response = await fetch(`/api/v1${path}`, init);
+  const headers = new Headers(init?.headers);
+  const token = accountToken();
+  if (token && !headers.has("Authorization"))
+    headers.set("Authorization", "Bearer " + token);
+  const response = await fetch(`/api/v1${path}`, { ...init, headers });
   if (!response.ok) {
     const body = await response.json().catch(() => ({}));
     throw new ApiError(
@@ -35,6 +41,52 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   return response.json();
 }
 export const api = {
+  me: () => request<Principal>("/auth/me"),
+  signIn: (token: string) =>
+    request<Principal>("/auth/me", {
+      headers: { Authorization: "Bearer " + token },
+    }),
+  readiness: (id: string) =>
+    request<Readiness>(`/scenes/${encodeURIComponent(id)}/readiness`),
+  audit: (id: string) =>
+    request<AuditEvent[]>(`/scenes/${encodeURIComponent(id)}/audit`),
+  history: (id: string) =>
+    request<{ version: number; status: string; updated_at: string }[]>(
+      `/scenes/${encodeURIComponent(id)}/history`,
+    ),
+  submit: (scene: SceneState, value: object) =>
+    request<SceneState>(
+      `/scenes/${encodeURIComponent(scene.scene_id)}/submit`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ expected_version: scene.version, ...value }),
+      },
+    ),
+  review: (scene: SceneState, decision: "approve" | "reject", reason: string) =>
+    request<SceneState>(
+      `/scenes/${encodeURIComponent(scene.scene_id)}/review`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          expected_version: scene.version,
+          decision,
+          reason,
+        }),
+      },
+    ),
+  exportScene: (id: string, version: number) =>
+    request<{
+      export_id: string;
+      sha256: string;
+      bytes: number;
+      approved_version: number;
+    }>(`/scenes/${encodeURIComponent(id)}/export`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ version }),
+    }),
   saveScenarios: (scene: SceneState, scenarios: Scenario[]) =>
     request<SceneState>(
       `/scenes/${encodeURIComponent(scene.scene_id)}/scenarios`,

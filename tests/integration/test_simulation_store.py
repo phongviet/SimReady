@@ -1,16 +1,16 @@
 import json
 
 import pytest
-from fastapi.testclient import TestClient
 
 from simready.api.app import create_app
 from simready.scene.demo import seed_demo
+from tests.auth_helpers import authorized_client
 
 
 def test_saved_scenario_actual_map_replay_provenance_and_api_guards(tmp_path):
     app = create_app(tmp_path / "studio")
     state = seed_demo(app.state.store)
-    api = TestClient(app)
+    api = authorized_client(app)
     scenario = {
         "scenario_id": "virtual-route",
         "name": "Declared virtual floor demo",

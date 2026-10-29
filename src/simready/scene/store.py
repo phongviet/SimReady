@@ -92,6 +92,7 @@ class SceneStore:
             {
                 "version": json.loads(row[0])["version"],
                 "updated_at": json.loads(row[0])["updated_at"],
+                "status": json.loads(row[0])["status"],
             }
             for row in rows
         ]

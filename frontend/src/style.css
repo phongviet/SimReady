@@ -844,3 +844,123 @@ pre {
   width: 600px;
   image-rendering: pixelated;
 }
+
+.studio {
+  grid-template-rows: 72px auto minmax(calc(100vh - 128px), auto);
+}
+.account-bar {
+  grid-column: 1/-1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 9px 28px;
+  background: #1c2a20;
+  border-bottom: 1px solid #354638;
+}
+.account-bar label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.account-bar small {
+  color: #a2b5a7;
+}
+.account-bar input {
+  width: 265px;
+}
+.review-panel {
+  padding: 20px;
+  background: #17221b;
+  border: 1px solid #354b3c;
+  border-radius: 9px;
+}
+.review-panel details {
+  padding: 12px 0;
+  border-top: 1px solid #394d3e;
+}
+.review-panel table {
+  width: 100%;
+  font-size: 11px;
+  border-collapse: collapse;
+}
+.review-panel th,
+.review-panel td {
+  text-align: left;
+  padding: 6px;
+  border-bottom: 1px solid #344839;
+}
+.review-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 15px 0;
+  border: 0;
+}
+.review-fields label {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.review-fields input:not([type="checkbox"]),
+.review-fields select {
+  flex: 1;
+  min-width: 0;
+}
+.review-fields textarea {
+  width: 100%;
+  min-height: 90px;
+  background: #101a14;
+  color: #e2ebe4;
+  border: 1px solid #344638;
+  border-radius: 6px;
+  padding: 10px;
+  font: inherit;
+}
+.camera-scope {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.captured-review,
+.qa-flags {
+  padding: 15px;
+  background: #263c2c;
+  border: 1px solid #456148;
+  border-radius: 6px;
+}
+.qa-flags {
+  padding-left: 30px;
+}
+.qa-flags li {
+  margin: 8px 0;
+}
+.review-panel a {
+  color: #c8e69c;
+}
+.review-panel code,
+.audit-list small {
+  overflow-wrap: anywhere;
+}
+.audit-list article {
+  padding: 12px;
+  margin: 10px 0;
+  background: #1d3023;
+  border-left: 3px solid #9bb86e;
+}
+.audit-list p {
+  margin: 5px 0;
+}
+.qa-components {
+  color: #b5c8ba;
+}
+
+.library-filter {
+  display: flex;
+  gap: 5px;
+  margin: 12px 0;
+}
+.library-filter button {
+  font-size: 11px;
+  padding: 7px;
+}

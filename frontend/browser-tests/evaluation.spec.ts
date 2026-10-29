@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./helpers";
 
 test("measured explorer loads paired images, failure ranking and verified exports", async ({
   page,

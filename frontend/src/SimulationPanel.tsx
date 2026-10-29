@@ -17,10 +17,12 @@ export function SimulationPanel({
   scene,
   onScene,
   unsaved,
+  editable = true,
 }: {
   scene: SceneState;
   onScene: (scene: SceneState) => void;
   unsaved: boolean;
+  editable?: boolean;
 }) {
   const [config, setConfig] = useState<Scenario>(
     scene.scenarios?.[0] || defaultScenario(scene),
@@ -192,7 +194,10 @@ export function SimulationPanel({
       )}
       <details open>
         <summary>Scenario editor · all distances in meters</summary>
-        <fieldset disabled={busy || unsaved} className="scenario-fields">
+        <fieldset
+          disabled={busy || unsaved || !editable}
+          className="scenario-fields"
+        >
           <label>
             Saved scenario
             <select
@@ -287,14 +292,14 @@ export function SimulationPanel({
         <div className="report-downloads">
           <button
             onClick={() => void save()}
-            disabled={busy || unsaved || !changed}
+            disabled={busy || unsaved || !editable || !changed}
           >
             Save scenario revision
           </button>
           <button
             className="primary"
             onClick={() => void run()}
-            disabled={busy || unsaved || changed}
+            disabled={busy || unsaved || !editable || changed}
           >
             {busy ? "Working…" : "Run navigation"}
           </button>

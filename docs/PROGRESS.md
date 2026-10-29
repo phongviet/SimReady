@@ -264,3 +264,23 @@ See SIMULATION_PROTOCOL.md and evidence/m4-navigation-acceptance.json.
 This satisfies the navigation comparison vertical slice, not full M4 acceptance.
 Readiness, HTTP role enforcement, scoped decisions/audit and reviewed export are
 still pending. Current full-project goal remains active.
+
+## M4 readiness/review implementation, real acceptance pending
+
+Measured camera novelty, mesh topology/surface diagnostics, actual perception
+flags and exact-revision navigation feed separate readiness components. There is
+no automatic safety/quality certificate. Authenticated server-assigned local roles
+now gate all HTTP mutations. Scope restricts measured camera IDs and tested map
+bounds/expected navigation result. Submission/decisions create immutable revisions
+and transactional append-only audit; self-review after role changes is forbidden.
+Later edits clear current approval, while old decisions remain inspectable.
+Reviewed ZIPs preserve source/content/evidence hashes, separate splats/colliders,
+and exclude tokens/DB/weights. QA retains its original pre-decision bytes.
+
+Verification: full CPU/geometry suite157passed,2opt-in GPU skips;5frontend unit
+and6real browser tests passed. Tests cover role/header spoofing, anonymous and
+wrong-role mutations, self-review after role changes, concurrent decisions,
+tampered evidence, contradictory declared outcomes, exported payload hashes,
+immutable history and edit invalidation. Full real-TUM review/export acceptance
+is the remaining M4 gate. The opt-in authenticated GPU queue regression
+separately passed1test with actual rendering/detection/LPIPS.

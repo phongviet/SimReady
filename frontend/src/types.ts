@@ -1,3 +1,4 @@
+import type { ReviewRecord } from "./review";
 import type { Scenario } from "./simulation";
 export type Vec3 = [number, number, number];
 export type Quaternion = [number, number, number, number];
@@ -25,6 +26,7 @@ export interface SceneState {
   name: string;
   version: number;
   status: string;
+  review?: ReviewRecord;
   objects: ProxyObject[];
   scenarios?: Scenario[];
   updated_at: string;

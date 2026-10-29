@@ -2,7 +2,8 @@
 
 - Gaussian training/rendering, independent TSDF and persistent proxy editing are
   verified locally, along with frozen-view perception metrics on 18 real TUM
-  test views. Simulation, approval workflow and recapture remain unimplemented.
+  test views. Navigation and scoped local review/export are implemented; M4 real-scene
+  acceptance is in progress. Recapture research remains unimplemented.
 - The short real baseline is blurry and has zero rendered detector predictions
   at the fixed >=0.5 threshold, versus 48 summed per-view real predictions. This
   exposes a failure, not detection accuracy. No annotated GT boxes are available.
@@ -11,7 +12,10 @@
   splat/mesh occlusion and edited-scene perception realism are unverified.
 - TSDF is an incomplete observed surface proxy, not necessarily watertight or
   physically exact. Triangle/box contact does not certify solid occupancy.
-- The API binds to loopback and has no review/authentication endpoints yet.
+- The API binds to loopback. Mutation endpoints require server-assigned local
+  Builder/Reviewer roles; separate opaque tokens are bootstrap fixtures. The OS
+  owner controls both accounts/database. This is not production IAM or independent
+  organizational/human review; automated acceptance decisions are labeled as such.
 - Analytic fixture generation, official Open3D Redwood and TUM fr1 desk formats
   are implemented. Other captures, general video and pose recovery are unsupported.
 - Redwood is synthetic ICL-NUIM; the initial M0 real label was wrong and corrected.

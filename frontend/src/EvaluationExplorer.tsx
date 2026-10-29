@@ -10,7 +10,13 @@ import {
   type EvaluationJob,
 } from "./evaluation";
 
-export function EvaluationExplorer({ scene }: { scene: SceneState }) {
+export function EvaluationExplorer({
+  scene,
+  canEvaluate = false,
+}: {
+  scene: SceneState;
+  canEvaluate?: boolean;
+}) {
   const [reports, setReports] = useState<EvaluationReport[]>([]);
   const [run, setRun] = useState("");
   const [views, setViews] = useState<EvaluationView[]>([]);
@@ -112,7 +118,10 @@ export function EvaluationExplorer({ scene }: { scene: SceneState }) {
           className="primary"
           onClick={() => void evaluate()}
           disabled={
-            launching || job?.status === "queued" || job?.status === "running"
+            !canEvaluate ||
+            launching ||
+            job?.status === "queued" ||
+            job?.status === "running"
           }
         >
           {launching ? "Submitting…" : "Evaluate frozen test views"}

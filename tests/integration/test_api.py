@@ -1,14 +1,14 @@
 import numpy as np
-from fastapi.testclient import TestClient
 
 from simready.api.app import create_app
 from simready.scene.demo import seed_demo
+from tests.auth_helpers import authorized_client
 
 
 def client(tmp_path):
     app = create_app(tmp_path / "studio")
     seed_demo(app.state.store)
-    return TestClient(app)
+    return authorized_client(app)
 
 
 def test_api_edit_reload_history_and_version_conflict(tmp_path):

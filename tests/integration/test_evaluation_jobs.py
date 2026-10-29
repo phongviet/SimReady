@@ -9,6 +9,7 @@ from simready.evaluation.store import EvaluationRequest
 from simready.reconstruction.gsplat import GsplatBackend
 from simready.scene.demo import seed_demo
 from simready.scene.store import VersionConflict
+from tests.auth_helpers import authorized_client
 
 
 def test_persistent_job_failure_and_request_guards(tmp_path, monkeypatch):
@@ -17,7 +18,7 @@ def test_persistent_job_failure_and_request_guards(tmp_path, monkeypatch):
     store = app.state.evaluations
     # Intercept only the launcher: execute the queue synchronously with an injected backend failure.
     monkeypatch.setattr("simready.evaluation.store.subprocess.Popen", lambda *args, **kwargs: None)
-    api = TestClient(app)
+    api = authorized_client(app)
     queued = api.post("/api/v1/scenes/analytic-demo/evaluate", json={"expected_version": 1})
     assert queued.status_code == 202
     job_id = queued.json()["job_id"]

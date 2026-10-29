@@ -149,3 +149,16 @@ fixture generation and camera math. Final acceptance will be recorded separately
     A single local comparison against the corrected walk reference returned
     identical14,088,647,054bytes in0.496s versus2.451s. This is a diagnostic,
     not a universal speedup/API benchmark. See evidence/m4-storage-scan.json.
+29. **M4 component bindings:** base-only evaluation may be reused when the model
+    and frozen split are unchanged; object/scenario content and navigation must
+    match the exact submitted source revision. Capture QA and content digests,
+    rather than recomputing an approval from whichever report is newest.
+30. **M4 local permissions:** opaque random bearer tokens with server-assigned
+    Builder/Reviewer roles; separate identities and explicit self-review checks
+    survive a role change. Private0600 credential bootstrap, no token HTTP endpoint.
+    Reads remain local/read-only; mutation endpoints require roles. Not production IAM.
+31. **M4 workflow/export:** submission and decisions create new immutable revisions
+    with transactional append-only hash-chained audit. Edits invalidate current
+    approval; historical scoped approvals remain inspectable/exportable. Export
+    validates captured content/evidence and separates render/collision assets with
+    complete payload digests and source attribution. No weights/accounts/DB exported.

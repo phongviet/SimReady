@@ -17,6 +17,7 @@ from simready.evaluation.store import EvaluationStore
 from simready.geometry.tsdf import build_tsdf
 from simready.reconstruction.contracts import ReconstructionConfig
 from simready.reconstruction.gsplat import GsplatBackend, cpu_smoke, validate_artifact
+from simready.review.auth import AuthStore
 from simready.scene.demo import seed_demo
 from simready.scene.store import SceneStore
 from simready.simulation.models import Scenario, ScenarioUpdate
@@ -97,6 +98,9 @@ def main(argv: list[str] | None = None) -> int:
             item.add_argument("--config", type=Path, required=True)
         if name == "run":
             item.add_argument("--scenario", required=True)
+    auth = commands.add_parser("auth").add_subparsers(dest="action", required=True)
+    item = auth.add_parser("init")
+    item.add_argument("--root", type=Path, default=PROJECT_ROOT / "artifacts/studio")
     api = commands.add_parser("api").add_subparsers(dest="action", required=True)
     item = api.add_parser("serve")
     item.add_argument("--root", type=Path, default=PROJECT_ROOT / "artifacts/studio")
@@ -110,6 +114,11 @@ def main(argv: list[str] | None = None) -> int:
                 "used_bytes": check_budget(root=args.root),
                 "limit_bytes": BUDGET_BYTES,
             }
+        elif args.command == "auth":
+            result = {
+                "credentials_file": str(AuthStore(SceneStore(args.root)).bootstrap()),
+                "scope": "local separate Builder/Reviewer tokens; keep this file private",
+            }
         elif args.command == "api":
             import uvicorn
 
@@ -117,6 +126,7 @@ def main(argv: list[str] | None = None) -> int:
 
             if args.demo:
                 seed_demo(SceneStore(args.root))
+                AuthStore(SceneStore(args.root)).bootstrap()
             uvicorn.run(create_app(args.root), host="127.0.0.1", port=args.port)
             return 0
         elif args.command == "sim":

@@ -7,12 +7,12 @@ import shutil
 from pathlib import Path
 
 import pytest
-from fastapi.testclient import TestClient
 
 from simready.api.app import create_app
 from simready.data.dataset import sha256_file
 from simready.evaluation.runner import validate_evaluation
 from simready.scene.demo import seed_demo
+from tests.auth_helpers import authorized_client
 
 FIXTURE = Path(__file__).resolve().parents[2] / "src/simready/demo/analytic-plane/evaluation"
 
@@ -49,7 +49,7 @@ def test_measured_report_package_and_export_consistency(tmp_path):
 def test_report_api_assets_hashes_scene_binding_and_cpu_seed(tmp_path):
     app = create_app(tmp_path / "studio")
     state = seed_demo(app.state.store)
-    api = TestClient(app)
+    api = authorized_client(app)
     reports = api.get("/api/v1/scenes/analytic-demo/reports").json()
     assert len(reports) == 1 and reports[0]["scene_version"] == state["version"]
     base = "/api/v1/scenes/analytic-demo/reports/bundled-test-1"

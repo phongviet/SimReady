@@ -4,11 +4,11 @@ import os
 import time
 
 import pytest
-from fastapi.testclient import TestClient
 
 from simready.api.app import create_app
 from simready.scene.demo import seed_demo
 from simready.scene.models import ObjectUpdate
+from tests.auth_helpers import authorized_client
 
 
 @pytest.mark.gpu
@@ -18,7 +18,7 @@ from simready.scene.models import ObjectUpdate
 def test_actual_queued_evaluation_and_revision_binding(tmp_path):
     app = create_app(tmp_path / "studio")
     seed_demo(app.state.store)
-    api = TestClient(app)
+    api = authorized_client(app)
     response = api.post("/api/v1/scenes/analytic-demo/evaluate", json={"expected_version": 1})
     assert response.status_code == 202
     job_id = response.json()["job_id"]

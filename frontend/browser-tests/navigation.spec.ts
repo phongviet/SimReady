@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./helpers";
 
 test("scenario save, actual metric navigation, 3D replay and hidden collider failure", async ({
   page,

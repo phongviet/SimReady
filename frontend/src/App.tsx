@@ -1,3 +1,6 @@
+import { AccountBar } from "./AccountBar";
+import type { Principal } from "./auth";
+import { ReviewPanel } from "./ReviewPanel";
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { api, ApiError } from "./api";
@@ -12,6 +15,11 @@ const Viewer = lazy(() =>
 );
 
 export function App() {
+  const [user, setUser] = useState<Principal | null>(null);
+  const canEdit = user?.role === "builder";
+  const [libraryFilter, setLibraryFilter] = useState<"all" | "submitted">(
+    "all",
+  );
   const [scenes, setScenes] = useState<SceneState[]>([]);
   const [scene, setScene] = useState<SceneState | null>(null);
   const [objects, setObjects] = useState<ProxyObject[]>([]);
@@ -21,7 +29,7 @@ export function App() {
   const [error, setError] = useState(""),
     [notice, setNotice] = useState("");
   const [view, setView] = useState<
-    "3d" | "saved" | "evaluation" | "simulation"
+    "3d" | "saved" | "evaluation" | "simulation" | "review"
   >("3d");
   const [cameraIndex, setCameraIndex] = useState(0),
     [collision, setCollision] = useState(false);
@@ -59,7 +67,7 @@ export function App() {
     try {
       accept(await api.scene(id));
       setNotice("");
-      setView("3d");
+      setView(libraryFilter === "submitted" ? "review" : "3d");
     } catch (reason) {
       setError(String(reason));
     }
@@ -193,26 +201,56 @@ export function App() {
         <span className="top-caption">Reconstruct. Inspect. Edit.</span>
         <span className="milestone-badge">M3 · Validation workspace</span>
       </header>
+      <AccountBar user={user} onUser={setUser} />
       <aside className="library">
         <div className="section-label">
           SCENE LIBRARY <span>{scenes.length}</span>
         </div>
-        {scenes.map((value) => (
+        <div className="library-filter">
+          <button onClick={() => setLibraryFilter("all")}>All scenes</button>
           <button
-            className={`scene-card ${scene?.scene_id === value.scene_id ? "active" : ""}`}
-            key={value.scene_id}
-            onClick={() => void choose(value.scene_id)}
+            onClick={() => {
+              if (dirty) {
+                setError("Save/discard edits before opening the review queue.");
+                return;
+              }
+              void api
+                .list()
+                .then((values) => {
+                  setScenes(values);
+                  setLibraryFilter("submitted");
+                  const next = values.find((s) => s.status === "submitted");
+                  if (next) {
+                    accept(next);
+                    setView("review");
+                  } else setNotice("No scenes are submitted for review.");
+                })
+                .catch((reason) => setError(String(reason)));
+            }}
           >
-            <span className="scene-symbol">▧</span>
-            <strong>{value.name}</strong>
-            <small>
-              {value.base.dataset_kind === "real"
-                ? "REAL CAPTURE"
-                : "SYNTHETIC"}{" "}
-              · v{value.version}
-            </small>
+            Review queue
           </button>
-        ))}
+        </div>
+        {scenes
+          .filter(
+            (value) => libraryFilter === "all" || value.status === "submitted",
+          )
+          .map((value) => (
+            <button
+              className={`scene-card ${scene?.scene_id === value.scene_id ? "active" : ""}`}
+              key={value.scene_id}
+              onClick={() => void choose(value.scene_id)}
+            >
+              <span className="scene-symbol">▧</span>
+              <strong>{value.name}</strong>
+              <small>
+                {value.base.dataset_kind === "real"
+                  ? "REAL CAPTURE"
+                  : "SYNTHETIC"}{" "}
+                · v{value.version} · {value.status}
+              </small>
+            </button>
+          ))}
         {!scenes.length && (
           <p className="empty-copy">
             Connect to the local API to load a registered scene. The offline
@@ -235,7 +273,9 @@ export function App() {
             <h1>{scene?.name || "Connect your local studio"}</h1>
           </div>
           {scene && (
-            <span className="draft-badge">Draft · v{scene.version}</span>
+            <button className="draft-badge" onClick={() => setView("review")}>
+              {scene.status} · v{scene.version} · review ↗
+            </button>
           )}
         </div>
         {error && (
@@ -291,14 +331,20 @@ export function App() {
                 Navigation
               </button>
               <button
+                className={view === "review" ? "selected" : ""}
+                onClick={() => setView("review")}
+              >
+                Readiness / review
+              </button>
+              <button
                 onClick={() => add("box")}
-                disabled={busy || objects.length >= 128}
+                disabled={busy || !canEdit || objects.length >= 128}
               >
                 ＋ Box
               </button>
               <button
                 onClick={() => add("barrier")}
-                disabled={busy || objects.length >= 128}
+                disabled={busy || !canEdit || objects.length >= 128}
               >
                 ＋ Barrier
               </button>
@@ -312,10 +358,10 @@ export function App() {
                 Collision proxy
               </label>
             </div>
-            {view === "simulation" ? (
-              <SimulationPanel
-                key={scene.scene_id}
+            {view === "review" ? (
+              <ReviewPanel
                 scene={scene}
+                user={user}
                 unsaved={dirty}
                 onScene={(value) => {
                   accept(value);
@@ -326,8 +372,27 @@ export function App() {
                   );
                 }}
               />
+            ) : view === "simulation" ? (
+              <SimulationPanel
+                key={scene.scene_id}
+                scene={scene}
+                unsaved={dirty}
+                editable={canEdit}
+                onScene={(value) => {
+                  accept(value);
+                  setScenes((values) =>
+                    values.map((s) =>
+                      s.scene_id === value.scene_id ? value : s,
+                    ),
+                  );
+                }}
+              />
             ) : view === "evaluation" ? (
-              <EvaluationExplorer key={scene.scene_id} scene={scene} />
+              <EvaluationExplorer
+                key={scene.scene_id}
+                scene={scene}
+                canEvaluate={canEdit}
+              />
             ) : (
               <>
                 <div className="preview-banner">
@@ -348,7 +413,7 @@ export function App() {
                         selected={selected}
                         showCollision={collision}
                         mode={mode}
-                        editable={!busy}
+                        editable={!busy && canEdit}
                         cameraIndex={cameraIndex}
                         onSpawnPosition={(value) => {
                           placement.current = value;
@@ -443,7 +508,7 @@ export function App() {
             The base splats stay immutable.
           </p>
         ) : (
-          <fieldset disabled={busy} className="object-fields">
+          <fieldset disabled={busy || !canEdit} className="object-fields">
             <label className="name-label">
               Object name
               <input
@@ -520,7 +585,7 @@ export function App() {
           </span>
           <button
             className="primary"
-            disabled={!scene || !dirty || busy}
+            disabled={!scene || !dirty || busy || !canEdit}
             onClick={() => void save()}
           >
             {busy ? "Saving…" : "Save revision"}
