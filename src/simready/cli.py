@@ -106,9 +106,24 @@ def main(argv: list[str] | None = None) -> int:
     item.add_argument("--root", type=Path, default=PROJECT_ROOT / "artifacts/studio")
     item.add_argument("--port", type=int, default=8000)
     item.add_argument("--demo", action="store_true")
+    research = commands.add_parser("research").add_subparsers(dest="action", required=True)
+    item = research.add_parser("prepare", help="freeze study protocol and withhold observations")
+    item.add_argument("--config", type=Path, default=PROJECT_ROOT / "configs/recapture.json")
+    item.add_argument("--out", type=Path, required=True)
+    item = research.add_parser("run", help="resume verified sequential acquisition/evaluation")
+    item.add_argument("--study", type=Path, required=True)
+    item.add_argument("--phase", choices=["acquire", "evaluate", "all"], default="all")
     args = parser.parse_args(argv)
     try:
-        if args.command == "storage":
+        if args.command == "research":
+            from simready.research.runner import prepare, run
+
+            result = (
+                {"study": str(prepare(args.config, args.out))}
+                if args.action == "prepare"
+                else run(args.study, args.phase)
+            )
+        elif args.command == "storage":
             result = {
                 "root": str(args.root.resolve()),
                 "used_bytes": check_budget(root=args.root),
