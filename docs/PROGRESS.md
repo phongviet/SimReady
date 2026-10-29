@@ -388,3 +388,17 @@ different saved render digest is rejected.12targeted evaluation/resume tests
 passed, and all15historical study evaluations passed the stronger read-only
 binding check without rerunning inference. Timestamped atomic release completion
 and partial-operation recovery remain pending, alongside the labeled E1 companion.
+
+Release hardening now records timestamped started/resumed/failed/completed events
+using serialized atomic ledger replacement. Completion follows verification;
+candidate datasets left behind by interrupted completion are validated against
+the sealed frames, partitions and calibration before reuse. Test release retries
+verify existing linked bytes. Fault tests cover process death after candidate
+materialization, failed partial test linking and failed ledger replacement;
+9targeted research tests passed, with4gate/atomic tests repeated after stricter
+metadata validation. Historical TUM outputs/ledger remain unchanged.
+
+The remaining labeled-object E1 gap now has a pre-measurement companion protocol
+in refine-logs/SUPPLEMENTAL_GT_PLAN.md. It uses authored procedural geometry for
+truth, a genuine learned reconstruction and the unchanged detector; no synthetic
+accuracy result is claimed yet. M6 shipping remains open.

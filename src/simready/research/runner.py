@@ -408,14 +408,13 @@ def run(study: Path, phase: str = "all") -> dict:
             datasets = {f"base-s{seed}": base for seed in config.seeds}
             for row in seal.acquisitions:
                 dataset = study / "datasets" / row.key
-                if not dataset.exists():
-                    create_dataset(
-                        study,
-                        dataset,
-                        list(row.selected_ids),
-                        "tum_m5_" + row.key.replace("-", "_"),
-                        row.key,
-                    )
+                create_dataset(
+                    study,
+                    dataset,
+                    list(row.selected_ids),
+                    "tum_m5_" + row.key.replace("-", "_"),
+                    row.key,
+                )
                 _, _, partitions = load_records(dataset, ("train", "validation"))
                 if set(partitions.train) != set(curation["partitions"]["train"]) | set(
                     row.selected_ids

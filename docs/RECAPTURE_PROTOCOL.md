@@ -55,6 +55,11 @@ M3's test views were already inspected. The new observations are withheld, but
 the same capture and nearby previously seen views remain a strong limitation.
 This is not an independent scene or population-level blind benchmark.
 
+Future runs record atomic timestamped release start/resume/failure/completion
+events. An interrupted candidate materialization is reused only after sealed
+metadata and allowed pixels validate; test links are hash-checked before completion.
+The historical6947fb8study retains its original ledger and audit limitations.
+
 The curator copies/hashes opaque bytes into `vault/`; learner directories contain
 only allowed observations. Training reads training RGB-D; camera rendering reads
 metadata only. Validation reads its16references; candidate features use public

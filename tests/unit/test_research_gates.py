@@ -1,5 +1,6 @@
 """Read-boundary tests use analytic fixtures; numbers here are not experiment results."""
 
+import json
 import shutil
 from pathlib import Path
 
@@ -11,6 +12,7 @@ from pydantic import ValidationError
 from simready.data.dataset import sha256_file, validate_scene, write_json
 from simready.reconstruction.contracts import ReconstructionConfig
 from simready.reconstruction.gsplat import load_records, prepare_training
+from simready.research import data as research_data
 from simready.research.data import create_dataset, release_test
 from simready.research.selection import (
     CandidateFeature,
@@ -93,7 +95,9 @@ def test_selector_contract_rejects_ground_truth_channels_and_handles_constant_sc
     ) == ["b", "a"]
 
 
-def test_observations_cannot_be_materialized_without_complete_matching_seal(scene, tmp_path):
+def test_observations_cannot_be_materialized_without_complete_matching_seal(
+    scene, tmp_path, monkeypatch
+):
     manifest, frames, splits = load_records(scene)
     study = tmp_path / "study"
     study.mkdir()
@@ -161,7 +165,23 @@ def test_observations_cannot_be_materialized_without_complete_matching_seal(scen
     write_json(study / "selections-sealed.json", seal)
     (study / "selections-sealed.sha256").write_text(sha256_file(study / "selections-sealed.json"))
     output = tmp_path / "allowed"
+    append = research_data.append_access
+
+    def crash_before_completion(study, phase, ids, **details):
+        if phase == "candidate_release" and details.get("status") == "completed":
+            raise SystemExit("injected process death after dataset creation")
+        return append(study, phase, ids, **details)
+
+    monkeypatch.setattr(research_data, "append_access", crash_before_completion)
+    with pytest.raises(SystemExit):
+        create_dataset(study, output, selected, "variant", "risk-s42")
+    assert output.is_dir()
+    monkeypatch.setattr(research_data, "append_access", append)
     create_dataset(study, output, selected, "variant", "risk-s42")
+    events = json.loads((study / "access-ledger.json").read_text())["events"]
+    assert [e["status"] for e in events] == ["started", "resumed", "completed"]
+    assert len({e["operation_id"] for e in events}) == 1
+    assert all(e["at"] for e in events)
     _, _, resulting = load_records(output, ("train", "validation"))
     assert set(resulting.train) == set(partitions["train"] + selected)
     for frame in frames:
@@ -170,7 +190,27 @@ def test_observations_cannot_be_materialized_without_complete_matching_seal(scen
             assert not (output / frame.depth_path).exists()
     with pytest.raises(ValueError, match="missing file"):
         validate_scene(output)
+    link = research_data.os.link
+    attempts = 0
+
+    def fail_during_link(source, target):
+        nonlocal attempts
+        attempts += 1
+        if attempts == 2:
+            raise OSError("injected interrupted file linking")
+        return link(source, target)
+
+    monkeypatch.setattr(research_data.os, "link", fail_during_link)
+    with pytest.raises(OSError, match="interrupted"):
+        release_test(study, output)
+    monkeypatch.setattr(research_data.os, "link", link)
+    events = json.loads((study / "access-ledger.json").read_text())["events"]
+    assert events[-1]["status"] == "failed"
     release_test(study, output)
+    assert (
+        json.loads((study / "access-ledger.json").read_text())["events"][-1]["status"]
+        == "completed"
+    )
     load_records(output, ("test",))
     for frame in frames:
         if frame.frame_id in resulting.candidate:

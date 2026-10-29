@@ -1,9 +1,14 @@
 """Curator/learner separation: withhold observations until immutable selection seals."""
 
+import fcntl
 import json
 import os
 import shutil
 import tarfile
+import tempfile
+import uuid
+from contextlib import contextmanager
+from datetime import UTC, datetime
 from pathlib import Path
 
 import numpy as np
@@ -191,7 +196,7 @@ def curate(source: Path, archive: Path, output: Path, protocol: dict) -> Path:
     return output
 
 
-def create_dataset(
+def _create_dataset(
     study: Path, output: Path, selected: list[str], scene_id: str, selection_key: str | None = None
 ) -> Path:
     curation = json.loads((study / "curation.json").read_text())
@@ -222,21 +227,104 @@ def create_dataset(
                     os.link(local_file(study / "vault", name), stage / name)
         metadata = curation["metadata"] | {"scene_id": scene_id}
         finalize_dataset(stage, metadata, frames, partitions=partitions, observation_ids=allowed)
-    if selected:
-        append_access(
-            study,
-            "candidate_release",
-            selected,
-            selection_key=selection_key,
-            selection_seal_sha256=sha256_file(study / "selections-sealed.json"),
-        )
     return output
 
 
 def append_access(study: Path, phase: str, ids: list[str], **details) -> None:
-    ledger = json.loads((study / "access-ledger.json").read_text())
-    ledger["events"].append({"phase": phase, "ids": ids, **details})
-    write_json(study / "access-ledger.json", ledger)
+    with (study / "access-ledger.lock").open("a") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        ledger = json.loads((study / "access-ledger.json").read_text())
+        ledger["events"].append(
+            {"phase": phase, "ids": ids, "at": datetime.now(UTC).isoformat(), **details}
+        )
+        temporary = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                mode="w", dir=study, prefix=".ledger-", delete=False
+            ) as stream:
+                temporary = Path(stream.name)
+                json.dump(ledger, stream, indent=2, sort_keys=True, allow_nan=False)
+                stream.write("\n")
+                stream.flush()
+                os.fsync(stream.fileno())
+            os.replace(temporary, study / "access-ledger.json")
+        finally:
+            if temporary is not None:
+                temporary.unlink(missing_ok=True)
+
+
+@contextmanager
+def release_operation(study: Path, phase: str, ids: list[str], **details):
+    """Resume interrupted releases; completion is written only after verification."""
+    key = json_digest({"phase": phase, "ids": ids, **details})
+    events = json.loads((study / "access-ledger.json").read_text())["events"]
+    terminal = {e.get("operation_id") for e in events if e.get("status") in ("completed", "failed")}
+    pending = [
+        e for e in events if e.get("operation_key") == key and e.get("operation_id") not in terminal
+    ]
+    operation_id = pending[-1]["operation_id"] if pending else uuid.uuid4().hex
+    context = details | {"operation_key": key, "operation_id": operation_id}
+    append_access(study, phase, ids, status="resumed" if pending else "started", **context)
+    receipt = {}
+    try:
+        yield receipt
+    except Exception as exc:
+        append_access(study, phase, ids, status="failed", error=str(exc), **context)
+        raise
+    else:
+        append_access(study, phase, ids, status="completed", **(context | receipt))
+
+
+def create_dataset(
+    study: Path, output: Path, selected: list[str], scene_id: str, selection_key: str | None = None
+) -> Path:
+    if not selected:
+        return _create_dataset(study, output, selected, scene_id, selection_key)
+    seal = validate_seal(study)
+    row = next((r for r in seal.acquisitions if r.key == selection_key), None)
+    if row is None or list(row.selected_ids) != selected:
+        raise ValueError("released observations must exactly match the named sealed acquisition")
+    with release_operation(
+        study,
+        "candidate_release",
+        selected,
+        selection_key=selection_key,
+        dataset=str(output.absolute()),
+        selection_seal_sha256=sha256_file(study / "selections-sealed.json"),
+    ) as receipt:
+        if output.exists():
+            manifest, frames, splits = load_records(output, ("train", "validation"))
+            curation = json.loads((study / "curation.json").read_text())
+            partitions = curation["partitions"]
+            actual_metadata = manifest.model_dump(
+                mode="json",
+                exclude={
+                    "schema_version",
+                    "world_units",
+                    "world_frame",
+                    "camera_axes",
+                    "frames_sha256",
+                    "split_sha256",
+                },
+            )
+            if (
+                actual_metadata != curation["metadata"] | {"scene_id": scene_id}
+                or [f.model_dump(mode="json") for f in frames] != curation["frames"]
+                or set(splits.train) != set(partitions["train"]) | set(selected)
+                or set(splits.validation) != set(partitions["validation"])
+                or set(splits.test) != set(partitions["test"])
+                or set(splits.candidate) != set(partitions["candidate"]) - set(selected)
+            ):
+                raise ValueError("existing acquisition dataset differs from sealed inputs")
+            for frame in frames:
+                if frame.frame_id in splits.candidate and any(
+                    (output / getattr(frame, c + "_path")).exists() for c in ("rgb", "depth")
+                ):
+                    raise ValueError("existing acquisition exposes unselected candidate pixels")
+        else:
+            _create_dataset(study, output, selected, scene_id, selection_key)
+        receipt["dataset_manifest_sha256"] = sha256_file(output / "manifest.json")
+    return output
 
 
 def release_test(study: Path, dataset: Path) -> None:
@@ -254,19 +342,19 @@ def release_test(study: Path, dataset: Path) -> None:
         or (selected and not any(selected == set(row.selected_ids) for row in seal.acquisitions))
     ):
         raise ValueError("test release dataset differs from the frozen curation/acquisitions")
-    append_access(
+    with release_operation(
         study,
         "test_release",
         list(splits.test),
         dataset_manifest_sha256=sha256_file(dataset / "manifest.json"),
         selection_seal_sha256=sha256_file(study / "selections-sealed.json"),
-    )
-    for frame in frames:
-        if frame.frame_id in splits.test:
-            for channel in ("rgb", "depth"):
-                name = getattr(frame, channel + "_path")
-                target = dataset / name
-                if not target.exists():
-                    os.link(local_file(study / "vault", name), target)
-                if sha256_file(target) != getattr(frame, channel + "_sha256"):
-                    raise ValueError("released test content differs from frozen digest")
+    ):
+        for frame in frames:
+            if frame.frame_id in splits.test:
+                for channel in ("rgb", "depth"):
+                    name = getattr(frame, channel + "_path")
+                    target = dataset / name
+                    if not target.exists():
+                        os.link(local_file(study / "vault", name), target)
+                    if sha256_file(target) != getattr(frame, channel + "_sha256"):
+                        raise ValueError("released test content differs from frozen digest")

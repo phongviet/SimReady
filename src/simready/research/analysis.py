@@ -172,7 +172,11 @@ def inspect(study: Path) -> dict:
         all(i > seal_index for i, p in enumerate(phases) if p.endswith("release")),
         "release recorded before all selections",
     )
-    releases = {e["selection_key"]: e["ids"] for e in ledger if e["phase"] == "candidate_release"}
+    releases = {
+        e["selection_key"]: e["ids"]
+        for e in ledger
+        if e["phase"] == "candidate_release" and e.get("status", "completed") == "completed"
+    }
     require(releases == {r.key: list(r.selected_ids) for r in seal.acquisitions}, "release matrix")
     _, frames, partition = load_records(study / "base-dataset", ())
     frame_map = {f.frame_id: f for f in frames}

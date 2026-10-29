@@ -14,7 +14,7 @@
 - [x] Confirm total storage below 30,000,000,000 bytes.
 - [ ] Controlled labeled-object E1 companion: true errors and agreement-versus-accuracy.
 - [x] Recovered evaluations bind exact reference records and render-index hashes.
-- [ ] Atomic timestamped release-ledger completion and partial-operation recovery.
+- [x] Atomic timestamped release-ledger completion and partial-operation recovery.
 
 Primary case study verified: all45actual stages completed from clean6947fb8;
 analysis from clean772e055. Fresh audit WARN, raw evidence pass, same-family
