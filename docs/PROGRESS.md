@@ -250,3 +250,17 @@ Local opaque-token account foundations have two passing unit tests, but are not
 yet wired into HTTP/UI permissions. Scoped submission/review, coverage/readiness
 reports, audit and reviewed exports remain unimplemented. Do not treat M4 as
 complete or the current local API as authenticated.
+
+### M4 real navigation regression verified
+
+From clean committed source1afbb60, `scripts/run_navigation_layouts.py` created
+`artifacts/m4-navigation-1` and ran the pinned real-TUM coarse-floor scenario.
+Baseline: route/travel1.05m, simulated7s, collisions0. Inserted0.15m box: detour
+1.15m, simulated7.6667s, collisions0. Inserted0.8m barrier: no route, null planned
+length, zero travel/time/collisions. All947support and5269unknown floor cells
+remain explicit. Permitted robot-center cells125/83/68. Inputs and all run asset
+hashes verified; manifests record clean source and immutable versions3/4/5.
+See SIMULATION_PROTOCOL.md and evidence/m4-navigation-acceptance.json.
+This satisfies the navigation comparison vertical slice, not full M4 acceptance.
+Readiness, HTTP role enforcement, scoped decisions/audit and reviewed export are
+still pending. Current full-project goal remains active.

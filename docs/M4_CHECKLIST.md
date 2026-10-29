@@ -6,7 +6,7 @@
   old approved revisions remain inspectable; self-approval and role spoofing fail.
 - [x] Bounded occupancy map, robot footprint, waypoints, deterministic planner,
   swept collision checks, scenario editor and 3D route replay.
-- [ ] Actual baseline and inserted-obstacle layouts, with measured route/collision
+- [x] Actual baseline and inserted-obstacle layouts, with measured route/collision
   outputs tied to geometry, scene revision and scenario config.
 - [ ] Reviewed export separates visual splats and collision assets and includes
   immutable evidence, approval scope, source licenses, hashes and audit.

@@ -1,0 +1,89 @@
+{
+  "created_at": "2026-10-29T10:07:46.811090+00:00",
+  "environment": {
+    "numpy": "2.5.4",
+    "pillow": "12.3.0",
+    "python": "3.12.3",
+    "scipy": "1.18.1"
+  },
+  "files_sha256": {
+    "occupancy.json": "98230a6a07530cdea810633e355ddb552a566b0049ee56aa82ec9cf0e81a896b",
+    "occupancy.npz": "706455ef91819874b0f447fdad25fd1e99c37888ea3e2f1aa86983dfa53122e5",
+    "result.json": "de47b7990c6699b6b539b9c7a222f98b9f0a6fd6a7c5803b34f57a0d528d8e91",
+    "route.png": "84a47f711cb6e081408ce560cac8a88d6db3adb35544dca62f2a1267ad92d9c4",
+    "scenario.json": "3e1c6bf1905f1d62d798ab543900a9a4ec58aa9d34293c42880dc1836e3bb879",
+    "scene-input.json": "a7b6931467d0380eafd3e26ce35036501d168a47058d892df501aa5433612206"
+  },
+  "floor_evidence": "observed_surface_support",
+  "floor_support_cells": 947,
+  "free_robot_center_cells": 83,
+  "geometry_sha256": "c0ae2cd7ae8ff80a785aaa6adb4b0b57ac1c9d70d54e3ce13fbeb99e9348d79b",
+  "git_commit": "1afbb6049c27b7a45377bb83a04cf0df74f03d64",
+  "git_dirty": false,
+  "limitations": [
+    "Metric frame is inherited from supplied poses and coarse TSDF; floor height is an explicit assumption.",
+    "Observed TSDF floor or declared virtual floor is selected explicitly; unknown cells and exterior are blocked.",
+    "Surfaces are projected through robot-height slab; mesh holes and solid occupancy truth remain unverified.",
+    "Robot is a circle; radius plus conservative cell inflation. Replay has fixed clock samples and exact corner events.",
+    "All collidable proxies participate even when hidden; visual overlay realism is not evaluated.",
+    "Planning uses the same declared map as replay. Route success is not an independent real-world benchmark."
+  ],
+  "planner": "deterministic four-neighbor A*; same-map swept occupancy replay",
+  "result_summary": {
+    "collisions": 0,
+    "elapsed_simulated_s": 7.66666666666667,
+    "path_length_m": 1.1500000000000004,
+    "reason": "goal reached",
+    "route_success": true,
+    "travel_distance_m": 1.1500000000000004
+  },
+  "run_id": "de09ccf9b4b54bacabae3d145a63ca1b",
+  "scenario": {
+    "bounds_xz_m": [
+      -2.4,
+      -2.8,
+      1.8,
+      0.9
+    ],
+    "floor_mode": "observed_tsdf",
+    "floor_note": "Nominal source up and floor near canonical Y=0; manually inspected TSDF. Route endpoints selected from the largest connected supported-floor component. No independent floor or robot ground truth.",
+    "floor_tolerance_m": 0.1,
+    "floor_y_m": 0.0,
+    "goal_xz_m": [
+      -0.775,
+      -1.475
+    ],
+    "ground_clearance_m": 0.12,
+    "name": "TUM observed floor patch",
+    "resolution_m": 0.05,
+    "robot_height_m": 0.5,
+    "robot_radius_m": 0.08,
+    "scenario_id": "tum-floor-route",
+    "seed": 42,
+    "speed_m_s": 0.15,
+    "start_xz_m": [
+      -1.125,
+      -2.175
+    ],
+    "timestep_s": 0.1,
+    "unknown_policy": "blocked",
+    "waypoints_xz_m": []
+  },
+  "scene_id": "tum-floor-nav",
+  "scene_version": 4,
+  "schema_version": "1.0",
+  "scope": "Deterministic simplified occupancy navigation only; no real robot or perception validation.",
+  "source_files_sha256": {
+    "src/simready/scene/models.py": "d7d437de4ea4ce35c0226eb2b7c4abe505b25051526f66bc68a89cb8af15a53f",
+    "src/simready/simulation/__init__.py": "f07a653f10ca567b9101759ef1cb548eb79d06a8b331ae9df905c707f7ea725c",
+    "src/simready/simulation/grid.py": "e6a0e4f072e200a809e89fb9234b44afcc57e62333052f2b4916f11f90877040",
+    "src/simready/simulation/models.py": "3e895d44ff62d03f2faec904acc8b4ef8e5f1bb75cc6df79e65bfc54c4eb25bf",
+    "src/simready/simulation/planner.py": "a50736f9dc814bff397952ccb5a3bd62c69408198707e6baf3036436755b0fdb",
+    "src/simready/simulation/store.py": "31452483c3bcd255d2ba934d7ed3735bb22c17c48f2a4fd8288c96c348038425"
+  },
+  "type": "occupancy_navigation",
+  "unknown_cells": 5269,
+  "wall_seconds": 2.7701530599952093,
+  "world_frame": "canonical_right_handed_y_up",
+  "world_units": "meters"
+}

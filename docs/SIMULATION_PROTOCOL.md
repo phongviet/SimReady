@@ -77,3 +77,37 @@ The TUM floor example selects endpoints from the largest connected supported
 component of the observed map. It demonstrates known-map planning and is not an
 independently selected robotics task benchmark. The small observed patch and
 unknown cells are part of the result, not hidden by declaring all space free.
+
+## Actual real-geometry layout regression
+
+Clean source **1afbb60**, output registry `artifacts/m4-navigation-1`. Reproduce
+with a new output path:
+
+```bash
+uv run --frozen python scripts/run_navigation_layouts.py --root artifacts/my-navigation-run
+```
+
+The script preserves the original TUM studio scene and registers a separate
+navigation scene. The same frozen TSDF, observed-floor scenario, 0.08m virtual
+robot radius, 0.05m grid, endpoints and controller are used in all three layouts.
+Explicit proxy placements are pinned in `configs/navigation_layouts.json`.
+
+| Layout | Source revision | Route | Path/travel | Simulated time | Replay collisions |
+|---|---:|---|---:|---:|---:|
+| Baseline | 3 | Goal reached | 1.05m | 7.000s | 0 |
+| Inserted 0.15m box | 4 | Goal reached via detour | 1.15m | 7.667s | 0 |
+| Inserted 0.8m barrier | 5 | No supported route | No planned path; 0m travel | 0s | 0 |
+
+All layouts retain **947 floor-support cells and 5,269 unknown cells**. Permitted
+robot-center cells decrease from125 to83 to68. In the blocked case zero collisions
+means the robot never moved, not that it reached the goal. These are measured
+results of our simplified map/planner and manually declared task, not real robot
+performance or independently verified physical free space. Source geometry:
+TUM RGB-D fr1 desk, Sturm et al., IROS2012, CC BY4.0; map visuals are derivatives.
+
+![Actual three-layout maps](evidence/m4-navigation-layouts.png)
+
+[Actual acceptance outputs](evidence/m4-navigation-acceptance.json) and the three
+`m4-*-simulation.json` manifests include source/geometry/config/content digests.
+Every registered asset hash was verified. The complete maps and trajectories
+remain in the local registry; no value in this table is a placeholder.
