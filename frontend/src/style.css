@@ -629,3 +629,147 @@ pre {
     line-height: 1.7;
   }
 }
+
+.evaluation-explorer {
+  padding: 20px;
+  background: #17221b;
+  border: 1px solid #354b3c;
+  border-radius: 9px;
+  overflow: hidden;
+}
+.evaluation-intro,
+.failure-controls,
+.detector-totals {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.evaluation-intro h2 {
+  margin: 0;
+}
+.evaluation-intro p {
+  color: #a6b7aa;
+}
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 20px 0;
+}
+.metric-card {
+  background: #1e3024;
+  border: 1px solid #3a5140;
+  border-radius: 6px;
+  padding: 14px;
+}
+.metric-card small {
+  display: block;
+  color: #b5c6b7;
+}
+.metric-card strong {
+  display: block;
+  font-size: 24px;
+  margin-top: 6px;
+}
+.metric-card em {
+  font-size: 12px;
+  font-style: normal;
+  font-weight: normal;
+}
+.report-downloads {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 18px 0;
+}
+.report-downloads a {
+  color: #cee89d;
+}
+.detector-totals {
+  background: #253b2c;
+  padding: 12px;
+  margin: 12px 0;
+}
+.failure-controls {
+  margin-top: 20px;
+}
+.failure-strip {
+  display: flex;
+  overflow-x: auto;
+  gap: 6px;
+  margin: 12px 0;
+}
+.failure-strip button {
+  flex-shrink: 0;
+}
+.failure-strip small {
+  display: block;
+  color: #b4c9b8;
+  margin-top: 4px;
+}
+.comparison-images {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.comparison-images figure {
+  margin: 0;
+  min-width: 0;
+}
+.comparison-images img {
+  width: 100%;
+  display: block;
+  image-rendering: auto;
+}
+.comparison-images figcaption {
+  font-size: 11px;
+  color: #b3c2b5;
+  margin: 6px 0;
+}
+.view-diagnostics h3 {
+  margin-top: 20px;
+}
+.depth-comparison {
+  margin-top: 14px;
+}
+.depth-comparison p {
+  margin-top: 0;
+  font-size: 12px;
+}
+.distribution {
+  max-width: 100%;
+}
+.evaluation-explorer details {
+  border-top: 1px solid #394d3e;
+  padding: 14px 0;
+}
+.evaluation-explorer pre,
+.evaluation-explorer code {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.evaluation-job {
+  padding: 12px;
+  background: #26392c;
+  margin: 12px 0;
+}
+.evaluation-explorer table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.evaluation-explorer th,
+.evaluation-explorer td {
+  text-align: left;
+  padding: 6px;
+  border-bottom: 1px solid #344839;
+}
+@media (max-width: 1050px) {
+  .comparison-images {
+    grid-template-columns: 1fr 1fr;
+  }
+  .metric-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

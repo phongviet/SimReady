@@ -10,6 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 
+from simready.evaluation.store import EvaluationRequest, EvaluationStore
 from simready.scene.models import ObjectUpdate
 from simready.scene.store import SceneStore, VersionConflict
 from simready.storage import PROJECT_ROOT
@@ -17,12 +18,14 @@ from simready.storage import PROJECT_ROOT
 
 def create_app(root: Path | None = None) -> FastAPI:
     store = SceneStore(root or PROJECT_ROOT / "artifacts/studio")
+    evaluations = EvaluationStore(store)
     app = FastAPI(title="SimReady local studio", version="0.1.0")
     app.state.store = store
+    app.state.evaluations = evaluations
     app.add_middleware(
         CORSMiddleware,
         allow_origins=["http://127.0.0.1:5173", "http://localhost:5173"],
-        allow_methods=["GET", "PUT"],
+        allow_methods=["GET", "PUT", "POST"],
         allow_headers=["Content-Type"],
     )
 
@@ -107,6 +110,36 @@ def create_app(root: Path | None = None) -> FastAPI:
     def asset(scene_id: str, asset_id: str):
         path = store.asset(scene_id, asset_id)
         return FileResponse(path, filename=path.name, headers={"Cache-Control": "no-cache"})
+
+    @app.post("/api/v1/scenes/{scene_id}/evaluate", status_code=202)
+    def start_evaluation(scene_id: str, request: EvaluationRequest):
+        return evaluations.enqueue(scene_id, request)
+
+    @app.get("/api/v1/scenes/{scene_id}/jobs")
+    def scene_jobs(scene_id: str):
+        return evaluations.jobs(scene_id)
+
+    @app.get("/api/v1/jobs/{job_id}")
+    def job(job_id: str):
+        return evaluations.job(job_id)
+
+    @app.get("/api/v1/scenes/{scene_id}/reports")
+    def reports(scene_id: str):
+        return evaluations.reports(scene_id)
+
+    @app.get("/api/v1/scenes/{scene_id}/reports/{run_id}")
+    def report(scene_id: str, run_id: str):
+        return evaluations.get(scene_id, run_id)
+
+    @app.get("/api/v1/scenes/{scene_id}/reports/{run_id}/assets/{name:path}")
+    def report_asset(scene_id: str, run_id: str, name: str):
+        path = evaluations.asset(scene_id, run_id, name)
+        return FileResponse(
+            path,
+            filename=path.name,
+            content_disposition_type="inline",
+            headers={"Cache-Control": "no-cache", "X-Content-Type-Options": "nosniff"},
+        )
 
     build = PROJECT_ROOT / "frontend/dist"
     if build.is_dir():

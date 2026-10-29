@@ -11,6 +11,9 @@ from simready.data.dataset import validate_scene
 from simready.data.redwood import fetch_sample, import_redwood
 from simready.data.synthetic import make_synthetic
 from simready.data.tum import import_tum
+from simready.evaluation.config import EvaluationConfig
+from simready.evaluation.runner import evaluate, validate_evaluation
+from simready.evaluation.store import EvaluationStore
 from simready.geometry.tsdf import build_tsdf
 from simready.reconstruction.contracts import ReconstructionConfig
 from simready.reconstruction.gsplat import GsplatBackend, cpu_smoke, validate_artifact
@@ -54,6 +57,15 @@ def main(argv: list[str] | None = None) -> int:
     item = recon.add_parser("validate")
     item.add_argument("--artifact", type=Path, required=True)
     recon.add_parser("smoke", help="CPU-only validation of trained synthetic demo and saved views")
+    evaluation = commands.add_parser("eval").add_subparsers(dest="action", required=True)
+    item = evaluation.add_parser("run")
+    for name in ("scene", "artifact", "renders", "out"):
+        item.add_argument(f"--{name}", type=Path, required=True)
+    item.add_argument("--config", type=Path, default=PROJECT_ROOT / "configs/evaluation.json")
+    item.add_argument("--python", type=Path)
+    report = commands.add_parser("report").add_subparsers(dest="action", required=True)
+    item = report.add_parser("build", help="verify and locate exported reports")
+    item.add_argument("--run", type=Path, required=True)
     geometry = commands.add_parser("geometry").add_subparsers(dest="action", required=True)
     item = geometry.add_parser("build")
     item.add_argument("--scene", type=Path, required=True)
@@ -68,6 +80,11 @@ def main(argv: list[str] | None = None) -> int:
         item.add_argument(f"--{name}", type=Path, required=True)
     item.add_argument("--root", type=Path, default=PROJECT_ROOT / "artifacts/studio")
     item = scenes.add_parser("demo")
+    item.add_argument("--root", type=Path, default=PROJECT_ROOT / "artifacts/studio")
+    item = scenes.add_parser("attach-report")
+    item.add_argument("--id", required=True)
+    item.add_argument("--run-id", required=True)
+    item.add_argument("--run", type=Path, required=True)
     item.add_argument("--root", type=Path, default=PROJECT_ROOT / "artifacts/studio")
     api = commands.add_parser("api").add_subparsers(dest="action", required=True)
     item = api.add_parser("serve")
@@ -93,6 +110,10 @@ def main(argv: list[str] | None = None) -> int:
             return 0
         elif args.command == "scene":
             store = SceneStore(args.root)
+            if args.action == "attach-report":
+                result = EvaluationStore(store).register(args.id, args.run_id, args.run)
+                print(json.dumps(result, indent=2, allow_nan=False))
+                return 0
             result = (
                 seed_demo(store)
                 if args.action == "demo"
@@ -100,6 +121,19 @@ def main(argv: list[str] | None = None) -> int:
                     args.id, args.name, args.artifact, args.geometry, args.renders, args.dataset
                 )
             )
+        elif args.command == "eval":
+            config = EvaluationConfig.model_validate_json(args.config.read_text())
+            result = {
+                "evaluation": str(
+                    evaluate(args.scene, args.artifact, args.renders, args.out, config, args.python)
+                )
+            }
+        elif args.command == "report":
+            validate_evaluation(args.run)
+            result = {
+                "html": str(args.run / "report.html"),
+                "markdown": str(args.run / "report.md"),
+            }
         elif args.command == "geometry":
             result = {"geometry": str(build_tsdf(args.scene, args.out, args.voxel_size))}
         elif args.command == "recon":

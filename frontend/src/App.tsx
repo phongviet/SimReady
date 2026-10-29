@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { api, ApiError } from "./api";
 import { spawnPosition } from "./camera";
+import { EvaluationExplorer } from "./EvaluationExplorer";
 import { SavedView } from "./SavedView";
 import type { ProxyObject, SceneState, Vec3 } from "./types";
 
@@ -18,7 +19,7 @@ export function App() {
     [busy, setBusy] = useState(false);
   const [error, setError] = useState(""),
     [notice, setNotice] = useState("");
-  const [view, setView] = useState<"3d" | "saved">("3d");
+  const [view, setView] = useState<"3d" | "saved" | "evaluation">("3d");
   const [cameraIndex, setCameraIndex] = useState(0),
     [collision, setCollision] = useState(false);
   const [mode, setMode] = useState<"translate" | "rotate" | "scale">(
@@ -187,7 +188,7 @@ export function App() {
           <span className="local-badge">LOCAL STUDIO</span>
         </div>
         <span className="top-caption">Reconstruct. Inspect. Edit.</span>
-        <span className="milestone-badge">M2 · Scene workspace</span>
+        <span className="milestone-badge">M3 · Validation workspace</span>
       </header>
       <aside className="library">
         <div className="section-label">
@@ -253,7 +254,8 @@ export function App() {
             </p>
             <pre>simready api serve --demo</pre>
             <p>
-              Perception validation, simulation and review are later milestones.
+              Load a registered report to inspect frozen-view validation.
+              Simulation and review are later milestones.
             </p>
           </div>
         ) : (
@@ -273,6 +275,12 @@ export function App() {
                   Saved camera
                 </button>
               </div>
+              <button
+                className={view === "evaluation" ? "selected" : ""}
+                onClick={() => setView("evaluation")}
+              >
+                Evaluation
+              </button>
               <button
                 onClick={() => add("box")}
                 disabled={busy || objects.length >= 128}
@@ -295,89 +303,97 @@ export function App() {
                 Collision proxy
               </label>
             </div>
-            <div className="preview-banner">
-              OVERLAY PREVIEW{" "}
-              <span>
-                Inserted meshes are not depth-composited with splats. Unobserved
-                space is unverified.
-              </span>
-            </div>
-            <div className="viewport-container">
-              {view === "3d" ? (
-                <Suspense fallback={<span role="status">Loading viewer…</span>}>
-                  <Viewer
-                    scene={scene}
-                    objects={objects}
-                    selected={selected}
-                    showCollision={collision}
-                    mode={mode}
-                    editable={!busy}
-                    cameraIndex={cameraIndex}
-                    onSpawnPosition={(value) => {
-                      placement.current = value;
-                    }}
-                    onSelect={setSelected}
-                    onChange={change}
-                    onUnavailable={(message) => {
-                      setView("saved");
-                      setNotice(message);
-                    }}
-                  />
-                </Suspense>
-              ) : (
-                <SavedView
-                  scene={scene}
-                  objects={objects}
-                  index={cameraIndex}
-                />
-              )}
-              <div className="viewport-footer">
-                <span>
-                  {view === "3d"
-                    ? "Orbit · left drag / Pan · right drag / Zoom · scroll"
-                    : `Frozen ${scene.base.cameras[cameraIndex].frame_id} · generated Gaussian view`}
-                </span>
-                <span>Y ↑ &nbsp; meters</span>
-              </div>
-            </div>
-            <div className="below-viewport">
-              <div>
-                <strong>Coarse collision geometry</strong>
-                <p>
-                  Independent TSDF from training RGB-D. Holes and unknown
-                  regions remain unverified.
-                </p>
-              </div>
-              <label>
-                Reference camera{" "}
-                <select
-                  aria-label="Reference camera"
-                  value={cameraIndex}
-                  onChange={(event) => {
-                    placement.current = null;
-                    setCameraIndex(Number(event.target.value));
-                  }}
-                >
-                  {scene.base.cameras.map((camera, index) => (
-                    <option key={camera.frame_id} value={index}>
-                      {camera.frame_id}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            </div>
-            <details className="source-details">
-              <summary>Source and limitations</summary>
-              <p>
-                {scene.base.source.name} · {scene.base.source.license}
-              </p>
-              <p>{scene.base.source.attribution}</p>
-              <ul>
-                {[...new Set(scene.base.limitations)].map((text) => (
-                  <li key={text}>{text}</li>
-                ))}
-              </ul>
-            </details>
+            {view === "evaluation" ? (
+              <EvaluationExplorer key={scene.scene_id} scene={scene} />
+            ) : (
+              <>
+                <div className="preview-banner">
+                  OVERLAY PREVIEW{" "}
+                  <span>
+                    Inserted meshes are not depth-composited with splats.
+                    Unobserved space is unverified.
+                  </span>
+                </div>
+                <div className="viewport-container">
+                  {view === "3d" ? (
+                    <Suspense
+                      fallback={<span role="status">Loading viewer…</span>}
+                    >
+                      <Viewer
+                        scene={scene}
+                        objects={objects}
+                        selected={selected}
+                        showCollision={collision}
+                        mode={mode}
+                        editable={!busy}
+                        cameraIndex={cameraIndex}
+                        onSpawnPosition={(value) => {
+                          placement.current = value;
+                        }}
+                        onSelect={setSelected}
+                        onChange={change}
+                        onUnavailable={(message) => {
+                          setView("saved");
+                          setNotice(message);
+                        }}
+                      />
+                    </Suspense>
+                  ) : (
+                    <SavedView
+                      scene={scene}
+                      objects={objects}
+                      index={cameraIndex}
+                    />
+                  )}
+                  <div className="viewport-footer">
+                    <span>
+                      {view === "3d"
+                        ? "Orbit · left drag / Pan · right drag / Zoom · scroll"
+                        : `Frozen ${scene.base.cameras[cameraIndex].frame_id} · generated Gaussian view`}
+                    </span>
+                    <span>Y ↑ &nbsp; meters</span>
+                  </div>
+                </div>
+                <div className="below-viewport">
+                  <div>
+                    <strong>Coarse collision geometry</strong>
+                    <p>
+                      Independent TSDF from training RGB-D. Holes and unknown
+                      regions remain unverified.
+                    </p>
+                  </div>
+                  <label>
+                    Reference camera{" "}
+                    <select
+                      aria-label="Reference camera"
+                      value={cameraIndex}
+                      onChange={(event) => {
+                        placement.current = null;
+                        setCameraIndex(Number(event.target.value));
+                      }}
+                    >
+                      {scene.base.cameras.map((camera, index) => (
+                        <option key={camera.frame_id} value={index}>
+                          {camera.frame_id}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
+                <details className="source-details">
+                  <summary>Source and limitations</summary>
+                  <p>
+                    {scene.base.source.name} · {scene.base.source.license}
+                  </p>
+                  <p>{scene.base.source.attribution}</p>
+                  <ul>
+                    {[...new Set(scene.base.limitations)].map((text) => (
+                      <li key={text}>{text}</li>
+                    ))}
+                  </ul>
+                </details>
+              </>
+            )}
           </>
         )}
       </main>

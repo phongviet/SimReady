@@ -4,6 +4,7 @@
   "pip_phases": [
     [
       "torch==2.4.1",
+      "torchvision==0.19.1",
       "--index-url",
       "https://download.pytorch.org/whl/cu124"
     ],
@@ -18,25 +19,40 @@
     ],
     [
       "https://github.com/nerfstudio-project/gsplat/releases/download/v1.5.3/gsplat-1.5.3%2Bpt24cu124-cp310-cp310-linux_x86_64.whl"
+    ],
+    [
+      "lpips==0.1.4",
+      "scipy==1.15.3",
+      "tqdm==4.67.1"
     ]
   ],
   "env": {
     "OMP_NUM_THREADS": "4",
     "MKL_NUM_THREADS": "4",
-    "OPENBLAS_NUM_THREADS": "4"
+    "OPENBLAS_NUM_THREADS": "4",
+    "TORCH_HOME": "/home/phong/simready/.cache/torch"
   },
-  "weight_dirs": {},
+  "weight_dirs": {
+    "torchvision": ".cache/torch/hub/checkpoints",
+    "lpips_calibration": ".venv-gpu/lib/python3.10/site-packages/lpips/weights/v0.1/squeeze.pth"
+  },
   "smoke": {
     "import_names": [
       "torch",
       "gsplat",
       "numpy",
-      "PIL"
+      "PIL",
+      "torchvision",
+      "lpips"
     ],
     "gpu_tests": [
       {
         "cmd": ".venv-gpu/bin/python workers/gsplat_worker.py witness",
         "expect": "WITNESS"
+      },
+      {
+        "cmd": ".venv-gpu/bin/python workers/perception_worker.py witness",
+        "expect": "PERCEPTION_WITNESS"
       }
     ],
     "cli_checks": [

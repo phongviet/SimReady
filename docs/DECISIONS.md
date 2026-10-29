@@ -115,3 +115,15 @@ fixture generation and camera math. Final acceptance will be recorded separately
     disable only its unrelated pytest plugin (`-p no:dash`) so it does not alter
     this project's test runner. Geometry fusion has its own optional integration
     marker. No project warning or failing test is suppressed.
+24. **M3 protocol before test measurement:** pin torchvision0.19.1+cu124
+    SSDLite320 COCO_V1 and LPIPS0.1.4 Squeeze/v0.1. Full content pins and all
+    preprocessing are recorded; choose Squeeze for compact local weights.
+    Confidence/IoU=.5 and depth alpha=.1 are declared heuristics, never certification.
+    Whole-image sRGB metrics and valid-depth errors remain separate. Hungarian
+    matching prioritizes valid cardinality then IoU. Agreement is not accuracy.
+    See EVALUATION_PROTOCOL.md for formulas, empty semantics and primary sources.
+25. **M3 report/queue:** immutable, content-hashed reports preserve raw backend
+    outputs, input camera/dataset hashes, per-view diagnostics, and source state.
+    The local SQLite/process queue serializes GPU evaluation through Linux flock;
+    browser edits are excluded from offline base-model metrics. Reports attach to
+    a submitted scene revision without changing the immutable reconstruction.

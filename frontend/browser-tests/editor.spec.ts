@@ -121,7 +121,7 @@ test("actual splat loading, inserted transform, save/reload and deletion", async
   ).toBeVisible();
   await page.getByLabel("Collision proxy", { exact: true }).check();
   await page.screenshot({
-    path: "../docs/evidence/m2-analytic-editor.png",
+    path: "../.cache/playwright-results/analytic-editor.png",
     fullPage: true,
   });
   await page

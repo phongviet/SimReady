@@ -1,3 +1,9 @@
+import type {
+  EvaluationReport,
+  EvaluationView,
+  EvaluationJob,
+} from "./evaluation";
+import { reportAsset } from "./evaluation";
 import type { ProxyObject, SceneState } from "./types";
 
 export class ApiError extends Error {
@@ -22,6 +28,33 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   return response.json();
 }
 export const api = {
+  reports: (id: string) =>
+    request<EvaluationReport[]>(`/scenes/${encodeURIComponent(id)}/reports`),
+  reportViews: async (id: string, run: string): Promise<EvaluationView[]> => {
+    const response = await fetch(reportAsset(id, run, "views.json"));
+    if (!response.ok)
+      throw new ApiError(
+        "Could not load measured view diagnostics",
+        response.status,
+      );
+    return response.json();
+  },
+  evaluate: (scene: SceneState) =>
+    request<EvaluationJob>(
+      `/scenes/${encodeURIComponent(scene.scene_id)}/evaluate`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          expected_version: scene.version,
+          split: "test",
+        }),
+      },
+    ),
+  jobs: (id: string) =>
+    request<EvaluationJob[]>(`/scenes/${encodeURIComponent(id)}/jobs`),
+  job: (id: string) =>
+    request<EvaluationJob>(`/jobs/${encodeURIComponent(id)}`),
   list: () => request<SceneState[]>("/scenes"),
   scene: (id: string) =>
     request<SceneState>(`/scenes/${encodeURIComponent(id)}`),

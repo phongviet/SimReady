@@ -24,7 +24,7 @@ exact tested package versions are recorded in `ENVIRONMENT.md` and the lockfiles
   held-out RGB/depth rendering, isolated GPU runtime and CPU demo. See M1_CHECKLIST.md.
 - [x] **M2 complete locally:** independent TSDF, versioned proxy edits, controlled
   local API, working splat/orbit editor, conflict handling and browser evidence.
-- [ ] M3: perception validation (not started).
+- [ ] M3: perception validation (implementation and acceptance checks in progress).
 - [ ] M4: simulation and review (not started).
 - [ ] M5: research experiments (not started).
 - [ ] M6: shipping (not started).
@@ -169,3 +169,15 @@ unverified. There is still no evaluation, simulation, approval or recapture resu
 and gsplat views on the frozen test split, save raw predictions/per-view metrics,
 and build the evaluation explorer/report with actual failure cases. Continue
 toward the full project; M3–M6 remain open.
+
+## M3 implementation, acceptance pending
+
+Pinned SSDLite320 COCO_V1 and LPIPS0.1.4 Squeeze/v0.1 before real test evaluation.
+Both GPU witnesses and an independent fresh-agent follows-doc pass succeeded.
+Spec3db6217d retains torch2.4.1/gsplat1.5.3. The initial actual two-view analytic
+pipeline run produced RGB/depth metrics and saved raw predictions (both filtered
+prediction sets empty, so no task-quality claim). Early tests caught integer IoU
+output casting and Python symlink resolution escaping the GPU venv; both were
+fixed before any real evaluation. Frozen provenance, exact split camera checks,
+CSV/JSON/Markdown/HTML exports, persistent local evaluation queue and explorer
+are implemented; full acceptance and real results remain pending.
