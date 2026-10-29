@@ -257,6 +257,13 @@ def report(output: Path, summary: dict) -> None:
     delta = summary["paired_risk_minus_random"]["lpips"]
     direction = "lower" if delta["mean"] < 0 else "higher"
     count = len(summary["ranking_counterexamples"])
+    coefficients = [r["coefficients"] for r in summary["calibration"]]
+    reduced_rule = (
+        "All fits set distance and rotation coefficients to zero; the ranking "
+        "reduces to alpha-hole fraction."
+        if all(c[1] == 0 and c[2] == 0 for c in coefficients)
+        else "The learned coefficients are recorded separately for each seed."
+    )
     audit = {
         k: v
         for k, v in summary["semantic_audit"].items()
@@ -291,6 +298,9 @@ def report(output: Path, summary: dict) -> None:
     5. Calibration fits 8 validation views and checks 8 other views. Coefficients,
     check MAE/correlation, risk features and sealed choices are saved. Weak
     checks were not used to tune or replace the method.
+
+    {reduced_rule} Coefficient order is intercept, distance, rotation, alpha hole:
+    {coefficients}
 
     Interpretation: any observed difference combines where four observations
     were acquired and seeded optimization. Coverage, visibility and holes are
