@@ -12,7 +12,7 @@
 - [x] Reproducible figures, primary research report and working research dashboard.
 - [x] CPU/unit/browser checks and actual local GPU pipeline evidence.
 - [x] Confirm total storage below 30,000,000,000 bytes.
-- [ ] Controlled labeled-object E1 companion: true errors and agreement-versus-accuracy.
+- [x] Controlled labeled-object E1 companion: true errors and agreement-versus-accuracy.
 - [x] Recovered evaluations bind exact reference records and render-index hashes.
 - [x] Atomic timestamped release-ledger completion and partial-operation recovery.
 
@@ -20,8 +20,9 @@ Primary case study verified: all45actual stages completed from clean6947fb8;
 analysis from clean772e055. Fresh audit WARN, raw evidence pass, same-family
 semantic acceptance provisional. Risk LPIPS is worse than random for all3seeds.
 170CPU/geometry tests passed with2opt-in GPU skips;5frontend unit tests,
-7actual browser tests, production build, lint and format checks passed. The two
-remaining checks above prevent claiming the full M5 evidence scope is finished.
+7actual browser tests, production build, lint and format checks passed. The
+companion review is now complete: WARN, same-family/provisional, no invalidation.
+The synthetic endpoint is saturated; its true-error relationship is unidentifiable.
 Storage about15.55GB. See M5_RESULTS.md and EXPERIMENT_AUDIT.md.
 Frozen design: `refine-logs/EXPERIMENT_PLAN.md`, config `configs/recapture.json`.
 Read boundaries use physically omitted candidate/test images in learner datasets.

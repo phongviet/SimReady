@@ -1,10 +1,10 @@
 # M6 shipping gates — completion remains unproven
 
-- [ ] Finish M5 companion integrity review and report; retain real-study negative outcome.
+- [x] Finish M5 companion integrity review and report; retain real-study negative outcome.
 - [ ] Audit every PLAN.md interface and deliverable against current implementation.
 - [x] Queued authenticated import HTTP path and persistent job polling.
-- [ ] Complete queued reconstruction and supplied-camera render HTTP paths.
-      These currently exist as CLI operations, not the listed HTTP endpoints.
+- [x] Queued reconstruction HTTP path, controlled artifact downloads and actual CUDA acceptance.
+- [ ] Supplied-camera render HTTP path.
 - [x] Fresh installed CPU wheel smoke without torch/Open3D; saved model/report and API import.
 - [ ] Fresh-checkout frontend/API demo, including fallback.
 - [ ] End-to-end current-source regression, browser visual inspection and failure handling.

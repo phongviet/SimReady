@@ -332,8 +332,9 @@ def evaluate(
             + [
                 "One sequence with temporally correlated held-out views; no "
                 "population or statistical significance claim.",
-                "No ground-truth object annotations: no precision, recall or mAP;"
-                " a detector can share errors across domains.",
+                "This generic report does not evaluate object annotations or compute "
+                "precision, recall or mAP; a detector can share errors across domains. "
+                "A separately labeled companion may evaluate accuracy.",
                 "Fixed confidence/IoU/alpha thresholds are declared heuristics, "
                 "not certified readiness thresholds.",
                 "Whole-image sRGB RGB metrics and LPIPS include holes/background;"

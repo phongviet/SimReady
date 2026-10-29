@@ -26,7 +26,7 @@ exact tested package versions are recorded in `ENVIRONMENT.md` and the lockfiles
   local API, working splat/orbit editor, conflict handling and browser evidence.
 - [x] M3: perception validation, real held-out report and nine inspected failures; see M3_CHECKLIST.md.
 - [x] M4: readiness, local roles, scoped review/audit, navigation and reviewed exports; see M4_CHECKLIST.md.
-- [ ] M5: primary case study/report/dashboard verified; labeled E1 companion and hardening remain.
+- [x] M5: real recapture study and labeled synthetic companion verified, with explicit negative/undefined outcomes.
 - [ ] M6: shipping (not started).
 - [ ] M7: optional integrations (not started).
 
@@ -439,3 +439,19 @@ traversal and missing-source requests were rejected. Importer/HTTP focused check
 passed; reconstruction/render HTTP paths remain incomplete. PIPELINE_API.md
 documents this exact current scope rather than implying an editable scene exists
 immediately after import.
+
+M5 companion review is complete: same-family/provisional WARN, no invalidation.
+Independent replay reproduced all28geometry labels, the14view training buffer,
+6evaluation rows and custom AP50. The synthetic outcome is saturated and cannot
+establish failure prediction. BENCH_COMPANION_RESULTS.md and the full audit
+retain that limitation. Generic no-annotation boilerplate is corrected for future
+reports; historical outputs stay unchanged. M5 is complete locally within these
+explicit scientific limits; the full project is still incomplete.
+
+M6 queued reconstruction now accepts authenticated preset requests against
+completed imports or registered datasets, captures a source digest, runs under
+the shared GPU lock and serves only verified artifact keys. Actual CUDA HTTP
+acceptance passed with import→40steptraining→artifact download; changed-source
+failure and anonymous access checks passed. Focused API/import checks passed4
+tests, and the new failure test separately passed with the GPU test visibly
+skipped in its CPU run. Rendering HTTP and remaining shipping gates stay open.

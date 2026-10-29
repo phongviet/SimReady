@@ -16,6 +16,7 @@ from simready.data.schema import Contract
 from simready.evaluation.readiness import readiness
 from simready.evaluation.store import EvaluationRequest, EvaluationStore
 from simready.pipeline.imports import ImportRequest, ImportStore
+from simready.pipeline.reconstruction import ReconstructionRequest, ReconstructionStore
 from simready.research.store import StudyStore
 from simready.review.auth import AuthenticationError, AuthorizationError, AuthStore, Principal
 from simready.review.export import ExportStore
@@ -45,6 +46,7 @@ def create_app(root: Path | None = None) -> FastAPI:
     app.state.exports = exports
     research = StudyStore(store.root)
     imports = ImportStore(store)
+    reconstructions = ReconstructionStore(store)
 
     app.add_middleware(
         CORSMiddleware,
@@ -143,6 +145,17 @@ def create_app(root: Path | None = None) -> FastAPI:
     def import_scene(request: ImportRequest, user: Annotated[Principal, Depends(builder)]):
         return imports.enqueue(request)
 
+    @app.post("/api/v1/scenes/{scene_id}/reconstruct", status_code=202)
+    def reconstruct(
+        scene_id: str, request: ReconstructionRequest, user: Annotated[Principal, Depends(builder)]
+    ):
+        return reconstructions.enqueue(scene_id, request)
+
+    @app.get("/api/v1/reconstruction-jobs/{job_id}/assets/{name}")
+    def reconstruction_asset(job_id: str, name: str):
+        path = reconstructions.asset(job_id, name)
+        return FileResponse(path, filename=path.name)
+
     @app.get("/api/v1/research/studies")
     def studies():
         return research.list()
@@ -197,7 +210,10 @@ def create_app(root: Path | None = None) -> FastAPI:
         try:
             return evaluations.job(job_id)
         except KeyError:
-            return imports.job(job_id)
+            try:
+                return imports.job(job_id)
+            except KeyError:
+                return reconstructions.job(job_id)
 
     @app.get("/api/v1/scenes/{scene_id}/reports")
     def reports(scene_id: str):
