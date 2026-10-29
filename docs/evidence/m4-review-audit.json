@@ -1,0 +1,136 @@
+[
+  {
+    "action": "submitted",
+    "actor": {
+      "display_name": "Local Builder",
+      "role": "builder",
+      "user_id": "local-builder"
+    },
+    "after_version": 6,
+    "before_version": 5,
+    "details": {
+      "disclaimer": "Scoped local experiment only; not safety certification, physical free-space truth or detection accuracy.",
+      "evaluation": {
+        "run_id": "baseline-test-1",
+        "scene_version": 5,
+        "scope": "immutable base model only; excludes proxy edits",
+        "sha256": "efbe5dca889cc38d2ba1d19f1ac8c8ecf3e9907dd2498c301337989802ed200f"
+      },
+      "readiness_sha256": "5edc62de5a8a0b5f7aa8d834c152cf79b7d74fc0c0a323d0c65b49d3e42da586",
+      "review_id": "869a4b9b97144319b503f2e9b487349d",
+      "scene_payload_sha256": "48fafe600e2157f71ff1d35be2aeaaa979563887e5035e1b132847ad426bbb6a",
+      "scope": {
+        "bounds_xz_m": [
+          -2.4,
+          -2.8,
+          1.8,
+          0.9
+        ],
+        "camera_ids": [
+          "frame_00082",
+          "frame_00083",
+          "frame_00084",
+          "frame_00085",
+          "frame_00086",
+          "frame_00087",
+          "frame_00088",
+          "frame_00089",
+          "frame_00090",
+          "frame_00091",
+          "frame_00092",
+          "frame_00093",
+          "frame_00094",
+          "frame_00095",
+          "frame_00096",
+          "frame_00097",
+          "frame_00098",
+          "frame_00099"
+        ],
+        "expected_navigation": "no_route",
+        "limitations_acknowledged": true,
+        "name": "TUM known-map obstruction rejection regression",
+        "task": "occupancy_navigation_regression"
+      },
+      "simulation": {
+        "floor_evidence": "observed_surface_support",
+        "floor_support_cells": 947,
+        "result": {
+          "collisions": 0,
+          "elapsed_simulated_s": 0.0,
+          "path_length_m": null,
+          "reason": "no route through supported unblocked cells",
+          "route_success": false,
+          "travel_distance_m": 0.0
+        },
+        "run_id": "0d43bdedf4cc4667a225af43740dac36",
+        "scene_version": 5,
+        "sha256": "7f2310d2edc6b0df58ec73cc84fb3e0feb87a68ffeeafe525a0d6f7c6bfe1490",
+        "unknown_cells": 5269
+      },
+      "source_version": 5,
+      "submitted_by": {
+        "display_name": "Local Builder",
+        "role": "builder",
+        "user_id": "local-builder"
+      }
+    },
+    "event_id": "9b2e6b55e8c6461887f93d5e8f55258d",
+    "previous_sha256": null,
+    "scene_id": "tum-floor-nav",
+    "sha256": "2b2f074c9f86595d19d4cba411743f6d6920f323a0c36c9d1a50da7a2297cc3f",
+    "timestamp": "2026-10-29T10:40:08.526269+00:00"
+  },
+  {
+    "action": "approve",
+    "actor": {
+      "display_name": "Local Reviewer",
+      "role": "reviewer",
+      "user_id": "local-reviewer"
+    },
+    "after_version": 7,
+    "before_version": 6,
+    "details": {
+      "readiness_sha256": "5edc62de5a8a0b5f7aa8d834c152cf79b7d74fc0c0a323d0c65b49d3e42da586",
+      "reason": "Automated acceptance fixture only: approve the declared known-map obstruction regression and listed measured cameras. Perception failure and unknown space remain explicit; no human, safety or detection-accuracy endorsement.",
+      "review_id": "869a4b9b97144319b503f2e9b487349d",
+      "scope": {
+        "bounds_xz_m": [
+          -2.4,
+          -2.8,
+          1.8,
+          0.9
+        ],
+        "camera_ids": [
+          "frame_00082",
+          "frame_00083",
+          "frame_00084",
+          "frame_00085",
+          "frame_00086",
+          "frame_00087",
+          "frame_00088",
+          "frame_00089",
+          "frame_00090",
+          "frame_00091",
+          "frame_00092",
+          "frame_00093",
+          "frame_00094",
+          "frame_00095",
+          "frame_00096",
+          "frame_00097",
+          "frame_00098",
+          "frame_00099"
+        ],
+        "expected_navigation": "no_route",
+        "limitations_acknowledged": true,
+        "name": "TUM known-map obstruction rejection regression",
+        "task": "occupancy_navigation_regression"
+      },
+      "source_version": 5
+    },
+    "event_id": "5f0832f224a64a109a0f4dcca8d9ef04",
+    "previous_sha256": "2b2f074c9f86595d19d4cba411743f6d6920f323a0c36c9d1a50da7a2297cc3f",
+    "scene_id": "tum-floor-nav",
+    "sha256": "a01d3ab8476d6acf9d5e1398e6d3e64fd99c9f60a7cca76ef43b02d9cd39cc64",
+    "timestamp": "2026-10-29T10:40:08.809035+00:00"
+  }
+]

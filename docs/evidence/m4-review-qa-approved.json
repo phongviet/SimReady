@@ -1,0 +1,351 @@
+{
+  "coverage": {
+    "heuristics": {
+      "calibrated_readiness_thresholds": false,
+      "distance_m": 0.5,
+      "rotation_deg": 30.0
+    },
+    "tested_reference_views": 18,
+    "training_cameras": 50,
+    "unobserved_free_views": "unverified; no real reference metrics",
+    "views": [
+      {
+        "center_inside_training_aabb": true,
+        "classification": "interpolated_but_tested",
+        "depth_completeness": 0.9490250469119687,
+        "distance_m": 0.11962563908155509,
+        "frame_id": "frame_00082",
+        "minimum_rotation_deg": 17.91011104869357,
+        "nearest_training_frame_id": "frame_00008",
+        "nearest_training_index": 8,
+        "reference_available": true,
+        "rotation_deg": 20.92915168873616
+      },
+      {
+        "center_inside_training_aabb": true,
+        "classification": "interpolated_but_tested",
+        "depth_completeness": 0.9351314387493838,
+        "distance_m": 0.17374587191223928,
+        "frame_id": "frame_00083",
+        "minimum_rotation_deg": 17.74727158350182,
+        "nearest_training_frame_id": "frame_00008",
+        "nearest_training_index": 8,
+        "reference_available": true,
+        "rotation_deg": 21.511811823519274
+      },
+      {
+        "center_inside_training_aabb": true,
+        "classification": "interpolated_but_tested",
+        "depth_completeness": 0.9187698695906054,
+        "distance_m": 0.20472636466839092,
+        "frame_id": "frame_00084",
+        "minimum_rotation_deg": 17.369850236410933,
+        "nearest_training_frame_id": "frame_00010",
+        "nearest_training_index": 10,
+        "reference_available": true,
+        "rotation_deg": 18.912257083042565
+      },
+      {
+        "center_inside_training_aabb": false,
+        "classification": "tested_extrapolation",
+        "depth_completeness": 0.8694271203824712,
+        "distance_m": 0.23518959928410002,
+        "frame_id": "frame_00085",
+        "minimum_rotation_deg": 17.60137536925637,
+        "nearest_training_frame_id": "frame_00011",
+        "nearest_training_index": 11,
+        "reference_available": true,
+        "rotation_deg": 18.25521545303078
+      },
+      {
+        "center_inside_training_aabb": false,
+        "classification": "tested_extrapolation",
+        "depth_completeness": 0.8330344723567562,
+        "distance_m": 0.26108660927875554,
+        "frame_id": "frame_00086",
+        "minimum_rotation_deg": 16.927866314826723,
+        "nearest_training_frame_id": "frame_00011",
+        "nearest_training_index": 11,
+        "reference_available": true,
+        "rotation_deg": 18.002694656246184
+      },
+      {
+        "center_inside_training_aabb": false,
+        "classification": "tested_extrapolation",
+        "depth_completeness": 0.8202079968056337,
+        "distance_m": 0.29683918882200816,
+        "frame_id": "frame_00087",
+        "minimum_rotation_deg": 15.214579818807099,
+        "nearest_training_frame_id": "frame_00011",
+        "nearest_training_index": 11,
+        "reference_available": true,
+        "rotation_deg": 17.653191805178807
+      },
+      {
+        "center_inside_training_aabb": false,
+        "classification": "tested_extrapolation",
+        "depth_completeness": 0.9256379481292073,
+        "distance_m": 0.3018876875933893,
+        "frame_id": "frame_00088",
+        "minimum_rotation_deg": 10.330795095277072,
+        "nearest_training_frame_id": "frame_00012",
+        "nearest_training_index": 12,
+        "reference_available": true,
+        "rotation_deg": 15.263247460625312
+      },
+      {
+        "center_inside_training_aabb": false,
+        "classification": "tested_extrapolation",
+        "depth_completeness": 0.9782680563046996,
+        "distance_m": 0.30647271491207695,
+        "frame_id": "frame_00089",
+        "minimum_rotation_deg": 5.670136105794187,
+        "nearest_training_frame_id": "frame_00012",
+        "nearest_training_index": 12,
+        "reference_available": true,
+        "rotation_deg": 11.962054113493194
+      },
+      {
+        "center_inside_training_aabb": false,
+        "classification": "tested_extrapolation",
+        "depth_completeness": 0.9920589903573455,
+        "distance_m": 0.3147162552026632,
+        "frame_id": "frame_00090",
+        "minimum_rotation_deg": 4.506477067273937,
+        "nearest_training_frame_id": "frame_00012",
+        "nearest_training_index": 12,
+        "reference_available": true,
+        "rotation_deg": 12.336286794400115
+      },
+      {
+        "center_inside_training_aabb": false,
+        "classification": "tested_extrapolation",
+        "depth_completeness": 0.9909531334108944,
+        "distance_m": 0.31944603739748406,
+        "frame_id": "frame_00091",
+        "minimum_rotation_deg": 5.320894236190193,
+        "nearest_training_frame_id": "frame_00012",
+        "nearest_training_index": 12,
+        "reference_available": true,
+        "rotation_deg": 13.257171739186825
+      },
+      {
+        "center_inside_training_aabb": true,
+        "classification": "interpolated_but_tested",
+        "depth_completeness": 0.9828688936025518,
+        "distance_m": 0.31962342329987053,
+        "frame_id": "frame_00092",
+        "minimum_rotation_deg": 6.212685217902079,
+        "nearest_training_frame_id": "frame_00012",
+        "nearest_training_index": 12,
+        "reference_available": true,
+        "rotation_deg": 16.510649704102825
+      },
+      {
+        "center_inside_training_aabb": false,
+        "classification": "tested_extrapolation",
+        "depth_completeness": 0.9589265891210966,
+        "distance_m": 0.33776348107174275,
+        "frame_id": "frame_00093",
+        "minimum_rotation_deg": 5.778551859002579,
+        "nearest_training_frame_id": "frame_00012",
+        "nearest_training_index": 12,
+        "reference_available": true,
+        "rotation_deg": 21.516026005723546
+      },
+      {
+        "center_inside_training_aabb": false,
+        "classification": "tested_extrapolation",
+        "depth_completeness": 0.9460060011353499,
+        "distance_m": 0.3556080680549688,
+        "frame_id": "frame_00094",
+        "minimum_rotation_deg": 5.505825574033665,
+        "nearest_training_frame_id": "frame_00018",
+        "nearest_training_index": 18,
+        "reference_available": true,
+        "rotation_deg": 5.691270484992494
+      },
+      {
+        "center_inside_training_aabb": false,
+        "classification": "tested_extrapolation",
+        "depth_completeness": 0.9657545363066835,
+        "distance_m": 0.3439661183473103,
+        "frame_id": "frame_00095",
+        "minimum_rotation_deg": 3.711123439604307,
+        "nearest_training_frame_id": "frame_00018",
+        "nearest_training_index": 18,
+        "reference_available": true,
+        "rotation_deg": 3.711123439604307
+      },
+      {
+        "center_inside_training_aabb": false,
+        "classification": "tested_extrapolation",
+        "depth_completeness": 0.9741084671438706,
+        "distance_m": 0.3328490294574527,
+        "frame_id": "frame_00096",
+        "minimum_rotation_deg": 2.772629930119522,
+        "nearest_training_frame_id": "frame_00018",
+        "nearest_training_index": 18,
+        "reference_available": true,
+        "rotation_deg": 2.772629930119522
+      },
+      {
+        "center_inside_training_aabb": true,
+        "classification": "interpolated_but_tested",
+        "depth_completeness": 0.9787748478701825,
+        "distance_m": 0.32899632592605915,
+        "frame_id": "frame_00097",
+        "minimum_rotation_deg": 2.5959960559636976,
+        "nearest_training_frame_id": "frame_00018",
+        "nearest_training_index": 18,
+        "reference_available": true,
+        "rotation_deg": 2.5959960559636976
+      },
+      {
+        "center_inside_training_aabb": true,
+        "classification": "interpolated_but_tested",
+        "depth_completeness": 0.9837087988941731,
+        "distance_m": 0.32895601494205184,
+        "frame_id": "frame_00098",
+        "minimum_rotation_deg": 2.146710294396596,
+        "nearest_training_frame_id": "frame_00018",
+        "nearest_training_index": 18,
+        "reference_available": true,
+        "rotation_deg": 2.146710294396596
+      },
+      {
+        "center_inside_training_aabb": true,
+        "classification": "interpolated_but_tested",
+        "depth_completeness": 0.9855276513539177,
+        "distance_m": 0.32726686599098137,
+        "frame_id": "frame_00099",
+        "minimum_rotation_deg": 2.6108532133306674,
+        "nearest_training_frame_id": "frame_00018",
+        "nearest_training_index": 18,
+        "reference_available": true,
+        "rotation_deg": 2.6108532133306674
+      }
+    ]
+  },
+  "evaluation": {
+    "run_id": "baseline-test-1",
+    "scene_version": 5,
+    "scope": "immutable base model only; excludes proxy edits",
+    "sha256": "efbe5dca889cc38d2ba1d19f1ac8c8ecf3e9907dd2498c301337989802ed200f"
+  },
+  "flags": [
+    "No rendered predictions meet the fixed confidence threshold; real-image predictions exist.",
+    "Collision mesh has open/nonmanifold surface boundaries; solid occupancy is not established.",
+    "Selected navigation run did not reach the goal; inspect its reason and declared regression expectation."
+  ],
+  "geometry": {
+    "aligned_ground_truth_evaluated": false,
+    "boundary_edges": 6964,
+    "bounds_max_m": [
+      1.7159230709075928,
+      1.3049999475479126,
+      0.7649999856948853
+    ],
+    "bounds_min_m": [
+      -2.325000047683716,
+      -0.10499999672174454,
+      -2.740605354309082
+    ],
+    "chamfer_m": null,
+    "degenerate_triangles": 5,
+    "f_score": null,
+    "nonmanifold_edges": 0,
+    "quality": "coarse_observed_surface_proxy",
+    "surface_area_m2": 15.429386138916016,
+    "triangles": 48828,
+    "vertices": 28007
+  },
+  "limitations": [
+    "Coverage measures reference camera pose novelty, not volumetric visibility or physical free-space coverage.",
+    "Pose classification thresholds are declared heuristics, not certified or validation-calibrated readiness gates.",
+    "Base evaluation can be reused across proxy-only revisions of the same model; simulation is bound to the exact source revision.",
+    "Geometry and navigation are coarse proxies. Detector agreement is not detection accuracy; no broad safety or sim-to-real claim.",
+    "ROS pinhole approximation follows publisher advice; residual errors possible.",
+    "Temporal splits may overlap spatially; not independent scenes.",
+    "Nominal mocap Z-up assumed; no accelerometer gravity alignment.",
+    "Uncertainty: interpolated poses, exposure, rolling shutter, holes and dynamics.",
+    "Observed surface proxy only; holes and unobserved space are unverified.",
+    "Not necessarily closed/watertight; no physical-accuracy certification.",
+    "No ground-truth geometric error measured.",
+    "ROS pinhole approximation follows publisher advice; residual errors possible.",
+    "Temporal splits may overlap spatially; not independent scenes.",
+    "Nominal mocap Z-up assumed; no accelerometer gravity alignment.",
+    "Uncertainty: interpolated poses, exposure, rolling shutter, holes and dynamics."
+  ],
+  "outcome": "usable_for_declared_test",
+  "perception": {
+    "appeared_count": 0,
+    "disappeared_count": 48,
+    "empty_both": 0,
+    "matched_count": 0,
+    "real_count": 48,
+    "rendered_count": 0
+  },
+  "photometric": {
+    "depth_completeness": 0.9437883254681552,
+    "depth_mae_m": 0.030070565783854666,
+    "depth_rmse_m": 0.07341390428977546,
+    "lpips": 0.4032108618153466,
+    "psnr_db": 16.73498062647631,
+    "ssim": 0.5177023670227732
+  },
+  "review_scope": {
+    "bounds_xz_m": [
+      -2.4,
+      -2.8,
+      1.8,
+      0.9
+    ],
+    "camera_ids": [
+      "frame_00082",
+      "frame_00083",
+      "frame_00084",
+      "frame_00085",
+      "frame_00086",
+      "frame_00087",
+      "frame_00088",
+      "frame_00089",
+      "frame_00090",
+      "frame_00091",
+      "frame_00092",
+      "frame_00093",
+      "frame_00094",
+      "frame_00095",
+      "frame_00096",
+      "frame_00097",
+      "frame_00098",
+      "frame_00099"
+    ],
+    "expected_navigation": "no_route",
+    "limitations_acknowledged": true,
+    "name": "TUM known-map obstruction rejection regression",
+    "task": "occupancy_navigation_regression"
+  },
+  "scene_id": "tum-floor-nav",
+  "scene_version": 7,
+  "schema_version": "1.0",
+  "simulation": {
+    "floor_evidence": "observed_surface_support",
+    "floor_support_cells": 947,
+    "result": {
+      "collisions": 0,
+      "elapsed_simulated_s": 0.0,
+      "path_length_m": null,
+      "reason": "no route through supported unblocked cells",
+      "route_success": false,
+      "travel_distance_m": 0.0
+    },
+    "run_id": "0d43bdedf4cc4667a225af43740dac36",
+    "scene_version": 5,
+    "sha256": "7f2310d2edc6b0df58ec73cc84fb3e0feb87a68ffeeafe525a0d6f7c6bfe1490",
+    "unknown_cells": 5269
+  },
+  "source_version": 5,
+  "world_frame": "canonical_right_handed_y_up",
+  "world_units": "meters"
+}

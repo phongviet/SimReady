@@ -112,3 +112,29 @@ byte-for-byte; its separate approval record supplies the scoped decision.
 A successful export is a scoped experiment package for further local analysis.
 It is not validated Isaac Sim/OpenUSD integration, real robot performance or
 certified perception/simulation fidelity.
+
+## Real TUM acceptance fixture
+
+Clean source`3d584ed`, source scene revision5→submitted6→approved7, with the
+already measured barrier layout. `scripts/verify_reviewed_scene.py` used actual
+server-issued local Builder/Reviewer credentials and real TUM base evaluation.
+The Builder's role-spoofed decision returned403; anonymous review returned401.
+The separate Reviewer fixture approved **only the declared known-map obstruction
+rejection regression**. This is an automated acceptance decision, not human or
+organizational endorsement.
+
+The captured report preserves18measured reference cameras,48real-image detector
+predictions versus0rendered,6,964mesh boundary edges, and5,269unknown map cells.
+Its expected navigation outcome is`no_route`. Approval does not override these
+failures/limits. The ZIP contains27,017,824bytes; SHA-256 is
+`3c3ad908a48bf597bc6ee2e86bb8bb2cf9f086684619eae7949c38a9951756dc`.
+Every payload hash, the entire ZIP hash, split render/collider paths and absence
+of credential tokens were verified from actual exported bytes.
+
+[Acceptance evidence](evidence/m4-review-evidence.json),
+[actual approved QA](evidence/m4-review-qa-approved.json),
+[audit events](evidence/m4-review-audit.json), and
+[ZIP payload manifest](evidence/m4-review-export-manifest.json).
+The full package remains at`artifacts/m4-review-evidence-1/reviewed-scene.zip`.
+
+![Actual scoped TUM review and export](evidence/m4-tum-scoped-review.png)

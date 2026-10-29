@@ -1,0 +1,67 @@
+{
+  "actual_source_kind": "real",
+  "anonymous_review_status": 401,
+  "approved_version": 7,
+  "builder_role_spoof_status": 403,
+  "export": {
+    "approval_event_id": "5f0832f224a64a109a0f4dcca8d9ef04",
+    "approved_version": 7,
+    "bytes": 27017824,
+    "created_at": "2026-10-29T10:40:11.055379+00:00",
+    "created_by": {
+      "display_name": "Local Reviewer",
+      "role": "reviewer",
+      "user_id": "local-reviewer"
+    },
+    "export_id": "aa40caeb8b4542c2a91dbbe32572110f",
+    "scene_id": "tum-floor-nav",
+    "sha256": "3c3ad908a48bf597bc6ee2e86bb8bb2cf9f086684619eae7949c38a9951756dc",
+    "source_version": 5
+  },
+  "files_sha256": {
+    "audit.json": "a0b43419e46b424d5db5367fd065df1a3174a81d829d86548c5ac1eb99d0bc9a",
+    "export-manifest.json": "25865fd429cb7e58c4a8cf10dcaad22453e3f688da393dd1a27e56e9ee7ee9ed",
+    "qa-approved.json": "1e6c721a8f676b2d5d9a51bcc3e075f70dc453e9de3f7476be9334a989b667dc",
+    "qa-before.json": "5edc62de5a8a0b5f7aa8d834c152cf79b7d74fc0c0a323d0c65b49d3e42da586",
+    "reviewed-scene.zip": "3c3ad908a48bf597bc6ee2e86bb8bb2cf9f086684619eae7949c38a9951756dc"
+  },
+  "git_commit": "3d584ed77c4f0ad6314e471acb8ec9374568d922",
+  "git_dirty": false,
+  "mode": "automated local-account acceptance; not human approval",
+  "scene_id": "tum-floor-nav",
+  "schema_version": "1.0",
+  "scope": {
+    "bounds_xz_m": [
+      -2.4,
+      -2.8,
+      1.8,
+      0.9
+    ],
+    "camera_ids": [
+      "frame_00082",
+      "frame_00083",
+      "frame_00084",
+      "frame_00085",
+      "frame_00086",
+      "frame_00087",
+      "frame_00088",
+      "frame_00089",
+      "frame_00090",
+      "frame_00091",
+      "frame_00092",
+      "frame_00093",
+      "frame_00094",
+      "frame_00095",
+      "frame_00096",
+      "frame_00097",
+      "frame_00098",
+      "frame_00099"
+    ],
+    "expected_navigation": "no_route",
+    "limitations_acknowledged": true,
+    "name": "TUM known-map obstruction rejection regression",
+    "task": "occupancy_navigation_regression"
+  },
+  "script_sha256": "63d3c6a989db3f08f416034c9897dd6356e842185646c88fe1f5e04578f23277",
+  "source_version": 5
+}
