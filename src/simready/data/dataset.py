@@ -52,7 +52,14 @@ def block_splits(frames: list[Frame], frames_hash: str) -> Splits:
     )
 
 
-def finalize_dataset(root: Path, metadata: dict, frames: list[Frame]) -> DatasetManifest:
+def finalize_dataset(
+    root: Path,
+    metadata: dict,
+    frames: list[Frame],
+    *,
+    partitions: dict[str, list[str]] | None = None,
+    observation_ids: set[str] | None = None,
+) -> DatasetManifest:
     frame_path = root / "frames.jsonl"
     frame_path.write_text(
         "".join(
@@ -61,7 +68,16 @@ def finalize_dataset(root: Path, metadata: dict, frames: list[Frame]) -> Dataset
         )
     )
     frames_hash = sha256_file(frame_path)
-    splits = block_splits(frames, frames_hash)
+    splits = (
+        block_splits(frames, frames_hash)
+        if partitions is None
+        else Splits(
+            schema_version="1.0",
+            strategy="frozen_recapture_v1",
+            frames_sha256=frames_hash,
+            **partitions,
+        )
+    )
     write_json(root / "splits.json", splits.model_dump(mode="json"))
     manifest = DatasetManifest(
         schema_version="1.0",
@@ -73,7 +89,7 @@ def finalize_dataset(root: Path, metadata: dict, frames: list[Frame]) -> Dataset
         split_sha256=sha256_file(root / "splits.json"),
     )
     write_json(root / "manifest.json", manifest.model_dump(mode="json"))
-    validate_scene(root)
+    validate_scene(root, observation_ids=observation_ids)
     for name in ("manifest.json", "frames.jsonl", "splits.json"):
         (root / name).chmod(0o444)
     return manifest
@@ -106,7 +122,7 @@ def atomic_dataset(output: Path, reserve_bytes: int) -> Iterator[Path]:
         lock.rmdir()
 
 
-def validate_scene(root: Path) -> dict:
+def validate_scene(root: Path, *, observation_ids: set[str] | None = None) -> dict:
     manifest = DatasetManifest.model_validate_json(local_file(root, "manifest.json").read_text())
     if manifest.source.name == "Open3D SampleRedwoodRGBDImages" and manifest.kind == "real":
         raise ValueError(
@@ -126,6 +142,8 @@ def validate_scene(root: Path) -> dict:
     ids = [f.frame_id for f in frames]
     if len(set(ids)) != len(ids):
         raise ValueError("duplicate frame IDs")
+    if observation_ids is not None and not observation_ids.issubset(ids):
+        raise ValueError("requested observation validation IDs are absent from metadata")
     all_split_ids = splits.train + splits.validation + splits.candidate + splits.test
     if set(all_split_ids) != set(ids):
         raise ValueError("split IDs must cover exactly the frame records")
@@ -150,6 +168,8 @@ def validate_scene(root: Path) -> dict:
             if name in paths:
                 raise ValueError(f"reused image path: {name}")
             paths.add(name)
+            if observation_ids is not None and frame.frame_id not in observation_ids:
+                continue
             path = local_file(root, name)
             try:
                 with Image.open(path) as image:
@@ -191,5 +211,9 @@ def validate_scene(root: Path) -> dict:
         "frames_sha256": manifest.frames_sha256,
         "split_sha256": manifest.split_sha256,
         "valid_depth_pixels": valid_depth_pixels,
+        "observations_validated": len(frames) if observation_ids is None else len(observation_ids),
+        "validation_scope": "complete"
+        if observation_ids is None
+        else "selected_observations_and_all_metadata",
         "limitations": list(manifest.limitations),
     }

@@ -26,11 +26,11 @@ from simready.storage import PROJECT_ROOT
 
 
 def verify_inputs(scene: Path, artifact: Path, renders: Path):
-    manifest, frames, splits = load_records(scene)
     model, images = validate_artifact(artifact), validate_renders(renders)
     split = images["split"]
     if split not in ("validation", "test"):
         raise ValueError("evaluation accepts only frozen validation or test views")
+    manifest, frames, splits = load_records(scene, (split,))
     provenance = model["provenance"]
     if (
         provenance["dataset_manifest_sha256"] != sha256_file(scene / "manifest.json")

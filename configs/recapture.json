@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "seeds": [42,43,44],
+  "methods": ["base","risk","random","farthest"],
+  "additional_observations": 4,
+  "blind_test_frames": 18,
+  "base_training_frames": 50,
+  "validation_fit_frames": 8,
+  "validation_check_frames": 8,
+  "candidate_frames": 16,
+  "ridge_penalty": 0.1,
+  "feature_distance_scale_m": 0.5,
+  "feature_rotation_scale_deg": 30.0,
+  "hole_alpha_threshold": 0.1,
+  "distance_bin_edges_m": [0,0.1,0.25,0.5,10000],
+  "rotation_bin_edges_deg": [0,10,30,60,181],
+  "pose_blocks": 3,
+  "reconstruction_config": "configs/recon_local_6gb.json",
+  "evaluation_config": "configs/evaluation.json",
+  "source_dataset": "data/scenes/tum-fr1-desk",
+  "source_archive": "data/raw/rgbd_dataset_freiburg1_desk.tgz"
+}

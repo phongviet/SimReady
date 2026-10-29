@@ -62,8 +62,18 @@ def cpu_smoke() -> dict:
     }
 
 
-def load_records(scene: Path) -> tuple[DatasetManifest, list[Frame], Splits]:
-    validate_scene(scene)
+def load_records(
+    scene: Path, observation_splits: tuple[str, ...] | None = None
+) -> tuple[DatasetManifest, list[Frame], Splits]:
+    observation_ids = None
+    if observation_splits is not None:
+        partition = Splits.model_validate_json(local_file(scene, "splits.json").read_text())
+        if any(name not in SPLIT_NAMES for name in observation_splits):
+            raise ValueError("unknown observation split")
+        observation_ids = {
+            name for split in observation_splits for name in getattr(partition, split)
+        }
+    validate_scene(scene, observation_ids=observation_ids)
     manifest = DatasetManifest.model_validate_json((scene / "manifest.json").read_text())
     frames = [
         Frame.model_validate_json(line)
@@ -89,7 +99,7 @@ def camera_record(frame: Frame, manifest: DatasetManifest, width: int) -> dict:
 
 def prepare_training(scene: Path, config: ReconstructionConfig, output: Path) -> dict:
     """Only train observations initialize/optimize splats; all others remain excluded."""
-    manifest, frames, splits = load_records(scene)
+    manifest, frames, splits = load_records(scene, ("train",))
     selected = [f for f in frames if f.frame_id in splits.train]
     if len({f.camera_id for f in selected}) != 1:
         raise ValueError("current gsplat adapter requires one calibrated training camera")
@@ -141,6 +151,7 @@ def prepare_training(scene: Path, config: ReconstructionConfig, output: Path) ->
     )
     return {
         "initialization": "training-only registered RGB-D points",
+        "input_validation_scope": "training observations and all metadata; other images not opened",
         "training_frame_ids": [f.frame_id for f in selected],
         "frames_sha256": manifest.frames_sha256,
         "split_sha256": manifest.split_sha256,
@@ -273,7 +284,7 @@ class GsplatBackend:
         if split not in SPLIT_NAMES:
             raise ValueError(f"unknown split: {split}")
         metadata = validate_artifact(artifact)
-        manifest, frames, splits = load_records(scene)
+        manifest, frames, splits = load_records(scene, ())
         if (
             manifest.frames_sha256 != metadata["provenance"]["frames_sha256"]
             or manifest.split_sha256 != metadata["provenance"]["split_sha256"]

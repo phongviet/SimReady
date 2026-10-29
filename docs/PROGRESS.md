@@ -26,7 +26,7 @@ exact tested package versions are recorded in `ENVIRONMENT.md` and the lockfiles
   local API, working splat/orbit editor, conflict handling and browser evidence.
 - [x] M3: perception validation, real held-out report and nine inspected failures; see M3_CHECKLIST.md.
 - [x] M4: readiness, local roles, scoped review/audit, navigation and reviewed exports; see M4_CHECKLIST.md.
-- [ ] M5: research experiments (not started).
+- [ ] M5: frozen research protocol and observation gates in progress; no results yet.
 - [ ] M6: shipping (not started).
 - [ ] M7: optional integrations (not started).
 
@@ -317,3 +317,20 @@ fixture approval and rebuilds/verifies all213ZIP payloads. It creates no new rev
 decision. Final storage: **14,239,961,486 / 30,000,000,000 bytes** including all
 caches/environments/data/packages/Git before the acceptance commit. Temporary
 HTTP verification server stopped cleanly. No hosted service or CI run is claimed.
+
+## M5 protocol and access boundaries (in progress)
+
+Resumed the full-project goal. The written experiment plan freezes equal K4,
+three optimization seeds, fresh1200-step base/recapture training and validation
+fit/check blocks. M3's inspected test views cannot be called blind; the curator
+will reserve18additional raw TUM pairs and disclose their temporal proximity.
+Observation-scoped training validation avoids decoding candidate/test pixels;
+ordinary full validation remains strict. Typed selector features exclude RGB/depth,
+and candidate/test releases require matching complete sealed acquisitions.
+Experiments, final fairness audit, analysis and dashboard are still pending.
+
+Access guards passed22targeted tests and the full CPU/geometry regression:
+161passed,2opt-in GPU skips. The complete selection-matrix fixture verifies
+withheld pixels, named release, metadata-only camera access, strict full validation,
+tampered decision rejection and deterministic selection/calibration arithmetic.
+Its generated values are test fixtures, not experimental results.

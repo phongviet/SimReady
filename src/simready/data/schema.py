@@ -130,7 +130,7 @@ class Frame(Contract):
 
 class Splits(Contract):
     schema_version: Literal["1.0"]
-    strategy: Literal["contiguous_blocks_v1"] = "contiguous_blocks_v1"
+    strategy: Literal["contiguous_blocks_v1", "frozen_recapture_v1"] = "contiguous_blocks_v1"
     frames_sha256: Digest
     train: tuple[Identifier, ...] = Field(min_length=1)
     validation: tuple[Identifier, ...] = Field(min_length=1)

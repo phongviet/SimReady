@@ -169,3 +169,15 @@ fixture generation and camera math. Final acceptance will be recorded separately
     separately from historical M0 evidence and correct misleading source labels.
     The June–October author/committer date range already satisfies the requested
     history range; use the actual October date for this documentation update.
+33. **M5 resumption and protocol:** the active full-project goal resumes work
+    after the M0 verification. Original M3 test images were already inspected;
+    retain that exposure record and curate 18 additional late TUM pairs for E4.
+    They remain temporally correlated with the same capture, not a new scene.
+    Fix K4, three seeds, 1200 fresh steps, validation-only nonnegative ridge risk,
+    random and farthest-pose controls before new test evaluation. Candidate/test
+    pixels are physically omitted from learner datasets until sealed release.
+34. **Observation-scoped validation:** keep default dataset validation complete;
+    training explicitly checks training pixels and all metadata, pose-only render
+    preparation checks metadata, and evaluation checks only its requested split.
+    Reading test images merely to validate training input would violate the study
+    boundary. Access scopes are recorded; partial validation is never called full.

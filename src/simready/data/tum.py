@@ -80,9 +80,8 @@ def interpolate_pose(timestamp: float, groundtruth: np.ndarray) -> np.ndarray:
     return TUM_WORLD_TO_CANONICAL @ pose
 
 
-def import_tum(archive: Path, output: Path, max_frames: int = 100) -> None:
-    if not 8 <= max_frames <= 256:
-        raise ValueError("TUM import requires 8 to 256 sampled frames")
+def index_tum_archive(archive: Path):
+    """Read only bounded indexes/poses and archive member metadata; never decode images."""
     if archive.stat().st_size > 500_000_000:
         raise ValueError("TUM archive exceeds 500 MB cap")
     metadata_text = {}
@@ -139,6 +138,13 @@ def import_tum(archive: Path, output: Path, max_frames: int = 100) -> None:
         chosen = nearest[0]
         used_depth.add(chosen)
         associated.append((rgb, depth_rows[chosen], pose))
+    return metadata_text, members, root, associated
+
+
+def import_tum(archive: Path, output: Path, max_frames: int = 100) -> None:
+    if not 8 <= max_frames <= 256:
+        raise ValueError("TUM import requires 8 to 256 sampled frames")
+    metadata_text, members, root, associated = index_tum_archive(archive)
     if len(associated) < max_frames:
         raise ValueError(f"only {len(associated)} posed pairs; need {max_frames}")
     selected = [associated[i] for i in np.linspace(0, len(associated) - 1, max_frames, dtype=int)]
@@ -227,7 +233,7 @@ def import_tum(archive: Path, output: Path, max_frames: int = 100) -> None:
             stage / "association-report.json",
             {
                 "schema_version": "1.0",
-                "source_rgb_frames": len(rgb_rows),
+                "source_rgb_frames": len(parse_rows(metadata_text["rgb.txt"], 2)),
                 "associated_posed_pairs": len(associated),
                 "sampled_frames": len(selected),
                 "selection": "uniform temporal indices before reconstruction; no quality selection",
