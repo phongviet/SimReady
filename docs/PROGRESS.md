@@ -402,3 +402,12 @@ The remaining labeled-object E1 gap now has a pre-measurement companion protocol
 in refine-logs/SUPPLEMENTAL_GT_PLAN.md. It uses authored procedural geometry for
 truth, a genuine learned reconstruction and the unchanged detector; no synthetic
 accuracy result is claimed yet. M6 shipping remains open.
+
+The labeled companion now has authored bench geometry and independent analytic
+ray-derived RGB-D/masks/boxes. Two numeric truth tests passed. Clean7112deb
+trained a genuine model for1200steps on14training views and rendered/evaluated
+all6frozen test views using the unchanged detector. Labels/geometry/manifest/plan
+hashes were saved before training; detector metadata confirms bench category15.
+See evidence/m5-bench-run.json. This is a synthetic-domain companion, not a
+second real capture. Precision/recall/custom AP50 and true-error correlation
+analysis remain pending; no accuracy result is claimed from pipeline success.

@@ -1,0 +1,32 @@
+{
+  "artifact_sha256": "eaab7fcd3c1794b713e68ce8e17c78e155e7236f638475341d01a2e1d4bfd9ba",
+  "evaluation_sha256": "55e63d143365e3814f9450e57696dc8474c96e8da64f85656b745ba8342a78a3",
+  "frozen_inputs": {
+    "annotations_sha256": "51703163b7935935e227a00314f52539170c8fdd9d11272129da086a11206275",
+    "geometry_sha256": "77b0ce39276b623c1b6cab612f31bc191138f3ff06fa61ede34aa8523a853718",
+    "manifest_sha256": "e20ac1b79b98294a586b9857584e5f29430065d947cedfc17cf48f2aa3149a2c",
+    "plan_sha256": "b9a9ee839d4d3e06e65a4bcbbe1db46fd05d80ea59ac20a16985c34ec90b72d3"
+  },
+  "kind": "synthetic",
+  "object_accuracy_analysis": "pending; no result claimed",
+  "source_commit": "7112debf71bc8d9110009f283882de77276dc80e",
+  "test_views": 6,
+  "training_frames": 14,
+  "worker": {
+    "backend": "gsplat",
+    "cuda": "12.4",
+    "determinism": "Seeded; CUDA floating-point kernels may not be bitwise deterministic.",
+    "final_gaussians": 5669,
+    "gpu": "NVIDIA GeForce GTX 1660 Ti",
+    "gsplat": "1.5.3+pt24cu124",
+    "initial_gaussians": 5000,
+    "iterations": 1200,
+    "loss": "RGB L1 + configured weight * valid axial-depth L1 (meters)",
+    "peak_vram_allocated_bytes": 16359424,
+    "peak_vram_reserved_bytes": 29360128,
+    "python": "3.10.20",
+    "sh_degree": 1,
+    "torch": "2.4.1+cu124",
+    "training_seconds": 10.734600964002311
+  }
+}
