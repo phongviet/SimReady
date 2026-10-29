@@ -5,20 +5,36 @@ build-backend = "hatchling.build"
 [project]
 name = "simready"
 version = "0.0.1"
-description = "M0: canonical RGB-D contracts and mathematical sanity checks"
+description = "Local RGB-D reconstruction and scene editing studio"
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
-dependencies = ["numpy>=2.2,<3", "pillow>=11,<13", "pydantic>=2.10,<3"]
+dependencies = [
+    "fastapi>=0.115,<1",
+    "numpy>=2.2,<3",
+    "pillow>=11,<13",
+    "pydantic>=2.10,<3",
+    "uvicorn>=0.30,<1",
+]
 
 [project.scripts]
 simready = "simready.cli:main"
 
+[project.optional-dependencies]
+geometry = [
+    "open3d-cpu==0.19.0",
+]
+
 [dependency-groups]
-dev = ["pytest>=8,<10", "ruff>=0.11,<1"]
+dev = [
+    "httpx>=0.28,<1",
+    "pytest>=8,<10",
+    "ruff>=0.11,<1",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-markers = ["official_data: requires the official synthetic Open3D sample", "real_data: requires the real TUM RGB-D sequence", "gpu: requires the isolated gsplat CUDA worker"]
+addopts = "-p no:dash"
+markers = ["official_data: requires the official synthetic Open3D sample", "real_data: requires the real TUM RGB-D sequence", "gpu: requires the isolated gsplat CUDA worker", "geometry: requires optional Open3D CPU TSDF dependencies"]
 
 [tool.ruff]
 target-version = "py312"

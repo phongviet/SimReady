@@ -1,10 +1,11 @@
-name: M0 acceptance
+name: SimReady acceptance
 on: [push, pull_request, workflow_dispatch]
 permissions:
   contents: read
 env:
   UV_CACHE_DIR: ${{ github.workspace }}/.cache/uv
   npm_config_cache: ${{ github.workspace }}/frontend/.npm-cache
+  PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.cache/playwright
 jobs:
   cpu:
     runs-on: ubuntu-latest
@@ -20,7 +21,7 @@ jobs:
       - run: uv sync --frozen
       - run: uv run --frozen ruff check .
       - run: uv run --frozen ruff format --check src tests scripts workers
-      - run: uv run --frozen pytest -q -m 'not real_data and not official_data and not gpu'
+      - run: uv run --frozen pytest -q -m 'not real_data and not official_data and not gpu and not geometry'
       - run: make demo storage
   official-sample:
     runs-on: ubuntu-latest
@@ -35,14 +36,39 @@ jobs:
           enable-cache: false
       - run: uv sync --frozen
       - run: make test-official storage
-  frontend:
+  geometry:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: '0.12.2'
+          enable-cache: false
+      - run: uv sync --frozen --extra geometry
+      - run: OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 uv run --frozen --extra geometry pytest -q -m geometry
+      - run: make storage
+  frontend-browser:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '20.20.2'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: '0.12.2'
+          enable-cache: false
+      - run: uv sync --frozen
       - run: npm --prefix frontend ci --no-audit --no-fund
+      - run: npm --prefix frontend run format:check
       - run: npm --prefix frontend test
       - run: npm --prefix frontend run build
+      - run: cd frontend && npx playwright install --with-deps chromium
+      - run: cd frontend && npx playwright test
       - run: make storage

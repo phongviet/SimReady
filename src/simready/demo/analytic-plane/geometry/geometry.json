@@ -1,0 +1,73 @@
+{
+  "T_world_geometry": [
+    [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "bounds_max_m": [
+    1.2450000047683716,
+    0.9449999928474426,
+    -1.9999810457229614
+  ],
+  "bounds_min_m": [
+    -1.4249999523162842,
+    -0.9449999928474426,
+    -2.0000557899475098
+  ],
+  "dataset_manifest_sha256": "e177983e6fda8bf4d3bc2439846bf8134ed3890d6e48c7ec5771f8104dec2f5d",
+  "depth_trunc_m": 5.0,
+  "elapsed_seconds": 1.1804203970023082,
+  "files_sha256": {
+    "collision_mesh.json": "9869904605c559bbe3bc10ae01085809db77e2f53d32b3579cd77cc8e83b7e9a",
+    "collision_mesh.npz": "5c59ac8fb4d4cea7ebc379db1d4a7492c38c961a518c73f809acb1a72a8a447d",
+    "collision_mesh.ply": "0b75d82c5d496e9db7d9ad41aeedf3d1c41d88af9bb2c1ab6103ec47a6ea2f90"
+  },
+  "frames_sha256": "40128c0c4ff9a63f7feebd93452ae67c4c4873ca70f83c8d79d620e81998770f",
+  "ground_truth_metrics": null,
+  "limitations": [
+    "Observed surface proxy only; holes and unobserved space are unverified.",
+    "Not necessarily closed/watertight; no physical-accuracy certification.",
+    "No ground-truth geometric error measured.",
+    "Synthetic unit-test fixture; not real data or a reconstruction.",
+    "Small split blocks lack spatial separation; not an evaluation benchmark."
+  ],
+  "max_triangles": 50000,
+  "method": "open3d_tsdf",
+  "open3d_version": "0.19.0",
+  "quality": "coarse_proxy",
+  "schema_version": "1.0",
+  "sdf_trunc_m": 0.09,
+  "split_sha256": "44954bd8811e3c4f7032f96516e2c1f838734c9e8e5ce0515a2dc1b29ee816c7",
+  "training_frame_ids": [
+    "frame_00000",
+    "frame_00001",
+    "frame_00002",
+    "frame_00003"
+  ],
+  "triangles": 11214,
+  "vertices": 5760,
+  "voxel_size_m": 0.03,
+  "world_frame": "canonical_right_handed_y_up",
+  "world_units": "meters"
+}

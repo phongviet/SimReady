@@ -11,8 +11,11 @@ from simready.data.dataset import validate_scene
 from simready.data.redwood import fetch_sample, import_redwood
 from simready.data.synthetic import make_synthetic
 from simready.data.tum import import_tum
+from simready.geometry.tsdf import build_tsdf
 from simready.reconstruction.contracts import ReconstructionConfig
 from simready.reconstruction.gsplat import GsplatBackend, cpu_smoke, validate_artifact
+from simready.scene.demo import seed_demo
+from simready.scene.store import SceneStore
 from simready.storage import BUDGET_BYTES, PROJECT_ROOT, check_budget
 
 
@@ -51,6 +54,26 @@ def main(argv: list[str] | None = None) -> int:
     item = recon.add_parser("validate")
     item.add_argument("--artifact", type=Path, required=True)
     recon.add_parser("smoke", help="CPU-only validation of trained synthetic demo and saved views")
+    geometry = commands.add_parser("geometry").add_subparsers(dest="action", required=True)
+    item = geometry.add_parser("build")
+    item.add_argument("--scene", type=Path, required=True)
+    item.add_argument("--out", type=Path, required=True)
+    item.add_argument("--voxel-size", type=float, default=0.03)
+    item.add_argument("--method", choices=["tsdf"], default="tsdf")
+    scenes = commands.add_parser("scene").add_subparsers(dest="action", required=True)
+    item = scenes.add_parser("create")
+    item.add_argument("--id", required=True)
+    item.add_argument("--name", required=True)
+    for name in ("dataset", "artifact", "geometry", "renders"):
+        item.add_argument(f"--{name}", type=Path, required=True)
+    item.add_argument("--root", type=Path, default=PROJECT_ROOT / "artifacts/studio")
+    item = scenes.add_parser("demo")
+    item.add_argument("--root", type=Path, default=PROJECT_ROOT / "artifacts/studio")
+    api = commands.add_parser("api").add_subparsers(dest="action", required=True)
+    item = api.add_parser("serve")
+    item.add_argument("--root", type=Path, default=PROJECT_ROOT / "artifacts/studio")
+    item.add_argument("--port", type=int, default=8000)
+    item.add_argument("--demo", action="store_true")
     args = parser.parse_args(argv)
     try:
         if args.command == "storage":
@@ -59,6 +82,26 @@ def main(argv: list[str] | None = None) -> int:
                 "used_bytes": check_budget(root=args.root),
                 "limit_bytes": BUDGET_BYTES,
             }
+        elif args.command == "api":
+            import uvicorn
+
+            from simready.api.app import create_app
+
+            if args.demo:
+                seed_demo(SceneStore(args.root))
+            uvicorn.run(create_app(args.root), host="127.0.0.1", port=args.port)
+            return 0
+        elif args.command == "scene":
+            store = SceneStore(args.root)
+            result = (
+                seed_demo(store)
+                if args.action == "demo"
+                else store.register(
+                    args.id, args.name, args.artifact, args.geometry, args.renders, args.dataset
+                )
+            )
+        elif args.command == "geometry":
+            result = {"geometry": str(build_tsdf(args.scene, args.out, args.voxel_size))}
         elif args.command == "recon":
             if args.action == "smoke":
                 result = cpu_smoke()

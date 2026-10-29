@@ -91,3 +91,27 @@ fixture generation and camera math. Final acceptance will be recorded separately
     mislabeled records, annotate prior evidence, and use the official real TUM
     Kinect desk capture for the actual real-scene gate. Do not rewrite frozen
     source manifests or treat successful synthetic training as real reconstruction.
+19. **M2 geometry:** use optional `open3d-cpu==0.19.0` in the CPU environment,
+    not the CUDA worker. The upstream smaller Linux wheel supports NumPy 2 and
+    Python3.12. Fuse only frozen training observations; use the same c2w/world
+    frame as reconstruction and explicit w2c integration extrinsics. No ICP or
+    scene rescaling. Export a coarse TSDF mesh plus numeric mesh arrays and hashes.
+20. **M2 editor:** use Three.js + Spark (MIT, maintained WebGL2 renderer) behind
+    a replaceable frontend adapter, with OrbitControls and TransformControls.
+    Browser output is an inspection/overlay preview, separate from gsplat metrics.
+    Use the exact same inserted-box transform for the visible mesh and collider.
+21. **M2 persistence/API:** local filesystem packages hold immutable base assets
+    and scene revision JSON; SQLite transactions provide atomic revision/CAS
+    updates. Local FastAPI serves only registered package assets through scene IDs.
+    API is loopback-only in this milestone. Review authentication/permissions and
+    persistent worker jobs are later milestones; no client-only approval is exposed.
+22. **M2 browser verification:** an initial screenshot caught an empty canvas despite
+    successful asset loading. OrbitControls initializes its own orientation, so
+    preserve the calibrated look target before constructing it. Browser acceptance
+    now reads rendered pixels and tests orbit movement, rather than trusting a load
+    message. Overlays use a separate render pass with a cleared depth buffer and
+    remain explicitly unsuitable for scientific edited-scene evaluation.
+23. **Optional-dependency tests:** Open3D brings Dash as an upstream dependency;
+    disable only its unrelated pytest plugin (`-p no:dash`) so it does not alter
+    this project's test runner. Geometry fusion has its own optional integration
+    marker. No project warning or failing test is suppressed.
