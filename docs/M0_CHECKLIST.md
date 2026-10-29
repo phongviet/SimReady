@@ -18,6 +18,9 @@
 
 Acceptance date: 2026-10-29. Result: 80 CPU tests and 1 frontend test pass,
 lint/format and frontend build pass; real import and manual CLI/HTTP smoke verified.
+The official sample was later identified as synthetic Redwood/ICL-NUIM. Earlier
+references to a real import were wrong; see the correction in `PROGRESS.md`.
+Real Kinect integration is covered separately by M1's TUM path.
 Commands and evidence are in `PROGRESS.md`. CI is configured but has not run on
 a host. No GPU, reconstruction, scientific performance or browser visual
 verification is implied by this checklist.
