@@ -13,15 +13,19 @@ from fastapi.staticfiles import StaticFiles
 from simready.evaluation.store import EvaluationRequest, EvaluationStore
 from simready.scene.models import ObjectUpdate
 from simready.scene.store import SceneStore, VersionConflict
+from simready.simulation.models import ScenarioUpdate, SimulationRequest
+from simready.simulation.store import SimulationStore
 from simready.storage import PROJECT_ROOT
 
 
 def create_app(root: Path | None = None) -> FastAPI:
     store = SceneStore(root or PROJECT_ROOT / "artifacts/studio")
     evaluations = EvaluationStore(store)
+    simulations = SimulationStore(store)
     app = FastAPI(title="SimReady local studio", version="0.1.0")
     app.state.store = store
     app.state.evaluations = evaluations
+    app.state.simulations = simulations
     app.add_middleware(
         CORSMiddleware,
         allow_origins=["http://127.0.0.1:5173", "http://localhost:5173"],
@@ -140,6 +144,27 @@ def create_app(root: Path | None = None) -> FastAPI:
             content_disposition_type="inline",
             headers={"Cache-Control": "no-cache", "X-Content-Type-Options": "nosniff"},
         )
+
+    @app.put("/api/v1/scenes/{scene_id}/scenarios")
+    def scenarios(scene_id: str, change: ScenarioUpdate):
+        return store.update_scenarios(scene_id, change)
+
+    @app.post("/api/v1/scenes/{scene_id}/scenarios/run", status_code=201)
+    def run_scenario(scene_id: str, request: SimulationRequest):
+        return simulations.run(scene_id, request.scenario_id, request.expected_version)
+
+    @app.get("/api/v1/scenes/{scene_id}/simulations")
+    def simulation_runs(scene_id: str):
+        return simulations.runs(scene_id)
+
+    @app.get("/api/v1/scenes/{scene_id}/simulations/{run_id}")
+    def simulation_run(scene_id: str, run_id: str):
+        return simulations.get(scene_id, run_id)
+
+    @app.get("/api/v1/scenes/{scene_id}/simulations/{run_id}/assets/{name}")
+    def simulation_asset(scene_id: str, run_id: str, name: str):
+        path = simulations.asset(scene_id, run_id, name)
+        return FileResponse(path, filename=path.name, content_disposition_type="inline")
 
     build = PROJECT_ROOT / "frontend/dist"
     if build.is_dir():

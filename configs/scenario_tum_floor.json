@@ -1,0 +1,19 @@
+{
+  "scenario_id": "tum-floor-route",
+  "name": "TUM observed floor patch",
+  "bounds_xz_m": [-2.4, -2.8, 1.8, 0.9],
+  "floor_y_m": 0.0,
+  "floor_mode": "observed_tsdf",
+  "floor_note": "Nominal source up and floor near canonical Y=0; manually inspected TSDF. Route endpoints selected from the largest connected supported-floor component. No independent floor or robot ground truth.",
+  "start_xz_m": [-1.125, -2.175],
+  "goal_xz_m": [-0.775, -1.475],
+  "floor_tolerance_m": 0.1,
+  "ground_clearance_m": 0.12,
+  "robot_radius_m": 0.08,
+  "robot_height_m": 0.5,
+  "resolution_m": 0.05,
+  "speed_m_s": 0.15,
+  "timestep_s": 0.1,
+  "seed": 42,
+  "unknown_policy": "blocked"
+}

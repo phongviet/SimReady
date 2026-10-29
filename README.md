@@ -3,7 +3,8 @@
 `PLAN.md` is the specification. **M0–M3 are complete locally.** The user has
 authorized completing the full project.
 The studio supports persistent rigid proxy editing and frozen-view perception
-evaluation. Simulation, review and recapture remain future milestones.
+evaluation. M4 navigation is a verified vertical slice; readiness, review and
+reviewed export are in progress. Recapture research and shipping remain pending.
 
 M0 provides a CPU-only RGB-D import/validation package, explicit camera
 conventions, an analytic fixture with known metric geometry, frozen dataset

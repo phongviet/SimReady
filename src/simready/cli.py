@@ -19,6 +19,8 @@ from simready.reconstruction.contracts import ReconstructionConfig
 from simready.reconstruction.gsplat import GsplatBackend, cpu_smoke, validate_artifact
 from simready.scene.demo import seed_demo
 from simready.scene.store import SceneStore
+from simready.simulation.models import Scenario, ScenarioUpdate
+from simready.simulation.store import SimulationStore
 from simready.storage import BUDGET_BYTES, PROJECT_ROOT, check_budget
 
 
@@ -86,6 +88,15 @@ def main(argv: list[str] | None = None) -> int:
     item.add_argument("--run-id", required=True)
     item.add_argument("--run", type=Path, required=True)
     item.add_argument("--root", type=Path, default=PROJECT_ROOT / "artifacts/studio")
+    simulation = commands.add_parser("sim").add_subparsers(dest="action", required=True)
+    for name in ("save", "run", "list"):
+        item = simulation.add_parser(name)
+        item.add_argument("--scene", required=True, help="registered scene ID")
+        item.add_argument("--root", type=Path, default=PROJECT_ROOT / "artifacts/studio")
+        if name == "save":
+            item.add_argument("--config", type=Path, required=True)
+        if name == "run":
+            item.add_argument("--scenario", required=True)
     api = commands.add_parser("api").add_subparsers(dest="action", required=True)
     item = api.add_parser("serve")
     item.add_argument("--root", type=Path, default=PROJECT_ROOT / "artifacts/studio")
@@ -108,6 +119,23 @@ def main(argv: list[str] | None = None) -> int:
                 seed_demo(SceneStore(args.root))
             uvicorn.run(create_app(args.root), host="127.0.0.1", port=args.port)
             return 0
+        elif args.command == "sim":
+            store = SceneStore(args.root)
+            state = store.get(args.scene)
+            if args.action == "save":
+                config = Scenario.model_validate_json(args.config.read_text())
+                scenarios = [
+                    s for s in state.get("scenarios", []) if s["scenario_id"] != config.scenario_id
+                ]
+                scenarios.append(config.model_dump(mode="json"))
+                result = store.update_scenarios(
+                    args.scene,
+                    ScenarioUpdate(expected_version=state["version"], scenarios=scenarios),
+                )
+            elif args.action == "list":
+                result = SimulationStore(store).runs(args.scene)
+            else:
+                result = SimulationStore(store).run(args.scene, args.scenario, state["version"])
         elif args.command == "scene":
             store = SceneStore(args.root)
             if args.action == "attach-report":

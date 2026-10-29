@@ -1,0 +1,16 @@
+{
+  "scenario_id": "analytic-route",
+  "name": "Declared virtual floor demonstration",
+  "bounds_xz_m": [-1.0, -1.8, 1.0, -0.2],
+  "floor_y_m": -0.7,
+  "floor_mode": "declared_virtual_plane",
+  "floor_note": "Explicit virtual plane for simplified occupancy replay. The analytic reconstruction is a vertical plane; this floor is assumed, not observed.",
+  "start_xz_m": [-0.6, -1.4],
+  "goal_xz_m": [0.6, -0.6],
+  "robot_radius_m": 0.08,
+  "robot_height_m": 0.5,
+  "resolution_m": 0.05,
+  "speed_m_s": 0.15,
+  "timestep_s": 0.1,
+  "seed": 42
+}

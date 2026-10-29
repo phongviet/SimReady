@@ -1,4 +1,11 @@
 import type {
+  Scenario,
+  SimulationRun,
+  SimulationResult,
+  OccupancyMap,
+} from "./simulation";
+import { simulationAsset } from "./simulation";
+import type {
   EvaluationReport,
   EvaluationView,
   EvaluationJob,
@@ -28,6 +35,43 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   return response.json();
 }
 export const api = {
+  saveScenarios: (scene: SceneState, scenarios: Scenario[]) =>
+    request<SceneState>(
+      `/scenes/${encodeURIComponent(scene.scene_id)}/scenarios`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ expected_version: scene.version, scenarios }),
+      },
+    ),
+  simulations: (id: string) =>
+    request<SimulationRun[]>(`/scenes/${encodeURIComponent(id)}/simulations`),
+  runSimulation: (scene: SceneState, scenarioId: string) =>
+    request<SimulationRun>(
+      `/scenes/${encodeURIComponent(scene.scene_id)}/scenarios/run`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          expected_version: scene.version,
+          scenario_id: scenarioId,
+        }),
+      },
+    ),
+  simulationData: async (sceneId: string, runId: string) => {
+    const read = async <T>(name: string): Promise<T> => {
+      const response = await fetch(simulationAsset(sceneId, runId, name));
+      if (!response.ok)
+        throw new ApiError("Simulation asset unavailable", response.status);
+      return response.json();
+    };
+    const [result, map, scene] = await Promise.all([
+      read<SimulationResult>("result.json"),
+      read<OccupancyMap>("occupancy.json"),
+      read<SceneState>("scene-input.json"),
+    ]);
+    return { result, map, scene };
+  },
   reports: (id: string) =>
     request<EvaluationReport[]>(`/scenes/${encodeURIComponent(id)}/reports`),
   reportViews: async (id: string, run: string): Promise<EvaluationView[]> => {

@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { api, ApiError } from "./api";
 import { spawnPosition } from "./camera";
+import { SimulationPanel } from "./SimulationPanel";
 import { EvaluationExplorer } from "./EvaluationExplorer";
 import { SavedView } from "./SavedView";
 import type { ProxyObject, SceneState, Vec3 } from "./types";
@@ -19,7 +20,9 @@ export function App() {
     [busy, setBusy] = useState(false);
   const [error, setError] = useState(""),
     [notice, setNotice] = useState("");
-  const [view, setView] = useState<"3d" | "saved" | "evaluation">("3d");
+  const [view, setView] = useState<
+    "3d" | "saved" | "evaluation" | "simulation"
+  >("3d");
   const [cameraIndex, setCameraIndex] = useState(0),
     [collision, setCollision] = useState(false);
   const [mode, setMode] = useState<"translate" | "rotate" | "scale">(
@@ -282,6 +285,12 @@ export function App() {
                 Evaluation
               </button>
               <button
+                className={view === "simulation" ? "selected" : ""}
+                onClick={() => setView("simulation")}
+              >
+                Navigation
+              </button>
+              <button
                 onClick={() => add("box")}
                 disabled={busy || objects.length >= 128}
               >
@@ -303,7 +312,21 @@ export function App() {
                 Collision proxy
               </label>
             </div>
-            {view === "evaluation" ? (
+            {view === "simulation" ? (
+              <SimulationPanel
+                key={scene.scene_id}
+                scene={scene}
+                unsaved={dirty}
+                onScene={(value) => {
+                  accept(value);
+                  setScenes((values) =>
+                    values.map((s) =>
+                      s.scene_id === value.scene_id ? value : s,
+                    ),
+                  );
+                }}
+              />
+            ) : view === "evaluation" ? (
               <EvaluationExplorer key={scene.scene_id} scene={scene} />
             ) : (
               <>

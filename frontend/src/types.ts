@@ -1,3 +1,4 @@
+import type { Scenario } from "./simulation";
 export type Vec3 = [number, number, number];
 export type Quaternion = [number, number, number, number];
 export interface ProxyObject {
@@ -25,6 +26,7 @@ export interface SceneState {
   version: number;
   status: string;
   objects: ProxyObject[];
+  scenarios?: Scenario[];
   updated_at: string;
   base: {
     dataset_kind: "real" | "synthetic";

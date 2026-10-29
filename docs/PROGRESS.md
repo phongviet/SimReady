@@ -25,7 +25,7 @@ exact tested package versions are recorded in `ENVIRONMENT.md` and the lockfiles
 - [x] **M2 complete locally:** independent TSDF, versioned proxy edits, controlled
   local API, working splat/orbit editor, conflict handling and browser evidence.
 - [x] M3: perception validation, real held-out report and nine inspected failures; see M3_CHECKLIST.md.
-- [ ] M4: simulation and review (not started).
+- [ ] M4: navigation vertical slice verified; readiness, permissions/review and reviewed exports in progress.
 - [ ] M5: research experiments (not started).
 - [ ] M6: shipping (not started).
 - [ ] M7: optional integrations (not started).
@@ -217,3 +217,36 @@ unimplemented. M3 does not establish a ready scene or detection accuracy.
 M3 final storage: **14,086,309,730 bytes / 30,000,000,000**, including installed
 wheel-test caches, CUDA/core environments, raw data, reports and Git before the
 evidence commit. The temporary verification API was stopped cleanly.
+
+## M4 navigation vertical slice (milestone still in progress)
+
+Implemented bounded metric occupancy, observed TSDF support versus explicitly
+assumed virtual floor, unknown/exterior blocking, robot inflation, collidable
+proxy volumes, deterministic four-neighbor A*, waypoints and swept replay.
+Scenarios save as immutable scene revisions. Actual runs save geometry/source/
+config hashes, map JSON/NPZ, trajectory/metrics and route images. The Navigation
+UI edits scenarios, selects saved runs, and animates a robot/route overlay using
+that run's saved scene objects. It distinguishes simulated motion from real
+performance and declared virtual support from observed floor surfaces.
+
+Verification so far: six simulator unit tests plus existing scene tests (20 total)
+passed; simulator/API targeted checks passed (9 total); five frontend unit and
+five actual Playwright tests passed. Browser checks verify pixel changes and the
+actual 3D robot position at the route endpoint, save/reload, and a hidden collider
+blocking the start. The initial UI test exposed a request wait issue and software
+WebGL contention; no pixel/orbit correctness assertion was removed. Add activity
+cadence and optimize the full storage scan while preserving conservative bytes.
+The successful complete browser run took35.4s; this is a test duration, not a
+render performance benchmark. Full current-worktree CPU/geometry regression after these changes passed150tests
+with2opt-in GPU skips; lint/format and production build also passed.
+
+A development geometry probe on real TUM TSDF found947floor-support cells and
+125free robot-center cells; the largest connected component had100cells. The
+selected nominal-floor example planned1.05m. These are development diagnostics,
+not yet the clean committed multi-layout M4 acceptance runs. The endpoints were
+chosen from the known supported map, not an independent real navigation task.
+
+Local opaque-token account foundations have two passing unit tests, but are not
+yet wired into HTTP/UI permissions. Scoped submission/review, coverage/readiness
+reports, audit and reviewed exports remain unimplemented. Do not treat M4 as
+complete or the current local API as authenticated.

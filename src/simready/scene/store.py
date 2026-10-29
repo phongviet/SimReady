@@ -15,6 +15,7 @@ from simready.data.schema import Identifier
 from simready.geometry.tsdf import validate_geometry
 from simready.reconstruction.gsplat import load_records, validate_artifact, validate_renders
 from simready.scene.models import ObjectUpdate
+from simready.simulation.models import ScenarioUpdate
 from simready.storage import check_budget
 
 
@@ -108,8 +109,34 @@ class SceneStore:
             path.unlink(missing_ok=True)
 
     def update_objects(self, scene_id: str, change: ObjectUpdate) -> dict:
+        return self.update_content(
+            scene_id,
+            change.expected_version,
+            {"objects": [o.model_dump(mode="json") for o in change.objects]},
+        )
+
+    def update_scenarios(self, scene_id: str, change: ScenarioUpdate) -> dict:
+        return self.update_content(
+            scene_id,
+            change.expected_version,
+            {"scenarios": [s.model_dump(mode="json") for s in change.scenarios]},
+        )
+
+    def commit_revision(self, db: sqlite3.Connection, scene_id: str, state: dict) -> None:
+        """Caller holds BEGIN IMMEDIATE; immutable revision plus current pointer/snapshot."""
+        db.execute(
+            "INSERT INTO revisions VALUES(?,?,?)", (scene_id, state["version"], json.dumps(state))
+        )
+        db.execute(
+            "UPDATE scenes SET current_version=? WHERE scene_id=?", (state["version"], scene_id)
+        )
+        self._snapshot(scene_id, state)
+
+    def update_content(self, scene_id: str, expected_version: int, changes: dict) -> dict:
         check_budget(500_000)
         self.package(scene_id)
+        if not set(changes).issubset({"objects", "scenarios"}):
+            raise ValueError("content changes accept only objects and scenarios")
         with self.connect() as db:
             db.execute("BEGIN IMMEDIATE")
             row = db.execute(
@@ -118,26 +145,17 @@ class SceneStore:
             if row is None:
                 raise KeyError(f"unknown scene: {scene_id}")
             actual = row[0]
-            if change.expected_version != actual:
+            if expected_version != actual:
                 raise VersionConflict(actual)
             old = db.execute(
                 "SELECT state_json FROM revisions WHERE scene_id=? AND version=?",
                 (scene_id, actual),
             ).fetchone()
             state = json.loads(old[0])
-            state.update(
-                version=actual + 1,
-                objects=[o.model_dump(mode="json") for o in change.objects],
-                updated_at=utc_now(),
-            )
-            db.execute(
-                "INSERT INTO revisions VALUES(?,?,?)", (scene_id, actual + 1, json.dumps(state))
-            )
-            db.execute(
-                "UPDATE scenes SET current_version=? WHERE scene_id=?", (actual + 1, scene_id)
-            )
-            # Snapshot is written while the write transaction serializes writers.
-            self._snapshot(scene_id, state)
+            state.update(changes)
+            state.update(version=actual + 1, status="draft", updated_at=utc_now())
+            state.pop("review", None)
+            self.commit_revision(db, scene_id, state)
         return self.get(scene_id)
 
     def asset(self, scene_id: str, asset_id: str) -> Path:
@@ -194,6 +212,7 @@ class SceneStore:
             "world_frame": "canonical_right_handed_y_up",
             "status": "draft",
             "objects": [],
+            "scenarios": [],
             "created_at": now,
             "updated_at": now,
         }

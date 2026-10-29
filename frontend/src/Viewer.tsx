@@ -5,6 +5,7 @@ import { TransformControls } from "three/addons/controls/TransformControls.js";
 import { SparkRenderer, SplatMesh } from "@sparkjsdev/spark";
 import { assetUrl } from "./api";
 import { calibratedCamera, objectMatrix } from "./camera";
+import type { ReplayData } from "./simulation";
 import type { ProxyObject, SceneState, Vec3 } from "./types";
 
 type Mode = "translate" | "rotate" | "scale";
@@ -20,6 +21,8 @@ interface Props {
   cameraIndex: number;
   onSpawnPosition: (position: Vec3) => void;
   editable: boolean;
+  replay?: ReplayData;
+  replayIndex?: number;
 }
 export function Viewer(props: Props) {
   const host = useRef<HTMLDivElement>(null);
@@ -55,6 +58,8 @@ export function Viewer(props: Props) {
     const base = new THREE.Scene();
     base.background = new THREE.Color("#101713");
     const overlay = new THREE.Scene();
+    let lastActivity = performance.now();
+    let splatsLoaded = false;
     const reference = props.scene.base.cameras[props.cameraIndex];
     const camera = calibratedCamera(reference);
     const lookTarget = camera.position
@@ -63,7 +68,8 @@ export function Viewer(props: Props) {
     const orbit = new OrbitControls(camera, renderer.domElement);
     orbit.target.copy(lookTarget);
     orbit.update();
-    const placement = () =>
+    const placement = () => {
+      lastActivity = performance.now();
       latest.current.onSpawnPosition(
         camera.position
           .clone()
@@ -72,6 +78,7 @@ export function Viewer(props: Props) {
           )
           .toArray(),
       );
+    };
     orbit.addEventListener("change", placement);
     placement();
     const spark = new SparkRenderer({ renderer });
@@ -83,7 +90,11 @@ export function Viewer(props: Props) {
     base.add(splats);
     splats.initialized
       .then(() => {
-        if (!disposed) setStatus("Gaussian scene loaded");
+        if (!disposed) {
+          splatsLoaded = true;
+          lastActivity = performance.now();
+          setStatus("Gaussian scene loaded");
+        }
       })
       .catch((error) => {
         if (!disposed)
@@ -132,7 +143,125 @@ export function Viewer(props: Props) {
         if (!disposed)
           setStatus(`Collision view unavailable: ${String(error)}`);
       });
+    const navigation = new THREE.Group();
+    overlay.add(navigation);
+    let navigationId = "";
+    let robot: THREE.Mesh | null = null;
+    const clearNavigation = () => {
+      navigation.traverse((node) => {
+        if (node instanceof THREE.Mesh || node instanceof THREE.Line) {
+          node.geometry.dispose();
+          if (node.material instanceof THREE.MeshBasicMaterial)
+            node.material.map?.dispose();
+          (node.material as THREE.Material).dispose();
+        }
+      });
+      navigation.clear();
+      robot = null;
+    };
+    const syncNavigation = () => {
+      const replay = latest.current.replay;
+      if ((replay?.run.run_id || "") !== navigationId) {
+        clearNavigation();
+        navigationId = replay?.run.run_id || "";
+        if (replay) {
+          const { map, result, run } = replay;
+          const [xmin, zmin, xmax, zmax] = map.bounds_xz_m;
+          const y = map.floor_y_m + 0.01;
+          const geometry = new THREE.BufferGeometry();
+          geometry.setAttribute(
+            "position",
+            new THREE.Float32BufferAttribute(
+              [xmin, y, zmin, xmax, y, zmin, xmax, y, zmax, xmin, y, zmax],
+              3,
+            ),
+          );
+          geometry.setAttribute(
+            "uv",
+            new THREE.Float32BufferAttribute([0, 0, 1, 0, 1, 1, 0, 1], 2),
+          );
+          geometry.setIndex([0, 2, 1, 0, 3, 2]);
+          const pixels = new Uint8Array(map.width * map.height * 4);
+          for (let z = 0; z < map.height; z++)
+            for (let x = 0; x < map.width; x++) {
+              const color = map.surface_occupied[z][x]
+                ? [216, 132, 78]
+                : !map.floor_support[z][x]
+                  ? [30, 40, 34]
+                  : map.blocked[z][x]
+                    ? [100, 90, 78]
+                    : [76, 110, 78];
+              pixels.set([...color, 180], (z * map.width + x) * 4);
+            }
+          const texture = new THREE.DataTexture(
+            pixels,
+            map.width,
+            map.height,
+            THREE.RGBAFormat,
+          );
+          texture.needsUpdate = true;
+          navigation.add(
+            new THREE.Mesh(
+              geometry,
+              new THREE.MeshBasicMaterial({
+                map: texture,
+                transparent: true,
+                side: THREE.DoubleSide,
+                depthTest: false,
+              }),
+            ),
+          );
+          const points = result.path_xz_m.map(
+            ([x, z]) => new THREE.Vector3(x, y + 0.04, z),
+          );
+          const line = new THREE.Line(
+            new THREE.BufferGeometry().setFromPoints(points),
+            new THREE.LineBasicMaterial({ color: "#d9ed96", depthTest: false }),
+          );
+          navigation.add(line);
+          robot = new THREE.Mesh(
+            new THREE.CylinderGeometry(
+              run.scenario.robot_radius_m,
+              run.scenario.robot_radius_m,
+              run.scenario.robot_height_m,
+              24,
+            ),
+            new THREE.MeshBasicMaterial({
+              color: "#83ddfa",
+              transparent: true,
+              opacity: 0.6,
+              depthTest: false,
+            }),
+          );
+          navigation.add(robot);
+          const extent = Math.max(xmax - xmin, zmax - zmin);
+          orbit.target.set((xmin + xmax) / 2, y, (zmin + zmax) / 2);
+          camera.position
+            .copy(orbit.target)
+            .add(new THREE.Vector3(extent * 0.3, extent, extent * 0.8));
+          orbit.update();
+        }
+      }
+      if (robot && replay) {
+        const step = replay.result.trajectory[latest.current.replayIndex || 0];
+        robot.visible = Boolean(step);
+        if (step)
+          robot.position.set(
+            step.position_xz_m[0],
+            replay.map.floor_y_m + replay.run.scenario.robot_height_m / 2,
+            step.position_xz_m[1],
+          );
+      }
+      renderer.domElement.dataset.simulationRun = navigationId;
+      renderer.domElement.dataset.robotPosition = robot?.visible
+        ? JSON.stringify(robot.position.toArray())
+        : "";
+      renderer.domElement.dataset.replayIndex = String(
+        latest.current.replayIndex || 0,
+      );
+    };
     const update = () => {
+      lastActivity = performance.now();
       const current = latest.current;
       const ids = new Set(current.objects.map((object) => object.object_id));
       for (const [id, mesh] of meshes) {
@@ -186,6 +315,7 @@ export function Viewer(props: Props) {
       gizmo.setMode(current.mode);
       gizmo.enabled = current.editable;
       if (surface) surface.visible = current.showCollision;
+      syncNavigation();
     };
     sync.current = update;
     update();
@@ -236,8 +366,14 @@ export function Viewer(props: Props) {
     });
     resize.observe(element);
     let renderedFrames = 0;
-    renderer.setAnimationLoop(() => {
+    let lastRendered = -Infinity;
+    renderer.domElement.dataset.frameCadence = "30fps active / 5fps idle cap";
+    renderer.setAnimationLoop((now) => {
       if (disposed) return;
+      const cadence =
+        !splatsLoaded || now - lastActivity < 500 ? 1000 / 30 : 1000 / 5;
+      if (now - lastRendered < cadence) return;
+      lastRendered = now;
       orbit.update();
       renderer.clear();
       renderer.render(base, camera);
@@ -268,6 +404,7 @@ export function Viewer(props: Props) {
         surface.geometry.dispose();
         (surface.material as THREE.Material).dispose();
       }
+      clearNavigation();
       renderer.dispose();
       renderer.domElement.remove();
       sync.current = () => {};
@@ -281,6 +418,8 @@ export function Viewer(props: Props) {
     props.showCollision,
     props.mode,
     props.editable,
+    props.replay,
+    props.replayIndex,
   ]);
   return (
     <div className="viewer" ref={host}>

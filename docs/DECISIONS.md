@@ -127,3 +127,25 @@ fixture generation and camera math. Final acceptance will be recorded separately
     The local SQLite/process queue serializes GPU evaluation through Linux flock;
     browser edits are excluded from offline base-model metrics. Reports attach to
     a submitted scene revision without changing the immutable reconstruction.
+26. **M4 navigation contract:** deterministic four-neighbor A* over a bounded
+    metric XZ occupancy grid. TSDF surfaces in the configured robot-height slab
+    and collidable box volumes are obstacles. Floor support is derived from
+    near-horizontal TSDF triangles; unknown cells/exterior are blocked. A
+    declared virtual floor is an explicit alternative for the analytic demo,
+    with a required assumption note. Conservative robot-radius/cell inflation,
+    swept replay checks, and exact corner events prevent tunneling/shortcutting.
+    This is a coarse local simulator, not real robot or physical safety validation.
+27. **Viewer activity cadence:** the M4 browser regression exposed slow saves
+    while software WebGL consumed roughly eight CPU threads at a continuous
+    frame loop. Cap viewer rendering at 30fps during load/interaction/replay
+    activity and 5fps when idle; preserve actual pixel and orbit checks.
+    This is a display cadence limit, not a measured render-throughput claim.
+    Performance reports must state this cap. Full-budget scans remain intact.
+28. **Budget-scan latency:** profiling found ~90,786 stat calls and substantial
+    pathlib path-construction overhead in each full project scan. Use iterative
+    `os.scandir`/DirEntry stat while preserving full conservative accounting,
+    per-path hardlink counting and non-traversal of symlink targets. Count
+    directory-symlink metadata as well (previous walk skipped those entries).
+    A single local comparison against the corrected walk reference returned
+    identical14,088,647,054bytes in0.496s versus2.451s. This is a diagnostic,
+    not a universal speedup/API benchmark. See evidence/m4-storage-scan.json.

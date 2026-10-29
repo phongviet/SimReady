@@ -1,0 +1,10 @@
+{
+  "kind": "single local diagnostic, not an API throughput benchmark",
+  "date": "2026-10-29",
+  "accounting": "per-path max(logical, allocated) files and symlinks; allocated directories; never follow symlinks; hardlinks counted per path",
+  "conservative_bytes": 14088647054,
+  "walk_pathlib_reference_seconds": 2.4510347969990107,
+  "scandir_seconds": 0.4956631120003294,
+  "outputs_equal": true,
+  "notes": "Reference additionally counts directory-symlink metadata omitted by the old walk implementation. Original profiling observed 90786 stat calls. This one warm-cache comparison does not establish a universal speedup."
+}
