@@ -182,9 +182,18 @@ def readiness(
         state.get("review", {}).get("approval_event_id")
     )
     if approved:
-        from simready.review.workflow import Workflow
+        from simready.review.workflow import Workflow, scene_evidence_digest
 
-        events = Workflow(scenes).records(scene_id)
+        workflow = Workflow(scenes)
+        workflow.captured_readiness(scene_id, state)
+        if scene_evidence_digest(state) != state["review"]["scene_payload_sha256"]:
+            raise ValueError("approved content differs from captured review")
+        simulation_manifest = json.loads(
+            simulations.asset(scene_id, run["run_id"], "simulation.json").read_text()
+        )
+        for name in simulation_manifest["files_sha256"]:
+            simulations.asset(scene_id, run["run_id"], name)
+        events = workflow.records(scene_id)
         if not any(
             e["event_id"] == state["review"]["approval_event_id"]
             and e["action"] == "approve"

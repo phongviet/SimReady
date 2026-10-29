@@ -197,3 +197,14 @@ def test_tampered_capture_cannot_be_approved_and_can_still_be_rejected(tmp_path)
     denied = reviewer.post(base + "/review", json=decision(3))
     assert denied.status_code == 400 and "content changed" in denied.json()["error"]["message"]
     assert reviewer.post(base + "/review", json=decision(3, "reject")).status_code == 200
+
+
+def test_post_approval_evidence_tamper_blocks_readiness_and_export(tmp_path):
+    app, builder, reviewer, run = setup(tmp_path)
+    base = "/api/v1/scenes/analytic-demo"
+    assert builder.post(base + "/submit", json=submission(run)).status_code == 200
+    assert reviewer.post(base + "/review", json=decision(3)).status_code == 200
+    path = app.state.simulations.run_root("analytic-demo", run["run_id"]) / "result.json"
+    path.write_text("{}")
+    assert reviewer.get(base + "/readiness").status_code == 400
+    assert reviewer.post(base + "/export", json={"version": 4}).status_code == 400
