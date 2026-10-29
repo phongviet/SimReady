@@ -118,12 +118,20 @@ def main(argv: list[str] | None = None) -> int:
     )
     item.add_argument("--study", type=Path, required=True)
     item.add_argument("--out", type=Path, required=True)
+    item = research.add_parser("register", help="register a verified analysis for the dashboard")
+    item.add_argument("--id", required=True)
+    item.add_argument("--analysis", type=Path, required=True)
+    item.add_argument("--root", type=Path, default=PROJECT_ROOT / "artifacts/studio")
     args = parser.parse_args(argv)
     try:
         if args.command == "research":
             from simready.research.runner import prepare, run
 
-            if args.action == "analyze":
+            if args.action == "register":
+                from simready.research.store import StudyStore
+
+                result = StudyStore(args.root).register(args.id, args.analysis)
+            elif args.action == "analyze":
                 from simready.research.analysis import analyze
 
                 result = {"analysis": str(analyze(args.study, args.out))}

@@ -1,0 +1,88 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>M5 TUM recapture study</title><style>body{max-width:1160px;margin:32px auto;padding:0 20px;font:16px/1.5 system-ui;color:#20332f}table{border-collapse:collapse;width:100%;font-size:14px}td{border-bottom:1px solid #ccd7d1;padding:8px}tr:first-child{font-weight:700;background:#edf3ef}img{max-width:100%;height:auto}p{overflow-wrap:anywhere}</style><h1>M5 — Frozen-budget TUM recapture case study</h1>
+<p>One real TUM capture, three paired seeds, 18 correlated test views.</p>
+<p>Descriptive engineering case study; no novelty, population significance, safety or transfer claim.</p>
+<h2>Raw run table</h2>
+<table>
+<tr><td>Run</td><td>Train</td><td>LPIPS</td><td>PSNR dB</td><td>SSIM</td><td>Depth MAE m</td><td>Real/rendered/matched</td></tr>
+<tr><td>base-s42</td><td>50</td><td>0.41065</td><td>16.69959</td><td>0.50662</td><td>0.02991</td><td>54/4/0</td></tr>
+<tr><td>base-s43</td><td>50</td><td>0.41789</td><td>16.52413</td><td>0.50253</td><td>0.03866</td><td>54/4/0</td></tr>
+<tr><td>base-s44</td><td>50</td><td>0.39718</td><td>16.60605</td><td>0.50993</td><td>0.03878</td><td>54/3/3</td></tr>
+<tr><td>risk-s42</td><td>54</td><td>0.42794</td><td>17.59491</td><td>0.53600</td><td>0.03046</td><td>54/4/2</td></tr>
+<tr><td>risk-s43</td><td>54</td><td>0.41460</td><td>17.54736</td><td>0.53831</td><td>0.03153</td><td>54/4/0</td></tr>
+<tr><td>risk-s44</td><td>54</td><td>0.40623</td><td>17.80731</td><td>0.54204</td><td>0.03102</td><td>54/2/0</td></tr>
+<tr><td>random-s42</td><td>54</td><td>0.41404</td><td>18.39033</td><td>0.55770</td><td>0.02909</td><td>54/6/0</td></tr>
+<tr><td>random-s43</td><td>54</td><td>0.40366</td><td>17.58458</td><td>0.53852</td><td>0.02640</td><td>54/4/3</td></tr>
+<tr><td>random-s44</td><td>54</td><td>0.38689</td><td>18.00354</td><td>0.54899</td><td>0.02751</td><td>54/6/4</td></tr>
+<tr><td>farthest-s42</td><td>54</td><td>0.42641</td><td>17.81155</td><td>0.53701</td><td>0.02886</td><td>54/9/2</td></tr>
+<tr><td>farthest-s43</td><td>54</td><td>0.41171</td><td>17.70515</td><td>0.54308</td><td>0.02775</td><td>54/11/2</td></tr>
+<tr><td>farthest-s44</td><td>54</td><td>0.39432</td><td>17.82808</td><td>0.54391</td><td>0.02733</td><td>54/5/4</td></tr>
+</table>
+<h2>Seed summaries</h2>
+<p>Mean ± sample SD of three seed-level means. No independent-frame confidence interval.</p>
+<table>
+<tr><td>Method</td><td>LPIPS mean</td><td>Sample SD</td><td>LPIPS improvement vs base %</td></tr>
+<tr><td>base</td><td>0.40858</td><td>0.01051</td><td>-0.00000</td></tr>
+<tr><td>risk</td><td>0.41626</td><td>0.01095</td><td>-1.88020</td></tr>
+<tr><td>random</td><td>0.40153</td><td>0.01370</td><td>1.72390</td></tr>
+<tr><td>farthest</td><td>0.41081</td><td>0.01606</td><td>-0.54704</td></tr>
+</table>
+<h2>Findings and limits</h2>
+<p>1. Risk-minus-random LPIPS is 0.01473 ± 0.00426</p>
+<p>(sample SD), with seed deltas [0.013894331124093773, 0.010939190785090092, 0.019342977139684914]. Risk has higher aggregate</p>
+<p>LPIPS than random here; this does not establish general superiority.</p>
+<p>2. E1 reports Spearman for normalized unmatched fraction and raw counts</p>
+<p>separately. Constant inputs produce null plus a reason. Raw counts depend</p>
+<p>on object visibility; neither quantity measures true detection error.</p>
+<p>3. 12 normalized-discrepancy ranking counterexamples are exported</p>
+<p>(capped at 12). An empty list means no such inversion was found. It is not</p>
+<p>evidence of safety or accuracy.</p>
+<p>4. E2 uses the same original 50 training cameras for all arms, three</p>
+<p>chronological six-view blocks and explicit empty bins. Scene/visibility</p>
+<p>confounding cannot be controlled in this one-capture case study.</p>
+<p>5. Calibration fits 8 validation views and checks 8 other views. Coefficients,</p>
+<p>check MAE/correlation, risk features and sealed choices are saved. Weak</p>
+<p>checks were not used to tune or replace the method.</p>
+<p>All fits set distance and rotation coefficients to zero; the ranking reduces to alpha-hole fraction. Coefficient order is intercept, distance, rotation, alpha hole:</p>
+<p>[[0.31620563450832967, 0.0, 0.0, 0.02371121630551018], [0.3221081536578033, 0.0, 0.0, 0.01571630664415079], [0.3174188701601206, 0.0, 0.0, 0.046151574670320786]]</p>
+<p>Interpretation: any observed difference combines where four observations</p>
+<p>were acquired and seeded optimization. Coverage, visibility and holes are</p>
+<p>plausible contributors, not established causal explanations.</p>
+<p>Next experiments: use independently captured scenes and valid object labels;</p>
+<p>pre-register calibration/feature ablations before new test exposure.</p>
+<p>Do not retune this completed test study.</p>
+<h2>Provenance and integrity</h2>
+<p>Experiment source: `6947fb837b726c54dd4f4b2b17482dd9447ba857`. All 12 models use 1,200</p>
+<p>fresh steps at 320px. Recapture arms add exactly 4 frames; base has 50.</p>
+<p>Final Gaussian counts and measured costs vary under the same fixed caps.</p>
+<p>checks.json contains deterministic hash, selection, matching and metric</p>
+<p>replays. It is not a substitute for independent semantic review.</p>
+<p>Fresh semantic audit: {&quot;acceptance_status&quot;: &quot;provisional&quot;, &quot;integrity_status&quot;: &quot;warn&quot;, &quot;review_independence&quot;: &quot;same-family&quot;, &quot;summary&quot;: &quot;The completed M5 raw experiment is internally consistent and traceable. No leakage through the declared pipeline, fabricated ground truth, score inflation, phantom run, or metric mismatch was found. Scientific conclusions remain limited to one correlated capture; risk acquisition is worse than random on LPIPS for all three seeds.&quot;, &quot;verdict&quot;: &quot;WARN&quot;}</p>
+<p>Benchmark outputs: config.yaml (JSON-compatible YAML1.2), environment.json,</p>
+<p>git_commit.txt, dataset_and_split_hash.json, runs.csv, per_view.csv,</p>
+<p>raw prediction JSONL, metrics_summary.json, figures and this report.</p>
+<h2>Relation to prior work</h2>
+<p><a href="https://arxiv.org/abs/2209.08546">ActiveNeRF</a>,</p>
+<p><a href="https://li-yuetao.github.io/ActiveSplat/">ActiveSplat</a> and</p>
+<p><a href="https://arxiv.org/abs/2501.06897">ActiveGAMER</a> study broader active</p>
+<p>reconstruction/exploration methods. They are related work, not reproduced</p>
+<p>baselines. Farthest-pose acquisition here is a local coverage control.</p>
+<p><a href="https://arxiv.org/abs/2610.17521">YUBI-Real2Sim</a> studies scene verification</p>
+<p>and robot-policy evaluation. This pinhole detector study does not reproduce</p>
+<p>its policy benchmark. No research novelty is claimed.</p>
+<h2>Limitations</h2>
+<p>- ROS pinhole approximation follows publisher advice; residual errors possible.</p>
+<p>- Temporal splits may overlap spatially; not independent scenes.</p>
+<p>- Nominal mocap Z-up assumed; no accelerometer gravity alignment.</p>
+<p>- Uncertainty: interpolated poses, exposure, rolling shutter, holes and dynamics.</p>
+<p>- Study access is phase-scoped; metadata is public, candidate/test pixels are withheld until seals.</p>
+<p>- New held-out frames are close in time/pose to inspected M3 frames; no scene-level blindness claim.</p>
+<p>- Three paired seeds vary optimization and random acquisition jointly; not across-scene uncertainty.</p>
+<p>- Sample SD describes seed-level means; no independent-frame CI or significance test.</p>
+<p>- Detector counts depend on visibility and model errors; normalized discrepancy uses prediction counts, not GT.</p>
+<p>- E2 bins use the common original50training poses, even for recaptured models; empty bins are null.</p>
+<p>- Same steps/resolution/caps; final Gaussian counts and measured runtime can differ.</p>
+<p>- No ground-truth object accuracy or geometric Chamfer/F-score measurement.</p>
+<p>- Post-hoc failure figures are diagnostic selections, not additional tuning data.</p>
+<p>Derived comparison images: TUM RGB-D benchmark, Sturm et al., IROS2012, CC-BY-4.0. Montage rows are selected after measurement for diagnosis, never for training or method selection.</p>
+<h2>Measured figures</h2><img src="study-figures.svg" alt="Measured recapture, discrepancy, pose-bin and calibration plots">
+<h2>Post-hoc failure comparisons</h2><img src="failure-comparisons.png" alt="Reference and four methods on three diagnostic frames"></html>

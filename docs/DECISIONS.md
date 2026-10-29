@@ -181,3 +181,15 @@ fixture generation and camera math. Final acceptance will be recorded separately
     preparation checks metadata, and evaluation checks only its requested split.
     Reading test images merely to validate training input would violate the study
     boundary. Access scopes are recorded; partial validation is never called full.
+35. **M5 negative outcome:** preserve the completed6947fb8study unchanged. Risk
+    loses to random on LPIPS in all3paired seeds. Do not tune the rule or rerun
+    successful arms after viewing test outputs. The rule's fitted distance and
+    rotation coefficients are zero; validation association is not acquisition benefit.
+36. **Research packages:** read-only HTTP serves only registered, content-verified
+    study assets. The CPU demo carries an actual measured-summary snapshot with
+    explicit raw-prediction/checkpoint omissions; full raw outputs remain in the
+    reproducible GPU study. Research is separate from the selected editor scene.
+37. **Concurrent budget scans:** retry a complete scan up to3times if files vanish
+    during traversal, rather than ignoring entries or returning partial bytes.
+    Repeated churn fails closed. This fixes the observed browser-cache cleanup
+    race while retaining sparse/hardlink/symlink accounting and the30GB cap.

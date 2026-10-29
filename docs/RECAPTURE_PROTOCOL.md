@@ -31,6 +31,18 @@ post-run analysis additions do not silently replace that source on resume.
 `research run` deliberately rejects source drift; a new implementation requires
 a new study directory. Reports keep analysis source separate from training source.
 
+Register a full analysis for the Research tab:
+
+```bash
+uv run --frozen simready research register --id tum-recapture-1 \
+  --analysis experiments/tum-recapture-1/analysis-1
+make studio
+```
+
+The CPU demo also seeds a small actual measured-summary snapshot. It visibly
+omits raw prediction downloads/checkpoints; it is not a new CPU experiment or
+the selected analytic editor scene. The original full study keeps all raw outputs.
+
 The ready local GPU spec is3db6217d; reuse it per `GPU_SETUP.md`. No remote or
 paid compute is configured. These commands run sequentially on the local GPU;
 do not start other GPU jobs concurrently. `--phase all` runs both phases. A

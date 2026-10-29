@@ -1,0 +1,26 @@
+{
+  "files_sha256": {
+    "checks.json": "715fc3af22320b7770026f210e3fac805c37dcc54acce53fc3f06fa2c9224132",
+    "config.yaml": "20a86410c4efd96777e6300f86ec7d148d8fca5419bce4c1539bc3c601a56912",
+    "dataset_and_split_hash.json": "fcc3eddf6e8ad33794d1a7ca9cfe3784d32d743e1b0a941afbf6a6bee02f03ff",
+    "environment.json": "eec935249ecb596047f89a90200071ec01ed008f9fd2e058783f242235cc26d5",
+    "experiment-audit.json": "79fa7c201a2e99ccb446891e75bba235f4bf26d242509a698c60a6b4072a8d52",
+    "failure-comparisons.png": "74c78e0f5551c8ef9c902f09867a2052ed1b1e0ecea6074b234ac1cad14395ee",
+    "failure-selection.json": "c9aa6b7f776d51b4650c6f3dedbbe5653397077a99912578d79f44dfd6e1672e",
+    "git_commit.txt": "4316ae37b72d049474c1e7fc487292dd38e7513dfa96b035525d043d7186a077",
+    "metrics_summary.json": "ede26dc7e6cd52ab3370ebb0fb58f0422acdfb51389e6b329bdda5c38b87bb3d",
+    "per_view.csv": "af119b9fe868b0a65af72f67e5797910d5330733d40069a0844bd6762dd50e67",
+    "report.html": "659723ea48edafc39559a84cddb68216d5fa0a3b702ec3d2070fe2b28b89b13a",
+    "report.md": "5a328d5b69a440b0ff177fab333df7b09ceedda38d14a25a6058935b4e7fc46d",
+    "runs.csv": "b0bcc56496c3d960f6517080f1ba2c23d5514a278af3d82b1bac345d8d669647",
+    "source-analysis.json": "ae98e83d2cb6e2c413ff21cedc6139b1d55928f776a603b3b57edc5750c50e81",
+    "study-figures.png": "01e62505040e91b09c8a67094d56d8a3f19368c630f6efb08de8091ee07b1f12",
+    "study-figures.svg": "f5af9be35a66d412962c8eb7ded81b5440a998aab515fa838e7101debe81c3c8"
+  },
+  "schema_version": "1.0",
+  "scope": "Measured summary snapshot; raw predictions/checkpoints require reproducing the recorded GPU study.",
+  "source_analysis_sha256": "ae98e83d2cb6e2c413ff21cedc6139b1d55928f776a603b3b57edc5750c50e81",
+  "summary_snapshot": true,
+  "text_serialization": "Portable CSV uses LF and SVG omits trailing layout whitespace. Values are unchanged; source-analysis.json retains original byte hashes.",
+  "type": "measured_study_package"
+}

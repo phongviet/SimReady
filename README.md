@@ -4,7 +4,8 @@
 authorized completing the full project.
 The studio supports persistent rigid proxy editing and frozen-view perception
 evaluation, deterministic navigation and scoped local review/export.
-Recapture research and shipping remain pending.
+M5's real recapture case study, analysis and research dashboard are implemented;
+its labeled-object companion and recovery hardening remain open. Shipping is pending.
 
 M0 provides a CPU-only RGB-D import/validation package, explicit camera
 conventions, an analytic fixture with known metric geometry, frozen dataset
@@ -128,6 +129,19 @@ not human endorsement. Its perception failures and unknowns remain visible.
 [Navigation protocol/results](docs/SIMULATION_PROTOCOL.md) ·
 [Accounts, readiness, review and export](docs/REVIEW_PROTOCOL.md) ·
 [M4 acceptance](docs/M4_CHECKLIST.md)
+
+## Measured recapture case study
+
+The **Research** tab includes an actual measured TUM summary, viewable without a
+GPU. It labels the precomputed snapshot and its omitted raw files explicitly.
+The full study used three seeds, four methods and the same18new held-out views.
+Risk recapture did worse than random on LPIPS for all three seeds:
+**risk-minus-random +0.01473 ± 0.00426** (sample SD; lower is better).
+This is one correlated capture, not a general method or detection-accuracy claim.
+
+[Results, figures and failures](docs/M5_RESULTS.md) ·
+[Reproduction and registration](docs/RECAPTURE_PROTOCOL.md) ·
+[Fresh provisional integrity audit](docs/EXPERIMENT_AUDIT.md)
 
 ## Local scene workspace
 

@@ -7,6 +7,7 @@ import { api, ApiError } from "./api";
 import { spawnPosition } from "./camera";
 import { SimulationPanel } from "./SimulationPanel";
 import { EvaluationExplorer } from "./EvaluationExplorer";
+import { ResearchDashboard } from "./ResearchDashboard";
 import { SavedView } from "./SavedView";
 import type { ProxyObject, SceneState, Vec3 } from "./types";
 
@@ -29,7 +30,7 @@ export function App() {
   const [error, setError] = useState(""),
     [notice, setNotice] = useState("");
   const [view, setView] = useState<
-    "3d" | "saved" | "evaluation" | "simulation" | "review"
+    "3d" | "saved" | "evaluation" | "simulation" | "review" | "research"
   >("3d");
   const [cameraIndex, setCameraIndex] = useState(0),
     [collision, setCollision] = useState(false);
@@ -199,7 +200,9 @@ export function App() {
           <span className="local-badge">LOCAL STUDIO</span>
         </div>
         <span className="top-caption">Reconstruct. Inspect. Edit.</span>
-        <span className="milestone-badge">M4 · Scoped experiments</span>
+        <span className="milestone-badge">
+          Measured scenes · Scoped experiments
+        </span>
       </header>
       <AccountBar user={user} onUser={setUser} />
       <aside className="library">
@@ -337,6 +340,12 @@ export function App() {
                 Readiness / review
               </button>
               <button
+                className={view === "research" ? "selected" : ""}
+                onClick={() => setView("research")}
+              >
+                Research
+              </button>
+              <button
                 onClick={() => add("box")}
                 disabled={busy || !canEdit || objects.length >= 128}
               >
@@ -358,7 +367,9 @@ export function App() {
                 Collision proxy
               </label>
             </div>
-            {view === "review" ? (
+            {view === "research" ? (
+              <ResearchDashboard />
+            ) : view === "review" ? (
               <ReviewPanel
                 scene={scene}
                 user={user}

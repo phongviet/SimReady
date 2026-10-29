@@ -6,17 +6,22 @@
 - [x] Run three base models; calibrate only on validation and record independent check block.
 - [x] Seal all nine K=4 acquisitions before candidate-image release.
 - [x] Run nine fresh equal-budget 54-frame models and twelve common-test evaluations.
-- [ ] Audit configs, counts, source/input/content hashes and raw predictions.
-- [ ] E1 correlations/counterexamples, E2 novelty bins/pose blocks, E4 paired variability.
-- [ ] Explicit undefined metrics, negative results, unknown regions and missing object GT.
-- [ ] Reproducible figures, research report and working research dashboard.
-- [ ] CPU/unit/browser checks and actual local GPU pipeline evidence.
-- [ ] Confirm total storage below 30,000,000,000 bytes.
+- [x] Audit configs, counts, source/input/content hashes and raw predictions.
+- [x] E1 discrepancy correlations/counterexamples, E2 bins/blocks, E4 paired variability.
+- [x] Explicit undefined metrics, negative results, unknown regions and missing object GT.
+- [x] Reproducible figures, primary research report and working research dashboard.
+- [x] CPU/unit/browser checks and actual local GPU pipeline evidence.
+- [x] Confirm total storage below 30,000,000,000 bytes.
+- [ ] Controlled labeled-object E1 companion: true errors and agreement-versus-accuracy.
+- [ ] Forward fixes for missing-stage evaluation binding and release-ledger recovery.
 
-Status: all45actual pipeline stages completed from clean6947fb8; analysis,
-semantic audit and dashboard acceptance remain pending. No superiority claim.
-Core regression after access guards:161 passed,2 opt-in GPU skips. The new runner
-has separate targeted verification before its first real execution.
+Primary case study verified: all45actual stages completed from clean6947fb8;
+analysis from clean772e055. Fresh audit WARN, raw evidence pass, same-family
+semantic acceptance provisional. Risk LPIPS is worse than random for all3seeds.
+170CPU/geometry tests passed with2opt-in GPU skips;5frontend unit tests,
+7actual browser tests, production build, lint and format checks passed. The two
+remaining checks above prevent claiming the full M5 evidence scope is finished.
+Storage about15.55GB. See M5_RESULTS.md and EXPERIMENT_AUDIT.md.
 Frozen design: `refine-logs/EXPERIMENT_PLAN.md`, config `configs/recapture.json`.
 Read boundaries use physically omitted candidate/test images in learner datasets.
 The curator may copy/hash opaque bytes, which is not selection-algorithm access.

@@ -15,6 +15,7 @@ from pydantic import Field
 from simready.data.schema import Contract
 from simready.evaluation.readiness import readiness
 from simready.evaluation.store import EvaluationRequest, EvaluationStore
+from simready.research.store import StudyStore
 from simready.review.auth import AuthenticationError, AuthorizationError, AuthStore, Principal
 from simready.review.export import ExportStore
 from simready.review.workflow import ReviewRequest, SubmitRequest, Workflow
@@ -41,6 +42,7 @@ def create_app(root: Path | None = None) -> FastAPI:
     app.state.auth = auth
     app.state.workflow = workflow
     app.state.exports = exports
+    research = StudyStore(store.root)
     app.add_middleware(
         CORSMiddleware,
         allow_origins=["http://127.0.0.1:5173", "http://localhost:5173"],
@@ -133,6 +135,24 @@ def create_app(root: Path | None = None) -> FastAPI:
     @app.get("/api/v1/scenes")
     def scenes():
         return store.list_scenes()
+
+    @app.get("/api/v1/research/studies")
+    def studies():
+        return research.list()
+
+    @app.get("/api/v1/research/studies/{study_id}")
+    def study(study_id: str):
+        return research.get(study_id)
+
+    @app.get("/api/v1/research/studies/{study_id}/assets/{name:path}")
+    def study_asset(study_id: str, name: str):
+        path = research.asset(study_id, name)
+        return FileResponse(
+            path,
+            filename=path.name,
+            content_disposition_type="inline",
+            headers={"Cache-Control": "no-cache", "X-Content-Type-Options": "nosniff"},
+        )
 
     @app.get("/api/v1/scenes/{scene_id}")
     def scene(scene_id: str):

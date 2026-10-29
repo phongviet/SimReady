@@ -1,0 +1,10 @@
+{
+  "seed": 42,
+  "frames": [
+    "blindtest_00001",
+    "blindtest_00000",
+    "blindtest_00002"
+  ],
+  "rule": "Three largest risk-minus-random LPIPS losses, ties by frame ID; diagnostic post-hoc selection.",
+  "attribution": "TUM RGB-D benchmark, Sturm et al., IROS2012, CC-BY-4.0"
+}

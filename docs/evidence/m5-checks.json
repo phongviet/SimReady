@@ -1,0 +1,14 @@
+{
+  "checks": {
+    "all_content_hashes": true,
+    "common_test_observations_and_cameras": true,
+    "complete_stage_matrix": 45,
+    "frozen_equal_training_configs": true,
+    "identical_real_predictions": true,
+    "recorded_release_order": true,
+    "rgb_depth_matching_replayed": 216,
+    "selection_replay": true,
+    "source_matches_recorded_git_objects": true
+  },
+  "scope": "Deterministic replay; not independent semantic review."
+}

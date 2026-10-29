@@ -14,6 +14,7 @@ import type {
 } from "./evaluation";
 import { reportAsset } from "./evaluation";
 import type { ProxyObject, SceneState } from "./types";
+import type { ResearchStudy } from "./ResearchDashboard";
 
 export class ApiError extends Error {
   constructor(
@@ -41,6 +42,7 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   return response.json();
 }
 export const api = {
+  studies: () => request<ResearchStudy[]>("/research/studies"),
   me: () => request<Principal>("/auth/me"),
   signIn: (token: string) =>
     request<Principal>("/auth/me", {

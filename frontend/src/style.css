@@ -964,3 +964,38 @@ pre {
   font-size: 11px;
   padding: 7px;
 }
+.research-dashboard {
+  min-width: 0;
+}
+.research-table {
+  overflow-x: auto;
+  margin: 20px 0;
+}
+.research-table table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 13px;
+}
+.research-table th,
+.research-table td {
+  padding: 10px;
+  border-bottom: 1px solid #ccd7d1;
+  text-align: left;
+}
+.research-table code {
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+.research-figure {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 20px 0;
+  background: white;
+}
+.research-downloads {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}

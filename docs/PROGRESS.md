@@ -26,7 +26,7 @@ exact tested package versions are recorded in `ENVIRONMENT.md` and the lockfiles
   local API, working splat/orbit editor, conflict handling and browser evidence.
 - [x] M3: perception validation, real held-out report and nine inspected failures; see M3_CHECKLIST.md.
 - [x] M4: readiness, local roles, scoped review/audit, navigation and reviewed exports; see M4_CHECKLIST.md.
-- [ ] M5: all45experiment stages complete; analysis, audit and dashboard pending.
+- [ ] M5: primary case study/report/dashboard verified; labeled E1 companion and hardening remain.
 - [ ] M6: shipping (not started).
 - [ ] M7: optional integrations (not started).
 
@@ -351,3 +351,32 @@ Recorded source pins match historical Git objects. Analysis math/adversarial
 tests passed; the fresh same-family semantic audit resumed after a usage-limit
 interruption and has no completed verdict yet. Never treat its partial remarks
 as acceptance. Storage after the raw matrix:15,494,459,790bytes, below30GB.
+
+### M5 primary study, analysis and dashboard verified
+
+The fresh audit completed: WARN for limited scope/local chronology and future
+recovery hardening, with raw experiment evidence pass; same-family semantic
+acceptance remains provisional. All163indexed inputs,264validation/test paired
+records,636training RGB-D tensor pairs and45stage records were verified. See
+EXPERIMENT_AUDIT.md/JSON; the initial usage error and raw review are retained.
+
+Analysis from clean772e055 exports full benchmark-contract outputs, correlations,
+common original50camera novelty bins, three6view blocks, paired seed variation,
+figures and actual failure comparisons. Primary result is negative: mean LPIPS
+base0.408576, risk0.416258, random0.401532, farthest0.410811. Paired risk-minus-
+random+0.0147255±0.0042631sampleSD; higher LPIPS is worse. All fits set distance/
+rotation coefficients to zero. No acquisition superiority or true accuracy claim.
+
+The Research dashboard serves controlled immutable packages, downloads and raw
+run provenance. CPU demo includes a2MBactual measured summary snapshot, explicitly
+omitting raw predictions/checkpoints. The full package is registered locally as
+tum-recapture-1. It is independent of the selected editor scene. Actual browser
+capture has zero page errors; the verification server was stopped.
+
+Current verification:170CPU/geometry tests passed,2opt-in GPU skips;5frontend
+unit and7actual browser tests passed. Lint/format/build/lock/diff checks pass.
+Concurrent browser cleanup exposed a disappearing-directory storage race; a
+bounded full recount now preserves conservative accounting and fails closed on
+repeated churn. Focused race/package tests passed after the fix. About15.55GB
+total, below30GB. M5's labeled-object companion and two forward recovery fixes
+remain explicit; M6 shipping and optional M7 remain open.

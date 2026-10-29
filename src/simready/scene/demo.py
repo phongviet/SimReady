@@ -8,6 +8,12 @@ from simready.scene.store import SceneStore
 
 
 def seed_demo(store: SceneStore) -> dict:
+    from simready.research.store import StudyStore
+
+    study = Path(__file__).resolve().parents[1] / "demo/tum-recapture-evidence"
+    research = StudyStore(store.root)
+    if study.is_dir() and not research.directory("bundled-recapture-1").exists():
+        research.import_package("bundled-recapture-1", study)
     fixture = Path(__file__).resolve().parents[1] / "demo/analytic-plane"
     try:
         state = store.get("analytic-demo")

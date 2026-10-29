@@ -1,0 +1,34 @@
+{
+  "analysis_source": {
+    "commit": "772e0555fdb0e784f010419e3d8a3c947c860c0b",
+    "dirty": false
+  },
+  "created_at": "2026-10-29T14:17:39.778283+00:00",
+  "files_sha256": {
+    "checks.json": "715fc3af22320b7770026f210e3fac805c37dcc54acce53fc3f06fa2c9224132",
+    "config.yaml": "20a86410c4efd96777e6300f86ec7d148d8fca5419bce4c1539bc3c601a56912",
+    "dataset_and_split_hash.json": "fcc3eddf6e8ad33794d1a7ca9cfe3784d32d743e1b0a941afbf6a6bee02f03ff",
+    "environment.json": "eec935249ecb596047f89a90200071ec01ed008f9fd2e058783f242235cc26d5",
+    "experiment-audit.json": "79fa7c201a2e99ccb446891e75bba235f4bf26d242509a698c60a6b4072a8d52",
+    "failure-comparisons.png": "74c78e0f5551c8ef9c902f09867a2052ed1b1e0ecea6074b234ac1cad14395ee",
+    "failure-selection.json": "c9aa6b7f776d51b4650c6f3dedbbe5653397077a99912578d79f44dfd6e1672e",
+    "git_commit.txt": "4316ae37b72d049474c1e7fc487292dd38e7513dfa96b035525d043d7186a077",
+    "metrics_summary.json": "ede26dc7e6cd52ab3370ebb0fb58f0422acdfb51389e6b329bdda5c38b87bb3d",
+    "per_view.csv": "a6ee7b4a4f095fe9c5e2096af84df0f7fad534c242bb47cb2e4f9f30394214f0",
+    "predictions_real.jsonl": "003105e4c9b6ffff4dbf47bfb7870def1b06401908cf171c52191bb7871008c1",
+    "predictions_rendered.jsonl": "e27664781e865512ee4c4e3a02baf03d02aefc40bd387ce112568f82a2d07635",
+    "report.html": "659723ea48edafc39559a84cddb68216d5fa0a3b702ec3d2070fe2b28b89b13a",
+    "report.md": "5a328d5b69a440b0ff177fab333df7b09ceedda38d14a25a6058935b4e7fc46d",
+    "runs.csv": "7e945d90a93cc3c89aed5ee312fc9fe2fd77e111d69cb3ae6c5347a75f1dd83e",
+    "study-figures.png": "01e62505040e91b09c8a67094d56d8a3f19368c630f6efb08de8091ee07b1f12",
+    "study-figures.svg": "8e9ca114883322daa2f178c83344ce46c93bd8501103cd68758043fe4c6d8bda"
+  },
+  "schema_version": "1.0",
+  "source_files_sha256": {
+    "src/simready/research/analysis.py": "d51c1ad64714873405b37fd55785fd795cb0f928c0ceeb37c0a8438edb67dcdc",
+    "src/simready/research/figures.py": "624b04cd8ffa0fbf301425d08f3d8ee3c400c294868982d39fdf0a0404610826"
+  },
+  "source_study": "tum-recapture-1",
+  "storage_bytes": 15520334261,
+  "type": "recapture_case_study"
+}
