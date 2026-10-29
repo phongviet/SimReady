@@ -1,0 +1,20 @@
+{
+  "scene_id": "tum_fr1_desk",
+  "kind": "real",
+  "frames": 100,
+  "splits": {
+    "train": 50,
+    "validation": 16,
+    "candidate": 16,
+    "test": 18
+  },
+  "frames_sha256": "dd6cca2995ae1f7f8696ecdd56f0cff88c03f3ae09947cfde8551d4348a8bc63",
+  "split_sha256": "7ce96989011152282b0adcaa80e49ab33907f98750cf342d945bab904406cdab",
+  "valid_depth_pixels": 22948680,
+  "limitations": [
+    "ROS pinhole approximation follows publisher advice; residual errors possible.",
+    "Temporal splits may overlap spatially; not independent scenes.",
+    "Nominal mocap Z-up assumed; no accelerometer gravity alignment.",
+    "Uncertainty: interpolated poses, exposure, rolling shutter, holes and dynamics."
+  ]
+}

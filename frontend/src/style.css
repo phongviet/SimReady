@@ -17,4 +17,7 @@ li, article p { line-height: 1.75; color: #b7c8bd; }
 ul { padding-left: 20px; }
 pre { white-space: pre-wrap; overflow-wrap: anywhere; background: #0d1711; padding: 14px; color: #b9ef8b; border-radius: 5px; line-height: 1.7; }
 footer { margin-top: 40px; font-size: 12px; color: #8fa397; }
+.demo-preview { margin: 24px 0 0; display: flex; gap: 20px; align-items: center; padding: 20px; border: 1px solid #30423a; border-radius: 12px; }
+.demo-preview img { width: 160px; height: 120px; object-fit: contain; background: #0d1711; }
+.demo-preview figcaption { color: #aec0b5; font-size: 13px; line-height: 1.8; }
 @media (max-width: 700px) { main { padding: 24px 20px; } .panels { grid-template-columns: 1fr; } section { padding-top: 35px; } }

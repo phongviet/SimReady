@@ -1,7 +1,7 @@
 # SimReady
 
-`PLAN.md` is the specification. **M0 is complete; M1 reconstruction is under
-acceptance verification.** The user has authorized completing the full project.
+`PLAN.md` is the specification. **M0 and M1 are complete locally.** The user has
+authorized completing the full project.
 Scene editing, perception evaluation, simulation and review remain future milestones.
 
 M0 provides a CPU-only RGB-D import/validation package, explicit camera
@@ -117,6 +117,7 @@ months of work. See [decisions](docs/DECISIONS.md), [environment](docs/ENVIRONME
 and [limitations](docs/LIMITATIONS.md). Local CI-equivalent commands are verified;
 hosted GitHub Actions has not run because no remote is configured.
 
-The M1 checklist remains open until a verified real capture has been imported,
-trained, reloaded and rendered. Successful training of synthetic input is tracked
-separately. Later milestone completion is always conditional on its own tests.
+M1 has genuinely reconstructed the real TUM sequence and reloaded/rendered all
+18 frozen test cameras. See [M1 acceptance](docs/M1_CHECKLIST.md) for evidence.
+Image/perception quality has not been measured. M2 geometry/editing is next;
+later milestone completion remains conditional on its own tests.

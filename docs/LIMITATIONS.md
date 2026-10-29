@@ -1,7 +1,7 @@
 # Current limitations
 
-- Gaussian training/rendering is implemented with a verified local CUDA kernel;
-  real TUM sequence acceptance is still in progress. No collision geometry, editor,
+- Gaussian training/rendering and real TUM checkpoint reload are verified locally.
+  No collision geometry, editor,
   API, perception metrics, simulation, approval workflow or recapture experiments.
 - Frontend is a React/TypeScript scope shell only, with no backend connection.
 - Analytic fixture generation, official Open3D Redwood and TUM fr1 desk formats

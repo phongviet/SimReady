@@ -20,7 +20,8 @@ exact tested package versions are recorded in `ENVIRONMENT.md` and the lockfiles
 - [x] **M0 complete locally:** repo bootstrap, typed versioned data/scene contracts,
   camera math, analytic fixture, official real RGB-D import, frozen splits, tests,
   frontend shell, CI configuration and documented acceptance.
-- [ ] M1: reconstruction (in progress after expanded authorization; see M1_CHECKLIST.md).
+- [x] **M1 complete locally:** actual real TUM reconstruction, checkpoint/PLY,
+  held-out RGB/depth rendering, isolated GPU runtime and CPU demo. See M1_CHECKLIST.md.
 - [ ] M2: geometry and editing (not started).
 - [ ] M3: perception validation (not started).
 - [ ] M4: simulation and review (not started).
@@ -85,8 +86,43 @@ was wrongly labeled real and is rejected by the corrected validator. It does
 not satisfy real-capture acceptance. The CPU suite passed 93 tests before the
 optional GPU integration test was added; later non-GPU checks passed 105 tests,
 with real TUM integration explicitly skipped pending its live download. Full
-M1 acceptance is still in progress.
+M1's real-data gate subsequently passed on the actual TUM capture.
 
 Scope/status descriptions elsewhere referring to M0 only are historical and are
 being updated incrementally. M2+ remain unimplemented. No perception metrics,
 navigation, approval or recapture experiments have run.
+
+## M1 acceptance (2026-10-29)
+
+- Actual official TUM archive: 344,011,403 bytes; SHA-256 pinned in
+  `configs/tum_fr1_desk.source.json`. Source and CC BY 4.0 attribution verified.
+- 100 real RGB-D frames imported; unique <=20ms associations, motion-capture
+  pose interpolation, publisher-recommended pinhole approximation, frozen
+  **50 train / 16 validation / 16 candidate / 18 test** split.
+- Real training: committed `local_6gb` preset, 1,200 iterations, 320x240,
+  10,000 training-only initial points -> **17,828 learned Gaussians**.
+- NPZ/PLY saved and reloaded in a separate GPU process; all **18 frozen test
+  cameras** rendered to RGB, expected axial depth and alpha. Content hashes,
+  dimensions, finite depth and nonempty support verified for every output.
+- Run source `3fcc516` was clean. Package/GPU versions, full configuration,
+  dataset/split/content hashes, timing and allocated/reserved PyTorch memory
+  peaks are recorded in [the actual artifact metadata](evidence/m1-tum-artifact.json).
+  [Render metadata](evidence/m1-tum-renders.json) and
+  [real data validation](evidence/tum-validation.json) are also checked in.
+- CPU smoke loads a genuinely trained 421-Gaussian analytic model and two saved
+  views, including from an isolated built wheel. It does not render live on CPU.
+- Prior non-GPU run: 111 passed and 1 real-data skip; after real import, the
+  required real-data test passed. CUDA training/reload/PLY/depth integration also
+  passed. Final `make test`: **112 passed, 1 optional GPU skip**, Ruff lint/format,
+  1 frontend test and TypeScript/Vite production build passed. Final
+  `make test-gpu`: **1 passed, 112 deselected** on the actual local GPU.
+
+Held-out image/perception quality has not been measured, and inspected real
+renders show visible blur/artifacts. Training success is not a sim-readiness or
+transfer claim. Dataset pose/calibration uncertainty and temporal/spatial overlap
+are disclosed. Total conservative storage accounting remains about 11.6 GB,
+under the 30 GB limit. No paid compute or external publication was used.
+
+**Next:** M2, build independent collision geometry from training RGB-D, persist
+non-destructive rigid objects, and implement a working scene editor with tested
+coordinate alignment. Continue toward the full project; M2–M6 remain open.
