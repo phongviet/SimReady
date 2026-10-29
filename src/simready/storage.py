@@ -9,6 +9,21 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 
 def project_bytes(root: Path = PROJECT_ROOT) -> int:
+    # A removed/renamed cache entry invalidates the traversal. Recount the whole
+    # project rather than silently dropping entries or returning partial bytes.
+    for attempt in range(3):
+        try:
+            return _scan_bytes(root)
+        except FileNotFoundError as exc:
+            if attempt == 2:
+                raise ValueError(
+                    "project files changed repeatedly during storage scan; retry after "
+                    "ongoing artifact/cache operations finish"
+                ) from exc
+    raise AssertionError("unreachable storage scan state")
+
+
+def _scan_bytes(root: Path) -> int:
     if not root.is_dir():
         raise ValueError(f"storage root is not a directory: {root}")
     total = os.lstat(root).st_blocks * 512
