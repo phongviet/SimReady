@@ -580,6 +580,7 @@ def analyze(study: Path, output: Path) -> Path:
     )
     with atomic_dataset(output, 300_000_000) as stage:
         write_json(stage / "metrics_summary.json", summary)
+        write_json(stage / "experiment-audit.json", summary["semantic_audit"])
         write_json(
             stage / "checks.json",
             {

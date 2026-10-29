@@ -14,6 +14,23 @@ uv run --frozen simready research run --study experiments/tum-recapture-1 --phas
 make storage
 ```
 
+After the raw matrix completes, analysis can use the current development tree:
+
+```bash
+uv sync --frozen --extra research
+uv run --frozen --extra research simready research analyze \
+  --study experiments/tum-recapture-1 --out experiments/tum-recapture-1/analysis-1
+uv run --frozen python scripts/index_research_outputs.py --study experiments/tum-recapture-1
+```
+
+Analysis checks historical Git objects against the experiment's source pins,
+replays saved RGB/depth/matching metrics and selections, and refuses overwrite.
+It does not rerun neural inference or retrain successful models. For reproducing
+the original raw study, check out its recorded6947fb8source and locked GPU setup;
+post-run analysis additions do not silently replace that source on resume.
+`research run` deliberately rejects source drift; a new implementation requires
+a new study directory. Reports keep analysis source separate from training source.
+
 The ready local GPU spec is3db6217d; reuse it per `GPU_SETUP.md`. No remote or
 paid compute is configured. These commands run sequentially on the local GPU;
 do not start other GPU jobs concurrently. `--phase all` runs both phases. A

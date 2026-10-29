@@ -22,6 +22,7 @@ def plots(output, summary, rows, config):
         {
             "font.size": 10,
             "svg.fonttype": "none",
+            "svg.hashsalt": "simready-m5-v1",
             "axes.spines.top": False,
             "axes.spines.right": False,
             "figure.facecolor": "white",
@@ -157,7 +158,7 @@ def plots(output, summary, rows, config):
     fig.suptitle(
         "One TUM desk capture · 18 held-out views · detector agreement is not accuracy", fontsize=12
     )
-    fig.savefig(output / "study-figures.svg")
+    fig.savefig(output / "study-figures.svg", metadata={"Date": None})
     fig.savefig(output / "study-figures.png", dpi=180)
     plt.close(fig)
 
@@ -256,7 +257,18 @@ def report(output: Path, summary: dict) -> None:
     delta = summary["paired_risk_minus_random"]["lpips"]
     direction = "lower" if delta["mean"] < 0 else "higher"
     count = len(summary["ranking_counterexamples"])
-    audit = summary["semantic_audit"]
+    audit = {
+        k: v
+        for k, v in summary["semantic_audit"].items()
+        if k
+        in (
+            "verdict",
+            "integrity_status",
+            "review_independence",
+            "acceptance_status",
+            "summary",
+        )
+    }
     paragraphs = dedent(f"""
     ## Findings and limits
 
