@@ -1,9 +1,9 @@
 # SimReady
 
-`PLAN.md` is the specification. **M0–M2 are complete locally.** The user has
+`PLAN.md` is the specification. **M0–M3 are complete locally.** The user has
 authorized completing the full project.
-The studio supports persistent rigid proxy editing. Perception evaluation,
-simulation and review remain future milestones.
+The studio supports persistent rigid proxy editing and frozen-view perception
+evaluation. Simulation, review and recapture remain future milestones.
 
 M0 provides a CPU-only RGB-D import/validation package, explicit camera
 conventions, an analytic fixture with known metric geometry, frozen dataset
@@ -86,6 +86,28 @@ initializes only from training RGB-D; exported `gaussians.npz` and Graphdeco SH
 hashes, seed, configuration, source revision, GPU/package versions, elapsed time,
 and PyTorch allocator memory peaks. Expected rendered depth is axial Z in meters,
 and must be masked by the saved alpha/support image before downstream comparison.
+
+## Frozen-view perception validation
+
+Use the **Evaluation** tab to inspect a registered report or queue evaluation of
+all frozen test views. The CPU demo includes an actual measured two-view analytic
+report; it requires no GPU to inspect. Evaluation itself uses the isolated GPU
+worker. Reports include paired RGB, residual/depth support maps, raw detector
+predictions, per-view CSV, summary JSON, Markdown/HTML, and content/input hashes.
+See the [pinned protocol](docs/EVALUATION_PROTOCOL.md) for commands and definitions.
+
+Actual TUM fr1 desk baseline: 18 frozen test views, mean **16.735 dB PSNR**,
+**0.518 SSIM**, **0.403 LPIPS Squeeze**, **0.0301 m depth MAE** on supported GT
+pixels (mean completeness **0.944**). At fixed confidence >=0.5, the detector has
+**48 predictions on real images and zero on rendered images**. These are summed
+per-view predictions, not distinct objects or detection-accuracy measurements.
+This is a documented failure case, not a readiness or safety claim.
+
+[Actual measurements and nine inspected failures](docs/M3_FAILURE_CASES.md)
+trace to clean source `06114ba` and frozen input hashes. No threshold or pose
+adjustment was made to improve the test result.
+
+![Actual TUM evaluation explorer](docs/evidence/m3-tum-explorer.png)
 
 ## Local scene workspace
 

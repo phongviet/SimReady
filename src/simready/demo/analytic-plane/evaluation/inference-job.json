@@ -1,0 +1,33 @@
+{
+  "config": {
+    "confidence_threshold": 0.5,
+    "depth_alpha_threshold": 0.1,
+    "detector": "ssdlite320_mobilenet_v3_large",
+    "detector_detections_per_img": 300,
+    "detector_nms_threshold": 0.55,
+    "detector_score_threshold": 0.001,
+    "detector_topk_candidates": 300,
+    "detector_weights": "COCO_V1",
+    "lpips_calibration": "0.1",
+    "lpips_network": "squeeze",
+    "lpips_version": "0.1.4",
+    "match_iou_threshold": 0.5,
+    "rgb_domain": "sRGB uint8 / 255; whole image; no exposure correction",
+    "schema_version": "1.0",
+    "seed": 42,
+    "ssim_window": 7,
+    "torchvision_version": "0.19.1+cu124"
+  },
+  "views": [
+    {
+      "frame_id": "frame_00006",
+      "real": "images/frame_00006-real.png",
+      "rendered": "images/frame_00006-rendered.png"
+    },
+    {
+      "frame_id": "frame_00007",
+      "real": "images/frame_00007-real.png",
+      "rendered": "images/frame_00007-rendered.png"
+    }
+  ]
+}

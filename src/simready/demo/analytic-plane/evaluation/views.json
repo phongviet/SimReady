@@ -1,0 +1,188 @@
+[
+  {
+    "assets": {
+      "depth_error": "images/frame_00006-depth_error.png",
+      "depth_mask": "images/frame_00006-depth_mask.png",
+      "real": "images/frame_00006-real.png",
+      "real_overlay": "images/frame_00006-real_overlay.png",
+      "rendered": "images/frame_00006-rendered.png",
+      "rendered_overlay": "images/frame_00006-rendered_overlay.png",
+      "residual": "images/frame_00006-residual.png"
+    },
+    "camera": {
+      "K": [
+        [
+          50.0,
+          0,
+          31.5
+        ],
+        [
+          0,
+          50.0,
+          23.5
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "frame_id": "frame_00006",
+      "height": 48,
+      "viewmat": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -0.125
+        ],
+        [
+          -0.0,
+          -1.0,
+          -0.0,
+          -0.0
+        ],
+        [
+          -0.0,
+          -0.0,
+          -1.0,
+          -0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "width": 64
+    },
+    "detection": {
+      "appeared_count": 0,
+      "class_mismatch_candidates": [],
+      "count_gap": 0,
+      "disappeared_count": 0,
+      "empty_both": true,
+      "matched_count": 0,
+      "matches": [],
+      "mean_center_error_normalized": null,
+      "mean_confidence_gap": null,
+      "mean_confidence_real": null,
+      "mean_confidence_rendered": null,
+      "mean_matched_iou": null,
+      "per_class": {},
+      "real": [],
+      "real_count": 0,
+      "rendered": [],
+      "rendered_count": 0,
+      "unmatched_real_indices": [],
+      "unmatched_rendered_indices": []
+    },
+    "frame_id": "frame_00006",
+    "metrics": {
+      "depth_completeness": 0.9827473958333334,
+      "depth_evaluated_pixels": 3019,
+      "depth_mae_m": 0.02758518047939274,
+      "depth_reference_pixels": 3072,
+      "depth_rmse_m": 0.05035077457154053,
+      "lpips": 0.5950120687484741,
+      "psnr_db": 15.202097567306073,
+      "rgb_exact_match": false,
+      "rgb_mse": 0.03018493488081507,
+      "ssim": 0.5851695748721996
+    }
+  },
+  {
+    "assets": {
+      "depth_error": "images/frame_00007-depth_error.png",
+      "depth_mask": "images/frame_00007-depth_mask.png",
+      "real": "images/frame_00007-real.png",
+      "real_overlay": "images/frame_00007-real_overlay.png",
+      "rendered": "images/frame_00007-rendered.png",
+      "rendered_overlay": "images/frame_00007-rendered_overlay.png",
+      "residual": "images/frame_00007-residual.png"
+    },
+    "camera": {
+      "K": [
+        [
+          50.0,
+          0,
+          31.5
+        ],
+        [
+          0,
+          50.0,
+          23.5
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "frame_id": "frame_00007",
+      "height": 48,
+      "viewmat": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -0.17500000000000002
+        ],
+        [
+          -0.0,
+          -1.0,
+          -0.0,
+          -0.0
+        ],
+        [
+          -0.0,
+          -0.0,
+          -1.0,
+          -0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "width": 64
+    },
+    "detection": {
+      "appeared_count": 0,
+      "class_mismatch_candidates": [],
+      "count_gap": 0,
+      "disappeared_count": 0,
+      "empty_both": true,
+      "matched_count": 0,
+      "matches": [],
+      "mean_center_error_normalized": null,
+      "mean_confidence_gap": null,
+      "mean_confidence_real": null,
+      "mean_confidence_rendered": null,
+      "mean_matched_iou": null,
+      "per_class": {},
+      "real": [],
+      "real_count": 0,
+      "rendered": [],
+      "rendered_count": 0,
+      "unmatched_real_indices": [],
+      "unmatched_rendered_indices": []
+    },
+    "frame_id": "frame_00007",
+    "metrics": {
+      "depth_completeness": 0.9664713541666666,
+      "depth_evaluated_pixels": 2969,
+      "depth_mae_m": 0.028324563481583666,
+      "depth_reference_pixels": 3072,
+      "depth_rmse_m": 0.05133912421514896,
+      "lpips": 0.600251317024231,
+      "psnr_db": 14.53172223152422,
+      "rgb_exact_match": false,
+      "rgb_mse": 0.03522311630943227,
+      "ssim": 0.5706388203677853
+    }
+  }
+]

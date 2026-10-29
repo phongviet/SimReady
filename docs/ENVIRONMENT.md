@@ -1,6 +1,6 @@
 # Inspected development environment
 
-Observed 2026-10-29; no training or GPU compute was attempted.
+Initial M0 observations, 2026-10-29; training/GPU work had not yet started at that point.
 
 | Item | Observed value |
 |---|---|
@@ -27,3 +27,13 @@ Ruff 0.17.3. Frontend: React/ReactDOM 19.3.1, TypeScript 7.0.2, Vite 8.3.5,
 Vitest 4.1.12. Exact transitive versions are in the checked-in lockfiles.
 The final project including caches/dependencies/data occupies about 0.30 GB;
 `make storage` reports conservative accounting and is the authoritative live check.
+
+## M3 tested additions (2026-10-29)
+
+Core: SciPy1.18.1 and scikit-image0.26.0, exact versions in uv.lock.
+GPU spec3db6217d adds torchvision0.19.1+cu124, LPIPS0.1.4, SciPy1.15.3 and
+tqdm4.67.1 to the existing Python3.10.20/torch2.4.1+cu124/gsplat1.5.3+pt24cu124
+environment. Official SSDLite320 COCO and SqueezeNet1.1 plus LPIPSv0.1 calibration
+weights are SHA-256 pinned. Both actual CUDA witnesses and fresh-agent documented
+invocations passed. Real18-view evaluation and actual queued analytic evaluation
+ran successfully. No hosted CI or external simulator was run.

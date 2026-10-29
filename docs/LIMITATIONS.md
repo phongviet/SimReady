@@ -1,8 +1,12 @@
 # Current limitations
 
 - Gaussian training/rendering, independent TSDF and persistent proxy editing are
-  verified locally. No perception metrics, simulation, approval workflow or
-  recapture experiments have run yet.
+  verified locally, along with frozen-view perception metrics on 18 real TUM
+  test views. Simulation, approval workflow and recapture remain unimplemented.
+- The short real baseline is blurry and has zero rendered detector predictions
+  at the fixed >=0.5 threshold, versus 48 summed per-view real predictions. This
+  exposes a failure, not detection accuracy. No annotated GT boxes are available.
+  Matching quality is N/A for these unmatched views; no mAP or readiness claim.
 - The browser uses a separate Spark renderer and explicit overlay-only mesh pass;
   splat/mesh occlusion and edited-scene perception realism are unverified.
 - TSDF is an incomplete observed surface proxy, not necessarily watertight or
@@ -24,8 +28,10 @@
   quota. Concurrent external writes or manually installing large packages can bypass
   them. Symlink targets outside the project are not counted. Keep project assets
   inside this directory and run `make storage` before/after large operations.
-- Original sample redistribution terms remain unverified. No third-party data is
-  committed, bundled in the frontend, or published. Synthetic fixture is CC0.
+- Original Redwood sample redistribution terms remain unverified. No third-party
+  raw dataset or model weight is committed or bundled. Derived TUM screenshots
+  and the failure contact sheet carry CC BY 4.0 source attribution. The bundled
+  analytic fixture, measured report and images derive from our CC0 synthetic data.
 - CUDA/gsplat forward/backward and small trained-checkpoint reload have been
   tested on the local 6 GB GTX 1660 Ti. Other GPU/runtime combinations are untested.
 - GPU peaks in run metadata measure PyTorch allocated/reserved memory only;

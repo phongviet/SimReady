@@ -24,7 +24,7 @@ exact tested package versions are recorded in `ENVIRONMENT.md` and the lockfiles
   held-out RGB/depth rendering, isolated GPU runtime and CPU demo. See M1_CHECKLIST.md.
 - [x] **M2 complete locally:** independent TSDF, versioned proxy edits, controlled
   local API, working splat/orbit editor, conflict handling and browser evidence.
-- [ ] M3: perception validation (implementation and acceptance checks in progress).
+- [x] M3: perception validation, real held-out report and nine inspected failures; see M3_CHECKLIST.md.
 - [ ] M4: simulation and review (not started).
 - [ ] M5: research experiments (not started).
 - [ ] M6: shipping (not started).
@@ -181,3 +181,39 @@ output casting and Python symlink resolution escaping the GPU venv; both were
 fixed before any real evaluation. Frozen provenance, exact split camera checks,
 CSV/JSON/Markdown/HTML exports, persistent local evaluation queue and explorer
 are implemented; full acceptance and real results remain pending.
+
+## M3 acceptance (2026-10-29)
+
+Complete local frozen-view pipeline, pinned metric/detector definitions,
+raw predictions and Hungarian discrepancy traces, HTML/Markdown/CSV/JSON exports,
+heatmaps, an actual evaluation explorer, and persistent serialized process jobs.
+The real run from clean source06114ba evaluated all18 immutable test views:
+mean PSNR16.73498062647631dB, SSIM0.5177023670227732,
+LPIPS Squeeze0.4032108618153466, supported-depth MAE0.030070565783854666m,
+RMSE0.07341390428977546m and completeness0.9437883254681552.
+At the fixed0.5 confidence threshold: 48 real predictions, 0 rendered, 0 matched,
+48 disappeared, 0 appeared. These are summed predictions across correlated views,
+not unique objects or object detection accuracy. No threshold was tuned on test.
+
+Nine highest-LPIPS paired views were visually inspected and documented in
+M3_FAILURE_CASES.md. They show blur/detail loss, object-edge residuals and
+unmatched predictions; the baseline's perception failure is retained honestly.
+Reports and UI distinguish base offline evaluation from browser proxy overlays.
+The CPU demo now bundles an actually measured analytic report from the same clean
+source (both filtered predictions empty; no positive task-quality inference).
+An isolated installed wheel loaded this report without GPU or geometry packages.
+
+Verification: 140 CPU/geometry tests passed, 2 opt-in GPU skips; the new actual
+queued GPU evaluation separately passed. Four frontend unit and four Playwright
+browser tests passed, including paired image loading, failure selection, overlay
+toggle, CSV download and portable HTML images. TypeScript/Vite, Ruff, format,
+lock and diff checks passed. An actual queue run demonstrated report binding to
+the submitted revision after a later edit; injected backend failures persist in
+SQLite with actionable logs. Hosted CI remains unrun (no remote).
+
+M4 simulation/readiness/review, M5 recapture research and M6 shipping remain
+unimplemented. M3 does not establish a ready scene or detection accuracy.
+
+M3 final storage: **14,086,309,730 bytes / 30,000,000,000**, including installed
+wheel-test caches, CUDA/core environments, raw data, reports and Git before the
+evidence commit. The temporary verification API was stopped cleanly.

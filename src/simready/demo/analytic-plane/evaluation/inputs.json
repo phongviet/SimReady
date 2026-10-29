@@ -1,0 +1,193 @@
+{
+  "artifact_sha256": "5ab2a748e131422a114be16e3c92f5f3b93c5de4510772aa38b46c27f68e6839",
+  "dataset_manifest": {
+    "T_canonical_source_world": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "association_tolerance": 0.0,
+    "camera_axes": "opencv_x_right_y_down_z_forward",
+    "cameras": {
+      "camera0": {
+        "cx": 31.5,
+        "cy": 23.5,
+        "fx": 50.0,
+        "fy": 50.0,
+        "height": 48,
+        "model": "pinhole",
+        "width": 64
+      }
+    },
+    "capture_conditions": "Static analytic textured plane, no distortion.",
+    "depth": {
+      "invalid_value": 0,
+      "meters_per_unit": 0.001,
+      "representation": "uint16_z"
+    },
+    "frames_sha256": "40128c0c4ff9a63f7feebd93452ae67c4c4873ca70f83c8d79d620e81998770f",
+    "kind": "synthetic",
+    "limitations": [
+      "Synthetic unit-test fixture; not real data or a reconstruction.",
+      "Small split blocks lack spatial separation; not an evaluation benchmark."
+    ],
+    "pose_provenance": "Exact analytic camera-to-world matrices, translated along world X.",
+    "privacy": "Synthetic, no personal information.",
+    "scene_id": "synthetic_plane",
+    "schema_version": "1.0",
+    "source": {
+      "archive_sha256": null,
+      "attribution": "SimReady Development",
+      "description": "Analytic plane at world Z=-2m; no learned rendering.",
+      "license": "CC0-1.0",
+      "name": "SimReady analytic fixture",
+      "url": "local:analytic-plane-v1"
+    },
+    "split_sha256": "44954bd8811e3c4f7032f96516e2c1f838734c9e8e5ce0515a2dc1b29ee816c7",
+    "timestamp_provenance": "Synthetic frame indices, not capture seconds.",
+    "world_frame": "canonical_right_handed_y_up",
+    "world_units": "meters"
+  },
+  "evaluation_frame_ids": [
+    "frame_00006",
+    "frame_00007"
+  ],
+  "observations": [
+    {
+      "camera": {
+        "K": [
+          [
+            50.0,
+            0,
+            31.5
+          ],
+          [
+            0,
+            50.0,
+            23.5
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "frame_id": "frame_00006",
+        "height": 48,
+        "viewmat": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            -0.125
+          ],
+          [
+            -0.0,
+            -1.0,
+            -0.0,
+            -0.0
+          ],
+          [
+            -0.0,
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "width": 64
+      },
+      "depth_sha256": "b00c7f84549d4fe76f856d9590f6e7dae30f5006efa437284075cd90ddbddc76",
+      "frame_id": "frame_00006",
+      "rgb_sha256": "0613c16b70539bfa97efe06dce600d5ecb99389d4e7305cb04eab156da96aee5",
+      "timestamp": 6.0
+    },
+    {
+      "camera": {
+        "K": [
+          [
+            50.0,
+            0,
+            31.5
+          ],
+          [
+            0,
+            50.0,
+            23.5
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "frame_id": "frame_00007",
+        "height": 48,
+        "viewmat": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            -0.17500000000000002
+          ],
+          [
+            -0.0,
+            -1.0,
+            -0.0,
+            -0.0
+          ],
+          [
+            -0.0,
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "width": 64
+      },
+      "depth_sha256": "b00c7f84549d4fe76f856d9590f6e7dae30f5006efa437284075cd90ddbddc76",
+      "frame_id": "frame_00007",
+      "rgb_sha256": "5db0d97119e1a3bf434fb6ef932a57675ac445294f66cc5bc8e7eb79fead2368",
+      "timestamp": 7.0
+    }
+  ],
+  "renders_index_sha256": "1ec3dba8e398540f5bb24120d1b81f77941b4079569efd6e6e61efbaa89171fc",
+  "training_frame_ids": [
+    "frame_00000",
+    "frame_00001",
+    "frame_00002",
+    "frame_00003"
+  ]
+}

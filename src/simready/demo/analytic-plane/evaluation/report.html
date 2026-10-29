@@ -1,0 +1,64 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SimReady evaluation</title><style>body{background:#111b17;color:#e2ebe4;font:16px system-ui;max-width:1400px;margin:30px auto;padding:20px}pre{white-space:pre-wrap;overflow-wrap:anywhere}.images{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}figure{margin:0}img{width:100%}section{border-top:1px solid #496052;margin-top:25px;padding-top:12px}figcaption{font-size:12px}a{color:#c9e798}</style><h1>Frozen-view evaluation</h1><a href="per_view.csv">Per-view CSV</a> · <a href="summary.json">Summary JSON</a> · <a href="predictions.json">Raw predictions</a><pre># SimReady frozen-view evaluation
+
+Camera-aligned base reconstruction only. Detector consistency is not detection accuracy. No edited proxies are evaluated.
+
+Dataset: synthetic_plane (synthetic). Split: test; 2 views.
+
+## Measured per-view means
+
+| Metric | Mean |
+|---|---:|
+| psnr_db | 14.866909899415147 |
+| ssim | 0.5779041976199925 |
+| lpips | 0.5976316928863525 |
+| depth_mae_m | 0.027954871980488204 |
+| depth_rmse_m | 0.050844949393344746 |
+| depth_completeness | 0.974609375 |
+
+Detector totals: {&quot;real_count&quot;: 0, &quot;rendered_count&quot;: 0, &quot;matched_count&quot;: 0, &quot;disappeared_count&quot;: 0, &quot;appeared_count&quot;: 0, &quot;empty_both&quot;: 2}
+
+Geometry accuracy: N/A (no aligned ground-truth mesh).
+
+## Failure ranking
+
+Sorted by measured LPIPS, descending; inspect images and raw predictions.
+
+- frame_00007: LPIPS=0.6003, PSNR=14.53172223152422, depth MAE=0.028324563481583666 m, disappeared=0, appeared=0.
+- frame_00006: LPIPS=0.5950, PSNR=15.202097567306073, depth MAE=0.02758518047939274 m, disappeared=0, appeared=0.
+
+## Limits
+
+- Synthetic unit-test fixture; not real data or a reconstruction.
+- Small split blocks lack spatial separation; not an evaluation benchmark.
+- One sequence with temporally correlated held-out views; no population or statistical significance claim.
+- No ground-truth object annotations: no precision, recall or mAP; a detector can share errors across domains.
+- Fixed confidence/IoU/alpha thresholds are declared heuristics, not certified readiness thresholds.
+- Whole-image sRGB RGB metrics and LPIPS include holes/background; no exposure or pose adjustment on test views.
+- Depth MAE/RMSE use only finite positive GT/prediction with alpha &gt;= threshold; completeness is separate.
+- Means weight each view equally. Infinite exact-match PSNR is null with an exact-match flag; finite means exclude it.
+- Class mismatch candidates are spatially matched unmatched boxes, not verified semantic errors.
+- No aligned ground-truth mesh; Chamfer and F-score N/A. Coarse TSDF accuracy is unmeasured.
+
+Protocol/config, input hashes, environment/weight hashes, raw predictions and per-view diagnostics are adjacent JSON/CSV files. The report contains no edited-scene evaluation.</pre><img src="lpips-distribution.svg" alt="LPIPS distribution"><section><h2>frame_00007</h2><div class="images"><figure><img loading="lazy" src="images/frame_00007-real_overlay.png" alt="Real / detector"><figcaption>Real / detector</figcaption></figure><figure><img loading="lazy" src="images/frame_00007-rendered_overlay.png" alt="Rendered / detector"><figcaption>Rendered / detector</figcaption></figure><figure><img loading="lazy" src="images/frame_00007-residual.png" alt="RGB residual: blue 0 → yellow/red 1"><figcaption>RGB residual: blue 0 → yellow/red 1</figcaption></figure><figure><img loading="lazy" src="images/frame_00007-depth_error.png" alt="Depth error: blue 0 → yellow/red ≥1 m; black invalid"><figcaption>Depth error: blue 0 → yellow/red ≥1 m; black invalid</figcaption></figure></div><pre>{
+  &quot;rgb_mse&quot;: 0.03522311630943227,
+  &quot;psnr_db&quot;: 14.53172223152422,
+  &quot;rgb_exact_match&quot;: false,
+  &quot;ssim&quot;: 0.5706388203677853,
+  &quot;lpips&quot;: 0.600251317024231,
+  &quot;depth_reference_pixels&quot;: 3072,
+  &quot;depth_evaluated_pixels&quot;: 2969,
+  &quot;depth_completeness&quot;: 0.9664713541666666,
+  &quot;depth_mae_m&quot;: 0.028324563481583666,
+  &quot;depth_rmse_m&quot;: 0.05133912421514896
+}</pre><p>Detector: {&quot;real_count&quot;: 0, &quot;rendered_count&quot;: 0, &quot;matched_count&quot;: 0, &quot;disappeared_count&quot;: 0, &quot;appeared_count&quot;: 0}</p></section><section><h2>frame_00006</h2><div class="images"><figure><img loading="lazy" src="images/frame_00006-real_overlay.png" alt="Real / detector"><figcaption>Real / detector</figcaption></figure><figure><img loading="lazy" src="images/frame_00006-rendered_overlay.png" alt="Rendered / detector"><figcaption>Rendered / detector</figcaption></figure><figure><img loading="lazy" src="images/frame_00006-residual.png" alt="RGB residual: blue 0 → yellow/red 1"><figcaption>RGB residual: blue 0 → yellow/red 1</figcaption></figure><figure><img loading="lazy" src="images/frame_00006-depth_error.png" alt="Depth error: blue 0 → yellow/red ≥1 m; black invalid"><figcaption>Depth error: blue 0 → yellow/red ≥1 m; black invalid</figcaption></figure></div><pre>{
+  &quot;rgb_mse&quot;: 0.03018493488081507,
+  &quot;psnr_db&quot;: 15.202097567306073,
+  &quot;rgb_exact_match&quot;: false,
+  &quot;ssim&quot;: 0.5851695748721996,
+  &quot;lpips&quot;: 0.5950120687484741,
+  &quot;depth_reference_pixels&quot;: 3072,
+  &quot;depth_evaluated_pixels&quot;: 3019,
+  &quot;depth_completeness&quot;: 0.9827473958333334,
+  &quot;depth_mae_m&quot;: 0.02758518047939274,
+  &quot;depth_rmse_m&quot;: 0.05035077457154053
+}</pre><p>Detector: {&quot;real_count&quot;: 0, &quot;rendered_count&quot;: 0, &quot;matched_count&quot;: 0, &quot;disappeared_count&quot;: 0, &quot;appeared_count&quot;: 0}</p></section></html>

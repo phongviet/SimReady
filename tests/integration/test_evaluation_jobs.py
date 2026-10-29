@@ -55,7 +55,7 @@ def test_persistent_job_failure_and_request_guards(tmp_path, monkeypatch):
     # Reopening the application retains terminal job state, not an in-memory future.
     other = TestClient(create_app(store.scenes.root))
     assert other.get(f"/api/v1/jobs/{job_id}").json()["status"] == "failed"
-    assert other.get("/api/v1/scenes/analytic-demo/reports").json() == []
+    assert len(other.get("/api/v1/scenes/analytic-demo/reports").json()) == 1
     with pytest.raises(VersionConflict):
         store.enqueue("analytic-demo", EvaluationRequest(expected_version=9))
 
