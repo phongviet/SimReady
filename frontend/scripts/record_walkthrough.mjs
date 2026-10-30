@@ -60,7 +60,7 @@ try {
   ).toBeVisible();
   await evaluation
     .getByRole("heading", { name: /aligned comparison/ })
-    .scrollIntoViewIfNeeded();
+    .evaluate((element) => element.scrollIntoView({ block: "start" }));
   await chapter("Real input and learned render: measured held-out comparison");
   await page.screenshot({
     path: resolve(out, "real-comparison.png"),
