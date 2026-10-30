@@ -1,3 +1,4 @@
+import { SceneCard } from "./SceneCard";
 import { AccountBar } from "./AccountBar";
 import type { Principal } from "./auth";
 import { ReviewPanel } from "./ReviewPanel";
@@ -34,6 +35,7 @@ export function App() {
   >("3d");
   const [cameraIndex, setCameraIndex] = useState(0),
     [collision, setCollision] = useState(false);
+  const [showCameras, setShowCameras] = useState(false);
   const [mode, setMode] = useState<"translate" | "rotate" | "scale">(
     "translate",
   );
@@ -239,20 +241,12 @@ export function App() {
             (value) => libraryFilter === "all" || value.status === "submitted",
           )
           .map((value) => (
-            <button
-              className={`scene-card ${scene?.scene_id === value.scene_id ? "active" : ""}`}
+            <SceneCard
               key={value.scene_id}
-              onClick={() => void choose(value.scene_id)}
-            >
-              <span className="scene-symbol">▧</span>
-              <strong>{value.name}</strong>
-              <small>
-                {value.base.dataset_kind === "real"
-                  ? "REAL CAPTURE"
-                  : "SYNTHETIC"}{" "}
-                · v{value.version} · {value.status}
-              </small>
-            </button>
+              scene={value}
+              active={scene?.scene_id === value.scene_id}
+              onChoose={() => void choose(value.scene_id)}
+            />
           ))}
         {!scenes.length && (
           <p className="empty-copy">
@@ -357,6 +351,18 @@ export function App() {
               >
                 ＋ Barrier
               </button>
+              <label
+                className="collision-toggle"
+                title="Frame tested reference camera centers. Connecting segments do not establish coverage."
+              >
+                <input
+                  type="checkbox"
+                  checked={showCameras}
+                  disabled={view !== "3d"}
+                  onChange={(event) => setShowCameras(event.target.checked)}
+                />{" "}
+                Reference camera path
+              </label>
               <label className="collision-toggle">
                 <input
                   type="checkbox"
@@ -423,6 +429,7 @@ export function App() {
                         objects={objects}
                         selected={selected}
                         showCollision={collision}
+                        showCameras={showCameras}
                         mode={mode}
                         editable={!busy && canEdit}
                         cameraIndex={cameraIndex}

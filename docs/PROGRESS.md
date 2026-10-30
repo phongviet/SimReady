@@ -559,3 +559,18 @@ REQUIREMENTS_AUDIT.md traces PLAN priorities/interfaces/milestones/deliverables 
 keeps concrete gaps open: library thumbnails/latest QA, reference camera path,
 final current-source regression/history/storage audit, and unconfigured public
 publication. No M6/project completion is claimed from the documentation audit.
+
+
+### M6 remaining UI requirements implemented
+
+2026-10-30: SceneCard now displays a controlled saved-render thumbnail,
+reconstruction/reference status and latest base QA with its source revision;
+refreshes every10s and reports unavailable QA explicitly. Reference camera path
+frames the scene/tested centers and draws diagnostic centers/polyline; connecting
+segments do not imply coverage. Saved-view mode disables this control.
+5frontend tests, TypeScript/Vite build, Prettier, Ruff and all8actual browser tests
+passed (35.0s). New browser acceptance independently computes centers as-R^Tt,
+verifies metadata/thumbnail and toggle/fallback. Screenshot visually inspected:
+card metadata and cyan reference centers are visible, controls remain usable.
+Final full CPU/GPU regression, history/credential/storage checks and publication
+remain open; no whole-project completion is claimed.

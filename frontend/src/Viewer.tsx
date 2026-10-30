@@ -14,6 +14,7 @@ interface Props {
   objects: ProxyObject[];
   selected: string | null;
   showCollision: boolean;
+  showCameras?: boolean;
   mode: Mode;
   onSelect: (id: string) => void;
   onChange: (object: ProxyObject) => void;
@@ -81,6 +82,36 @@ export function Viewer(props: Props) {
     };
     orbit.addEventListener("change", placement);
     placement();
+    const centers = props.scene.base.cameras.map(
+      (record) => calibratedCamera(record).position,
+    );
+    const referencePath = new THREE.Group();
+    referencePath.visible = false;
+    const centerGeometry = new THREE.BufferGeometry().setFromPoints(centers);
+    const centerPoints = new THREE.Points(
+      centerGeometry,
+      new THREE.PointsMaterial({
+        color: "#9de8ff",
+        size: 0.05,
+        transparent: true,
+        depthTest: false,
+        depthWrite: false,
+      }),
+    );
+    centerPoints.renderOrder = 21;
+    const centerLine = new THREE.Line(
+      centerGeometry,
+      new THREE.LineBasicMaterial({
+        color: "#9de8ff",
+        transparent: true,
+        opacity: 0.8,
+        depthTest: false,
+        depthWrite: false,
+      }),
+    );
+    centerLine.renderOrder = 20;
+    referencePath.add(centerLine, centerPoints);
+    overlay.add(referencePath);
     const spark = new SparkRenderer({ renderer });
     base.add(spark);
     const splats = new SplatMesh({
@@ -274,6 +305,26 @@ export function Viewer(props: Props) {
     const update = () => {
       lastActivity = performance.now();
       const current = latest.current;
+      if (current.showCameras && !referencePath.visible) {
+        const bounds = new THREE.Box3().setFromPoints([
+          ...centers,
+          new THREE.Vector3(...current.scene.base.bounds_min_m),
+          new THREE.Vector3(...current.scene.base.bounds_max_m),
+        ]);
+        const extent = Math.max(
+          bounds.getSize(new THREE.Vector3()).length(),
+          1,
+        );
+        orbit.target.copy(bounds.getCenter(new THREE.Vector3()));
+        camera.position
+          .copy(orbit.target)
+          .add(new THREE.Vector3(extent * 0.45, extent * 0.35, extent * 0.8));
+        orbit.update();
+      }
+      referencePath.visible = Boolean(current.showCameras);
+      renderer.domElement.dataset.referenceCameraCenters = referencePath.visible
+        ? JSON.stringify(centers.map((point) => point.toArray()))
+        : "";
       const ids = new Set(current.objects.map((object) => object.object_id));
       for (const [id, mesh] of meshes) {
         if (!ids.has(id)) {
@@ -416,6 +467,9 @@ export function Viewer(props: Props) {
         (surface.material as THREE.Material).dispose();
       }
       clearNavigation();
+      centerGeometry.dispose();
+      centerPoints.material.dispose();
+      centerLine.material.dispose();
       renderer.dispose();
       renderer.domElement.remove();
       sync.current = () => {};
@@ -427,6 +481,7 @@ export function Viewer(props: Props) {
     props.objects,
     props.selected,
     props.showCollision,
+    props.showCameras,
     props.mode,
     props.editable,
     props.replay,

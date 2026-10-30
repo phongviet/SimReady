@@ -91,9 +91,9 @@ server-bound roles, self-review prohibition and persistent failures are tested.
 | UX requirement | State | Evidence / remaining action |
 |---|---|---|
 |Scene Library source/review state|PASS|scene cards and review filter|
-|Scene Library thumbnail/reconstruction state/latest evaluation|OPEN|cards currently omit thumbnails and latest evaluation summary; implement and verify|
+|Scene Library thumbnail/reconstruction state/latest evaluation|PASS|SceneCard uses saved-render thumbnail, registered scene status and latest base QA with source revision;8-browser acceptance|
 |3D editor camera controls/reference selection/collider/scenario|PASS|App/Viewer/SimulationPanel; numerical + visual acceptance|
-|Reference camera PATH overlay|OPEN|reference-camera selector exists; explicit tested-camera-center/path visualization is missing|
+|Reference camera PATH overlay|PASS|bounded tested-camera centers/polyline; independent -R^Tt check, toggle/fallback and inspected screenshot; segments do not establish coverage|
 |Evaluation real/render/residual/depth/overlays/distribution/failure sort|PASS|EvaluationExplorer and browser/download tests|
 |Readiness view components/camera region/limits/scenarios/scope|PASS|ReviewPanel, measured coverage diagnostics, actual real-scene recording|
 |Review queue reject/approve/reason/log|PASS|separate roles, immutable audit tests and UI|
@@ -133,7 +133,7 @@ server-bound roles, self-review prohibition and persistent failures are tested.
 |M3 all tasks/DoD|PASS|M3_CHECKLIST.md; actual18-view evaluation and nine inspected failures|
 |M4 all tasks/DoD|PASS|M4_CHECKLIST.md; real layout/QA/review/export evidence|
 |M5 all tasks/DoD|PASS qualified|M5_CHECKLIST.md, real negative result, companion, audits; no novelty claim|
-|M6 tests/UX/data integrity|OPEN|latest frontend7-browser/5-unit accepted; final current-source full regression and UI gaps above remain|
+|M6 tests/UX/data integrity|OPEN|latest frontend8-browser/5-unit accepted; final current-source full regression remains|
 |M6 all CLI/setup/data/license docs and architecture|PASS incremental|CLI25 help entries, license wheel inclusion, current protocols; final link/command review remains|
 |M6 recording/examples/results/README|PASS|WALKTHROUGH.md; actual50.8s clip; failure cases, figures and benchmark links|
 |M6 memory/train/render/evaluation/API measurements|PASS|BENCHMARK_RESULTS.md with raw samples, exclusions and historical training metadata|
@@ -153,8 +153,8 @@ server-bound roles, self-review prohibition and persistent failures are tested.
 
 ## Concrete remaining work
 
-1. Add Scene Library thumbnails/status/latest-evaluation summary and tested-camera
-   center/path overlay; verify numerical coordinates, real pixels and fallback.
+1. UI gaps above are now implemented and verified in8 browser tests. Preserve
+   thumbnail/latest-base-QA scope and tested-center/unknown-coverage labels.
 2. Finish current-source full CPU/GPU/frontend/browser regression and review its
    failure cases; repair anything uncovered rather than weakening acceptance.
 3. Audit tracked content/history for credentials/raw data, validate current exports,

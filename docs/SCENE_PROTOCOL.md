@@ -66,3 +66,16 @@ Errors carry request IDs. The server binds to loopback. Current authenticated
 review/audit/export and persistent compute jobs are described in REVIEW_PROTOCOL.md
 and PIPELINE_API.md. Server-side roles prohibit self-approval and role spoofing;
 these local accounts are not production identity/access management.
+
+
+## Library and tested reference path
+
+Scene cards load a saved-render thumbnail through the controlled scene asset
+route, show reconstruction/reference-view status and poll the latest registered
+base evaluation every10s. The source evaluation revision remains visible; these
+metrics do not evaluate inserted objects. Failure to retrieve QA is explicit.
+The3D Reference camera path control frames the scene plus tested camera centers,
+computed by inverting each stored w2c. Connecting segments are diagnostic only:
+they do not turn intervening/unobserved space into validated coverage. The toggle
+is disabled in saved-camera mode. Eight actual browser tests include independent
+-R^Tt center checks, thumbnail/QA verification and saved-view fallback.
