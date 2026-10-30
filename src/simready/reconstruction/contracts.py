@@ -5,7 +5,20 @@ from typing import Literal, Protocol, Self
 
 from pydantic import Field, model_validator
 
-from simready.data.schema import Contract
+from simready.data.schema import Contract, Identifier, Intrinsics, Matrix4, rigid_matrix
+
+
+class RenderCamera(Contract):
+    frame_id: Identifier
+    intrinsics: Intrinsics
+    T_world_camera: Matrix4
+
+    @model_validator(mode="after")
+    def verified(self) -> Self:
+        rigid_matrix(self.T_world_camera)
+        if max(self.intrinsics.width, self.intrinsics.height) > 640:
+            raise ValueError("local render dimensions must be <=640 pixels")
+        return self
 
 
 class ReconstructionConfig(Contract):

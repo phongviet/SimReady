@@ -455,3 +455,25 @@ acceptance passed with import→40steptraining→artifact download; changed-sour
 failure and anonymous access checks passed. Focused API/import checks passed4
 tests, and the new failure test separately passed with the GPU test visibly
 skipped in its CPU run. Rendering HTTP and remaining shipping gates stay open.
+
+
+### M6 supplied-camera render increment
+
+2026-10-30: Added bounded calibrated camera requests and durable render jobs,
+sharing the existing local GPU lock. Parent reconstruction IDs must match the
+scene; model and output hashes bind jobs/downloads. Custom views are marked
+unverified and excluded from held-out evaluation. Actual GPU HTTP import/train/
+render/download test passed (2 tests,20.02s); CPU failure/validation tests passed
+(2 passed,1 GPU skip). Full M6 shipping acceptance remains open.
+
+Current-source CPU regression:179 passed,3 opt-in skips in138.44s; Ruff
+lint/format passed, frontend5 tests and production build passed. Real TUM
+100-frame dataset validation and saved421-Gaussian CPU smoke passed. A new
+tampering test initially modified its source fixture; restored the exact Git
+content, isolated the corrupt model copy, and reran the full suite successfully.
+Architecture/limitations/README status now include completed M3–M5 behavior.
+
+Final CUDA pipeline regression:3 passed in19.71s, including same-scene model
+binding and all custom-view channel downloads. Postflight storage:
+15,844,983,255bytes of30,000,000,000. M6 benchmarks, fresh-checkout UI,
+walkthrough recording, CV evidence and complete requirements audit remain open.

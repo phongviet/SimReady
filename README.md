@@ -1,11 +1,15 @@
 # SimReady
 
-`PLAN.md` is the specification. **M0–M4 are complete locally.** The user has
+`PLAN.md` is the specification. **M0–M5 are complete locally, with qualified research evidence.** The user has
 authorized completing the full project.
 The studio supports persistent rigid proxy editing and frozen-view perception
 evaluation, deterministic navigation and scoped local review/export.
-M5's real recapture case study, analysis and research dashboard are implemented;
-its labeled-object companion and recovery hardening remain open. Shipping is pending.
+M5's real recapture case study, labeled analytic companion, integrity audits and
+research dashboard are documented. Risk-based recapture did not outperform random
+on this case study; see [results](docs/M5_RESULTS.md). M6 shipping checks remain
+open in the [shipping checklist](docs/M6_CHECKLIST.md). Authenticated queued
+[import, reconstruction and supplied-camera render APIs](docs/PIPELINE_API.md)
+have local subprocess/CUDA acceptance evidence.
 
 M0 provides a CPU-only RGB-D import/validation package, explicit camera
 conventions, an analytic fixture with known metric geometry, frozen dataset

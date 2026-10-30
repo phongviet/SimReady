@@ -16,7 +16,11 @@ from simready.data.schema import Contract
 from simready.evaluation.readiness import readiness
 from simready.evaluation.store import EvaluationRequest, EvaluationStore
 from simready.pipeline.imports import ImportRequest, ImportStore
-from simready.pipeline.reconstruction import ReconstructionRequest, ReconstructionStore
+from simready.pipeline.reconstruction import (
+    ReconstructionRequest,
+    ReconstructionStore,
+    RenderRequest,
+)
 from simready.research.store import StudyStore
 from simready.review.auth import AuthenticationError, AuthorizationError, AuthStore, Principal
 from simready.review.export import ExportStore
@@ -151,6 +155,11 @@ def create_app(root: Path | None = None) -> FastAPI:
     ):
         return reconstructions.enqueue(scene_id, request)
 
+    @app.post("/api/v1/scenes/{scene_id}/render", status_code=202)
+    def render(scene_id: str, request: RenderRequest, user: Annotated[Principal, Depends(builder)]):
+        return reconstructions.enqueue_render(scene_id, request)
+
+    @app.get("/api/v1/render-jobs/{job_id}/assets/{name}")
     @app.get("/api/v1/reconstruction-jobs/{job_id}/assets/{name}")
     def reconstruction_asset(job_id: str, name: str):
         path = reconstructions.asset(job_id, name)

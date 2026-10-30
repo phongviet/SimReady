@@ -193,3 +193,13 @@ fixture generation and camera math. Final acceptance will be recorded separately
     during traversal, rather than ignoring entries or returning partial bytes.
     Repeated churn fails closed. This fixes the observed browser-cache cleanup
     race while retaining sparse/hardlink/symlink accounting and the30GB cap.
+
+
+### Reference-free render requests
+
+2026-10-30: Added bounded calibrated camera requests and durable render jobs,
+sharing the existing local GPU lock. Parent reconstruction IDs must match the
+scene; model and output hashes bind jobs/downloads. Custom views are marked
+unverified and excluded from held-out evaluation. Actual GPU HTTP import/train/
+render/download test passed (2 tests,20.02s); CPU failure/validation tests passed
+(2 passed,1 GPU skip). Full M6 shipping acceptance remains open.

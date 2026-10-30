@@ -18,7 +18,7 @@ from simready.data.dataset import (
     write_json,
 )
 from simready.data.schema import DatasetManifest, Frame, Splits
-from simready.reconstruction.contracts import ReconstructionConfig
+from simready.reconstruction.contracts import ReconstructionConfig, RenderCamera
 from simready.storage import PROJECT_ROOT
 
 SPLIT_NAMES = ("train", "validation", "candidate", "test")
@@ -297,6 +297,47 @@ class GsplatBackend:
             for f in frames
             if f.frame_id in getattr(splits, split)
         ]
+        return self._render_batch(
+            artifact,
+            cameras,
+            output,
+            {
+                "split": split,
+                "frames_sha256": manifest.frames_sha256,
+                "split_sha256": manifest.split_sha256,
+            },
+        )
+
+    def render_cameras(self, artifact: Path, cameras: list[RenderCamera], output: Path) -> Path:
+        if not 1 <= len(cameras) <= 16 or len({c.frame_id for c in cameras}) != len(cameras):
+            raise ValueError("render needs 1–16 uniquely named calibrated cameras")
+        records = []
+        for camera in cameras:
+            k = camera.intrinsics
+            records.append(
+                {
+                    "frame_id": camera.frame_id,
+                    "width": k.width,
+                    "height": k.height,
+                    "K": [[k.fx, 0, k.cx], [0, k.fy, k.cy], [0, 0, 1]],
+                    "viewmat": world_to_camera(np.array(camera.T_world_camera)).tolist(),
+                }
+            )
+        return self._render_batch(
+            artifact,
+            records,
+            output,
+            {
+                "split": "custom_unverified",
+                "frames_sha256": None,
+                "split_sha256": None,
+                "evaluation_eligible": False,
+                "scope": "Reference-free requested cameras; unverified quality.",
+            },
+        )
+
+    def _render_batch(self, artifact: Path, cameras: list[dict], output: Path, index: dict) -> Path:
+        metadata = validate_artifact(artifact)
         with atomic_dataset(output, 300_000_000) as stage:
             job = {
                 "schema_version": "1.0",
@@ -323,10 +364,8 @@ class GsplatBackend:
                 {
                     "schema_version": "1.0",
                     "renderer": "gsplat",
-                    "split": split,
+                    **index,
                     "artifact_sha256": sha256_file(artifact / "artifact.json"),
-                    "frames_sha256": manifest.frames_sha256,
-                    "split_sha256": manifest.split_sha256,
                     "depth_semantics": "Expected alpha-normalized axial Z, meters; mask by alpha.",
                     "cameras": cameras,
                     "files_sha256": {

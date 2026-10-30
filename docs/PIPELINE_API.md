@@ -4,7 +4,7 @@ The Builder-only `POST /api/v1/scenes/import` creates a persistent import job.
 `GET /api/v1/jobs/{job_id}` returns queued/running/succeeded/failed, timestamps,
 source digest, validation result and bounded log tail. Dataset output is private
 under the registry's `import-jobs/{job_id}/dataset`; import does not yet create a
-reconstructed editable scene. Rendering HTTP remains pending.
+reconstructed editable scene.
 
 `POST /api/v1/scenes/{scene_id}/reconstruct` accepts `{"preset":"smoke"}` or
 `{"preset":"local_6gb"}` from a Builder. It uses a completed imported dataset or
@@ -45,3 +45,24 @@ Acceptance: actual subprocess HTTP import and polling, strict anonymous denial,
 duplicate IDs, malformed traversal/missing keys and inbox content/link checks.
 Actual network-dataset formats have separate CLI/importer integration tests;
 the HTTP acceptance fixture is explicitly analytic synthetic data.
+
+
+Builder-only `POST /api/v1/scenes/{scene_id}/render` accepts a `cameras` array
+(1–16 unique identifier names) and optional `reconstruction_job_id`. Without a
+job ID it uses the registered scene model; with one it requires a successful
+reconstruction of that same scene. Each camera contains `frame_id`, `intrinsics`
+(width, height, fx, fy, cx, cy) and a rigid OpenCV-camera-to-world
+`T_world_camera` in meters, right-handed Y-up world coordinates. Dimensions are
+limited to640pixels per axis for this local service.
+
+Rendering shares the reconstruction/evaluation GPU lock and persistent polling
+endpoint. Download indexed RGB PNG, axial-depth/alpha NPY and `renders.json` via
+`/api/v1/render-jobs/{job_id}/assets/{name}`. Model manifest/content hashes are
+verified; changed queued models fail before GPU work. Supplied cameras are
+reference-free, explicitly `custom_unverified`, `evaluation_eligible:false`;
+these outputs cannot substitute for frozen held-out evaluation inputs.
+
+Actual CUDA acceptance: HTTP synthetic import →40-step learned model →requested
+64×48 camera render →all three verified channel downloads. CPU acceptance checks
+empty/invalid/duplicate/traversal cameras and changed queued model failure.
+This verifies the pipeline, not real-scene reconstruction quality.
