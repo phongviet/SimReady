@@ -574,3 +574,14 @@ verifies metadata/thumbnail and toggle/fallback. Screenshot visually inspected:
 card metadata and cyan reference centers are visible, controls remain usable.
 Final full CPU/GPU regression, history/credential/storage checks and publication
 remain open; no whole-project completion is claimed.
+
+### M6 current regression and containment follow-up
+
+2026-10-30: Clean43ec61c CPU/geometry/research regression passed179tests with3CUDA
+skips in152.91s, with real TUM and official synthetic sample explicitly enabled.
+All536reachable Git blobs were scanned for declared credential patterns: zero
+findings/forbidden tracked output paths/over20MBblobs.133local Markdown links
+exist (47documents); raw audit links intentionally include local study outputs.
+Found252MBof legacy pytest temporary output outside the project; moved future
+test basetemp into ignored `.cache/pytest` for budget accounting and serialized
+acceptance. Reverification follows this configuration change.

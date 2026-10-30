@@ -40,7 +40,7 @@ dev = [
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "-p no:dash"
+addopts = "-p no:dash --basetemp=.cache/pytest"
 markers = ["official_data: requires the official synthetic Open3D sample", "real_data: requires the real TUM RGB-D sequence", "gpu: requires the isolated gsplat CUDA worker", "geometry: requires optional Open3D CPU TSDF dependencies"]
 
 [tool.ruff]

@@ -229,3 +229,12 @@ not redistributed. The output manifest now preserves earlier indexed studies
 when adding companion/benchmark runs. ReconstructionBackend now declares the
 implemented supplied-camera method explicitly. Native local serving is the
 verified deployment fallback; this WSL distro reports Docker unavailable.
+
+### Contain acceptance test storage
+
+2026-10-30: pytest's temporary base now lives under `.cache/pytest`, so future
+fixture/model/render/report outputs count in `make storage` rather than living
+outside the project in `/tmp`. Pytest replaces only its dedicated disposable
+base on a subsequent invocation. Do not run simultaneous pytest invocations
+against that same base; CPU/GPU acceptance is serialized. Historical /tmp test
+outputs observed at252,426,367bytes are separately accounted during release review.
