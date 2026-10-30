@@ -2,7 +2,6 @@
 
 import csv
 import json
-import subprocess
 from pathlib import Path
 
 import numpy as np
@@ -14,6 +13,7 @@ from simready.evaluation.readiness import pose_diagnostics
 from simready.evaluation.runner import validate_evaluation, verify_inputs
 from simready.reconstruction.gsplat import load_records, validate_artifact, validate_renders
 from simready.research.contracts import StudyConfig
+from simready.research.history import source_at
 from simready.research.runner import git_state, now, pose_features
 from simready.research.selection import (
     calibrate,
@@ -129,9 +129,7 @@ def inspect(study: Path) -> dict:
     source = read(study / "run-source.json")
     require(curation["protocol_sha256"] == json_digest(protocol), "curation protocol")
     for name, digest in source["source_files_sha256"].items():
-        raw = subprocess.check_output(
-            ["git", "show", f"{source['git']['commit']}:{name}"], cwd=PROJECT_ROOT
-        )
+        raw = source_at(source["git"]["commit"], name)
         import hashlib
 
         require(hashlib.sha256(raw).hexdigest() == digest, "recorded source pin " + name)

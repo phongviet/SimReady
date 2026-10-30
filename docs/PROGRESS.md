@@ -677,3 +677,14 @@ commit. All4jobs passed on both runs. Later documentation-only corrections
 remove stale hosted-CI/storage wording; no runtime/test code is changed. Public
 repository visibility, branch/tag hashes and clean working tree were checked.
 The supported full project scope M0–M6 is delivered; optional M7 remains unselected.
+
+### GitHub attribution correction
+
+2026-10-30: Verified GitHub account phongviet ID162717702. All60 original commits
+were rebuilt with phongviet's noreply identity; every tree/date/message and graph
+parent relationship was checked. Future repository-local commits use that identity.
+Added immutable old-to-new source aliases for historical experiments, with tests
+for lookup when original objects are absent and invalid alias rejection. Five
+history/analysis unit tests passed; actual frozen45-stage/216-row inspection
+passed unchanged. Fresh-clone source-pin verification and leased remote update
+follow. Original backup bundle remains ignored locally.

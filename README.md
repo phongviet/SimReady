@@ -1,5 +1,7 @@
 # SimReady
 
+Author and maintainer: [phongviet](https://github.com/phongviet).
+
 [![CI](https://github.com/phongviet/SimReady/actions/workflows/ci.yml/badge.svg)](https://github.com/phongviet/SimReady/actions/workflows/ci.yml)
 
 SimReady is a local RGB-D-to-3DGS studio for inspecting reconstructions, editing
@@ -240,3 +242,5 @@ Local shipping performance is measured in [benchmark results](docs/BENCHMARK_RES
 320×240 warm GPU rasterization 656.77 FPS (excludes IO/startup/browser), fresh
 18-pair evaluation 12.77 s, sequential loopback read API p95≤3.82 ms. Raw samples,
 hardware, exclusions and a reproducible command accompany these observations.
+
+GitHub attribution and historical experiment-ID mapping are documented in [authorship notes](docs/AUTHORSHIP.md).

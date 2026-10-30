@@ -247,3 +247,14 @@ Git attributes: source uses LF; bundled hashed demo/evidence trees and binary
 assets remain byte-exact. This changes checkout policy, not model/metric content.
 The original candidate tag/archive are preserved; a successor candidate follows
 successful restore validation. Bundle restore commands explicitly select main.
+
+### Correct GitHub ownership attribution
+
+2026-10-30: Owner requested phongviet as contributor. Replaced only the placeholder
+SimReady Development author/committer identity throughout history using the
+verified GitHub ID-based noreply address; retained every original tree, message,
+date and parent topology. Annotated tagger identities were corrected too. A local
+backup bundle preserves the original objects. Frozen scientific records retain
+original IDs/hashes; a tracked commit alias map and source resolver preserve their
+meaning without fabricating new experiment execution. Publication uses explicit
+force-with-lease conditions against observed remote refs.
