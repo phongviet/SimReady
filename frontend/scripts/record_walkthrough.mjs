@@ -58,6 +58,9 @@ try {
   await expect(
     evaluation.getByText("18 frozen test views", { exact: false }),
   ).toBeVisible();
+  await evaluation
+    .getByRole("heading", { name: /aligned comparison/ })
+    .scrollIntoViewIfNeeded();
   await chapter("Real input and learned render: measured held-out comparison");
   await page.screenshot({
     path: resolve(out, "real-comparison.png"),
@@ -108,7 +111,22 @@ try {
   });
   const slider = nav.getByRole("slider", { name: "Replay position" });
   await slider.focus();
+  await slider.press("Home");
+  const replayCanvas = nav.locator("canvas");
+  await replayCanvas.scrollIntoViewIfNeeded();
+  const initialPosition = await replayCanvas.getAttribute(
+    "data-robot-position",
+  );
+  await nav.getByRole("button", { name: "Play replay", exact: true }).click();
+  await expect(replayCanvas).not.toHaveAttribute(
+    "data-robot-position",
+    initialPosition,
+  );
+  await page.waitForTimeout(2200);
+  await nav.getByRole("button", { name: "Pause replay", exact: true }).click();
+  await slider.focus();
   await slider.press("End");
+  await replayCanvas.scrollIntoViewIfNeeded();
   await chapter(
     "Observed coarse-map simulated route replay; unknown space remains blocked",
   );
