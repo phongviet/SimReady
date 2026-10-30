@@ -200,24 +200,33 @@ export function Viewer(props: Props) {
             THREE.RGBAFormat,
           );
           texture.needsUpdate = true;
-          navigation.add(
-            new THREE.Mesh(
-              geometry,
-              new THREE.MeshBasicMaterial({
-                map: texture,
-                transparent: true,
-                side: THREE.DoubleSide,
-                depthTest: false,
-              }),
-            ),
+          // Diagnostic layers have explicit order: map, route, then robot.
+          // They are overlays, so they must not write depth or mask one another.
+          const mapSurface = new THREE.Mesh(
+            geometry,
+            new THREE.MeshBasicMaterial({
+              map: texture,
+              transparent: true,
+              side: THREE.DoubleSide,
+              depthTest: false,
+              depthWrite: false,
+            }),
           );
+          mapSurface.renderOrder = 10;
+          navigation.add(mapSurface);
           const points = result.path_xz_m.map(
             ([x, z]) => new THREE.Vector3(x, y + 0.04, z),
           );
           const line = new THREE.Line(
             new THREE.BufferGeometry().setFromPoints(points),
-            new THREE.LineBasicMaterial({ color: "#d9ed96", depthTest: false }),
+            new THREE.LineBasicMaterial({
+              color: "#d9ed96",
+              transparent: true,
+              depthTest: false,
+              depthWrite: false,
+            }),
           );
+          line.renderOrder = 11;
           navigation.add(line);
           robot = new THREE.Mesh(
             new THREE.CylinderGeometry(
@@ -229,10 +238,12 @@ export function Viewer(props: Props) {
             new THREE.MeshBasicMaterial({
               color: "#83ddfa",
               transparent: true,
-              opacity: 0.6,
+              opacity: 0.9,
               depthTest: false,
+              depthWrite: false,
             }),
           );
+          robot.renderOrder = 12;
           navigation.add(robot);
           const extent = Math.max(xmax - xmin, zmax - zmin);
           orbit.target.set((xmin + xmax) / 2, y, (zmin + zmax) / 2);

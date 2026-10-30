@@ -514,3 +514,11 @@ M6 recording, CV evidence and full requirements audit remain open.
 2026-10-30: Added a fresh real-scene registry preparation script and an actual
 browser video recorder with chapter timestamps. Syntax/lint checks pass; video
 acceptance remains pending until the real UI workflow completes and is inspected.
+
+### M6 replay overlay legibility fix
+
+2026-10-30: Real-scene recording inspection exposed translucent occupancy-map
+sorting over the route/robot. Diagnostic map, route and robot now have explicit
+transparent-layer order and no depth writes; robot opacity is0.9. These remain
+labeled overlays, not physical compositing.5 frontend tests, production build,
+Prettier and all7 actual browser tests passed (31.8s). Final recording pending.
