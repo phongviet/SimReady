@@ -211,3 +211,11 @@ FPS from historical training time. Warm synchronized render timing excludes IO;
 fresh evaluation throughput includes startup/reporting; loopback API p50/p95 uses
 sequential real TCP reads. Raw samples and exact scopes accompany all summaries.
 No performance target, baseline speedup or browser FPS is inferred from these runs.
+
+### Actual real-scene walkthrough recording
+
+2026-10-30: A fresh registry and Playwright recorder use the genuine saved TUM
+model/report, metric proxy edits, observed-map replay and separate automated
+local review roles. No live retraining or human endorsement is implied. Tokens
+are switched in browser storage and never displayed in the recording. Source
+and measured reports are preserved; new review history belongs only to this demo.

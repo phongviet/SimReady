@@ -10,8 +10,8 @@
     "dev": "vite --host 127.0.0.1",
     "build": "tsc --noEmit && vite build",
     "test": "vitest run",
-    "format": "prettier --write src browser-tests *.ts",
-    "format:check": "prettier --check src browser-tests *.ts",
+    "format": "prettier --write src browser-tests scripts *.ts",
+    "format:check": "prettier --check src browser-tests scripts *.ts",
     "test:browser": "playwright test"
   },
   "dependencies": {

@@ -508,3 +508,9 @@ visually inspected and copied with structured evidence; see FRESH_INSTALL.md.
 Offline cache-only install initially lacked archives; locked online install passed.
 Post-install full-project storage16,453,960,691bytes, including this ignored checkout.
 M6 recording, CV evidence and full requirements audit remain open.
+
+### M6 walkthrough tooling
+
+2026-10-30: Added a fresh real-scene registry preparation script and an actual
+browser video recorder with chapter timestamps. Syntax/lint checks pass; video
+acceptance remains pending until the real UI workflow completes and is inspected.
