@@ -1,0 +1,13 @@
+{
+  "source_commit": "dab423a",
+  "split": "train",
+  "camera_count": 50,
+  "files_verified": 150,
+  "resolution": [
+    320,
+    240
+  ],
+  "render_index_sha256": "89a63f37c38f8ebff0967202e72277a4b797b68e9e44a0cbce9fc9a74906ab94",
+  "artifact_sha256": "0f9cbc9d5c304a44f4b316c54e201b95b3b8faf17a740e6aa4967fc966254084",
+  "scope": "Actual RGB/depth/alpha training-view samples from the saved genuine TUM model; not held-out quality evidence."
+}

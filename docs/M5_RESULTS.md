@@ -118,4 +118,4 @@ Derived comparison images: TUM RGB-D benchmark, Sturm et al., IROS2012, CC-BY-4.
 
 ![Actual research dashboard](evidence/m5-research-dashboard.png)
 
-The bundled package is an explicitly labeled measured-summary snapshot. Full raw predictions and checkpoints remain in the local source study; reproduce them with RECAPTURE_PROTOCOL.md. This primary case study does not complete the planned labeled-object E1 companion or M6 shipping.
+The bundled package is an explicitly labeled measured-summary snapshot. Full raw predictions and checkpoints remain in the local source study; reproduce them with RECAPTURE_PROTOCOL.md. The separate labeled-object E1 companion is now documented in [its results](BENCH_COMPANION_RESULTS.md). M6 shipping remains open.

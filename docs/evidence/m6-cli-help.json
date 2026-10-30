@@ -1,0 +1,31 @@
+{
+  "commands_verified": [
+    "storage",
+    "data synthetic",
+    "data fetch",
+    "data import",
+    "data validate",
+    "data split",
+    "recon train",
+    "recon render",
+    "recon validate",
+    "recon smoke",
+    "geometry build",
+    "scene create",
+    "scene demo",
+    "scene attach-report",
+    "eval run",
+    "report build",
+    "sim save",
+    "sim run",
+    "sim list",
+    "auth init",
+    "api serve",
+    "research prepare",
+    "research run",
+    "research analyze",
+    "research register"
+  ],
+  "count": 25,
+  "method": "Actual installed CLI subprocess --help; runtime behavior has separate milestone acceptance."
+}

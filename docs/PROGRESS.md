@@ -1,6 +1,6 @@
 # Progress
 
-Actual execution: **2026-10-29 (Asia/Bangkok)**. User-requested Git dates across
+Actual execution: **2026-10-29–30 (Asia/Bangkok)**. User-requested Git dates across
 June–October are documented in `DECISIONS.md`; they are not experiment timestamps.
 
 **Correction found during M1:** Open3D's Redwood sample is synthetic ICL-NUIM,
@@ -27,7 +27,7 @@ exact tested package versions are recorded in `ENVIRONMENT.md` and the lockfiles
 - [x] M3: perception validation, real held-out report and nine inspected failures; see M3_CHECKLIST.md.
 - [x] M4: readiness, local roles, scoped review/audit, navigation and reviewed exports; see M4_CHECKLIST.md.
 - [x] M5: real recapture study and labeled synthetic companion verified, with explicit negative/undefined outcomes.
-- [ ] M6: shipping (not started).
+- [ ] M6: shipping in progress; measured benchmarks, fresh demo and recording verified; final audit open.
 - [ ] M7: optional integrations (not started).
 
 Detailed acceptance criteria: [M0 checklist](M0_CHECKLIST.md).
@@ -546,3 +546,16 @@ Actual reindex retained all previous rows and added companion/benchmark outputs
 (5,455 files). Lint passes. Docker CLI reports no integration in this WSL distro;
 no container runtime or hosted deployment is claimed. Native clean-install demo
 is verified. Training-view sample renders and comprehensive interface audit follow.
+
+
+### M6 concrete requirements audit and training samples
+
+2026-10-30: Actual gsplat rendered50 original training cameras (150 RGB/depth/alpha
+files) from the saved real baseline; cameras and content hashes verified exactly.
+These are training samples, not held-out quality evidence. All25 installed CLI
+help subprocesses passed; built wheel includes MIT/third-party notices and excludes
+caches/dependencies. CLI.md/DEPLOYMENT.md map actual interfaces and native fallback.
+REQUIREMENTS_AUDIT.md traces PLAN priorities/interfaces/milestones/deliverables and
+keeps concrete gaps open: library thumbnails/latest QA, reference camera path,
+final current-source regression/history/storage audit, and unconfigured public
+publication. No M6/project completion is claimed from the documentation audit.

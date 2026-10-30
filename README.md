@@ -28,6 +28,9 @@ human endorsement. TUM reference/derived imagery: Sturm et al., IROS2012,
 [CC BY4.0](https://creativecommons.org/licenses/by/4.0/).
 [Measured CV evidence](docs/CV_EVIDENCE.md) lists supported claims and exclusions.
 
+[Current CLI reference](docs/CLI.md) · [deployment boundary](docs/DEPLOYMENT.md) ·
+[open requirements audit](docs/REQUIREMENTS_AUDIT.md)
+
 ## Setup
 
 Run from the repository root. Python 3.12, uv and npm are required. Node 20.20.2
