@@ -6,7 +6,7 @@ or public service has been created or claimed. The requested repository destinat
 is the only outstanding external prerequisite identified by the current audit.
 
 Tested code: `22afb45790b6ae939ce6fb78bfd51e6e9d06cf65`, 2026-10-30. Later release
-notes change documentation only. [Structured verification](evidence/m6-final-verification.json)
+notes and Git checkout policy do not change application code. [Structured verification](evidence/m6-final-verification.json)
 and [artifact recheck](evidence/m6-evidence-recheck.json) retain exact scopes.
 
 | Gate | Actual result |

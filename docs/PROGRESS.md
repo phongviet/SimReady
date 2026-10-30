@@ -602,3 +602,11 @@ outputs; fsck had no corrupt/missing object errors (dangling objects preserved).
 Evidence capture combined root/legacy external pytest upper bound17,792,987,490bytes
 (<30GB). FINAL_VERIFICATION.md and JSON retain scopes. Only public publication /
 hosted CI remain open; destination requested asynchronously. Full goal remains active.
+
+### Release handoff portability finding
+
+2026-10-30: RC1 source/history/wheel archives were created and bundle-verified.
+A further restore under Git core.autocrlf=true reproduced a train-job.json hash
+mismatch from line-ending conversion. Root evidence stayed unchanged. Added Git
+attributes protecting hashed demo/evidence bytes and LF source checkout; actual
+restore recheck follows. Preserve RC1 rather than rewriting its tag.

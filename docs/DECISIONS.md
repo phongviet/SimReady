@@ -238,3 +238,12 @@ outside the project in `/tmp`. Pytest replaces only its dedicated disposable
 base on a subsequent invocation. Do not run simultaneous pytest invocations
 against that same base; CPU/GPU acceptance is serialized. Historical /tmp test
 outputs observed at252,426,367bytes are separately accounted during release review.
+
+### Preserve hashed assets across Git checkout policies
+
+2026-10-30: A real restore of the first release bundle with core.autocrlf=true
+changed train-job.json bytes and failed checkpoint validation. Added explicit
+Git attributes: source uses LF; bundled hashed demo/evidence trees and binary
+assets remain byte-exact. This changes checkout policy, not model/metric content.
+The original candidate tag/archive are preserved; a successor candidate follows
+successful restore validation. Bundle restore commands explicitly select main.

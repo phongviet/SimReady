@@ -1,0 +1,11 @@
+# Keep source consistent; preserve byte-hashed scientific/demo assets exactly.
+* text=auto eol=lf
+src/simready/demo/** -text
+docs/evidence/** -text
+*.npz -text
+*.npy -text
+*.png -text
+*.jpg -text
+*.jpeg -text
+*.webm -text
+*.ply -text
