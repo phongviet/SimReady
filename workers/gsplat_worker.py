@@ -18,6 +18,7 @@ import torch
 from gsplat import rasterization
 from gsplat.strategy import DefaultStrategy
 from PIL import Image
+from quality_losses import objectives
 
 SH_C0 = 0.28209479177387814
 
@@ -123,6 +124,10 @@ def train(job_path):
     torch.manual_seed(config["seed"])
     torch.cuda.manual_seed_all(config["seed"])
     rng = np.random.default_rng(config["seed"])
+    if "memory_limit_bytes" in config:
+        torch.cuda.set_per_process_memory_fraction(
+            config["memory_limit_bytes"] / torch.cuda.get_device_properties(0).total_memory
+        )
     torch.cuda.reset_peak_memory_stats()
     started = time.perf_counter()
     with np.load(output / "training.npz", allow_pickle=False) as data:
@@ -171,6 +176,11 @@ def train(job_path):
     strategy.check_sanity(params, optimizers)
     state = strategy.initialize_state(scene_scale=2.0)
     height, width = images.shape[1:3]
+    torch.cuda.synchronize()
+    optimize_started = time.perf_counter()
+    checkpoint_seconds = 0.0
+    checkpoints = []
+    max_count = count
     with (output / "training-log.jsonl").open("w") as log:
         for step in range(config["iterations"]):
             index = int(rng.integers(len(images)))
@@ -178,14 +188,14 @@ def train(job_path):
                 params, views[index], intrinsics[index], width, height, degree
             )
             strategy.step_pre_backward(params, optimizers, state, step, info)
-            rgb_loss = torch.abs(rendered[0, ..., :3] - images[index]).mean()
-            valid = (depths[index] > 0) & (alpha[0, ..., 0] > 0.01)
-            depth_loss = (
-                torch.abs(rendered[0, ..., 3][valid] - depths[index][valid]).mean()
-                if valid.any()
-                else rgb_loss * 0
+            loss, components = objectives(
+                rendered[0, ..., :3],
+                images[index],
+                rendered[0, ..., 3],
+                depths[index],
+                alpha[0, ..., 0],
+                config,
             )
-            loss = rgb_loss + config["depth_loss_weight"] * depth_loss
             if not torch.isfinite(loss):
                 raise RuntimeError(f"non-finite training loss at iteration {step}")
             loss.backward()
@@ -198,17 +208,58 @@ def train(job_path):
             strategy.step_post_backward(params, optimizers, state, step, info, packed=True)
             if not 0 < len(params["means"]) <= config["max_gaussians"]:
                 raise RuntimeError("Gaussian count violates configured budget")
-            if step % 10 == 0 or step == config["iterations"] - 1:
+            max_count = max(max_count, len(params["means"]))
+            if (
+                step % config.get("log_every", 10) == 0
+                or step + 1 in config.get("checkpoint_steps", [])
+                or step == config["iterations"] - 1
+            ):
                 row = {
                     "step": step,
-                    "rgb_l1": float(rgb_loss.detach()),
-                    "depth_l1_m": float(depth_loss.detach()),
+                    **{key: float(value.detach()) for key, value in components.items()},
+                    "total_loss": float(loss.detach()),
+                    "completed_steps": step + 1,
+                    "optimization_seconds": time.perf_counter()
+                    - optimize_started
+                    - checkpoint_seconds,
+                    "peak_vram_allocated_bytes": torch.cuda.max_memory_allocated(),
                     "gaussians": len(params["means"]),
                 }
                 log.write(json.dumps(row) + "\n")
                 log.flush()
                 print(json.dumps(row), flush=True)
+            if step + 1 in config.get("checkpoint_steps", []):
+                torch.cuda.synchronize()
+                snapshot_started = time.perf_counter()
+                folder = output / "checkpoints" / f"step_{step + 1:06d}"
+                folder.mkdir(parents=True)
+                np.savez_compressed(
+                    folder / "gaussians.npz",
+                    **{key: value.detach().cpu().numpy() for key, value in params.items()},
+                )
+                save_ply(params, folder / "gaussian.ply")
+                log.flush()
+                (folder / "training-log.jsonl").write_bytes(
+                    (output / "training-log.jsonl").read_bytes()
+                )
+                (folder / "train-job.json").write_bytes(job_path.read_bytes())
+                record = {
+                    "step": step + 1,
+                    "directory": str(folder.relative_to(output)),
+                    "optimization_seconds": snapshot_started
+                    - optimize_started
+                    - checkpoint_seconds,
+                    "gaussians": len(params["means"]),
+                    "max_gaussians_seen": max_count,
+                    "peak_vram_allocated_bytes": torch.cuda.max_memory_allocated(),
+                    "peak_vram_reserved_bytes": torch.cuda.max_memory_reserved(),
+                    "checkpoint_seconds": time.perf_counter() - snapshot_started,
+                }
+                checkpoints.append(record)
+                write_json(folder / "checkpoint.json", record)
+                checkpoint_seconds += time.perf_counter() - snapshot_started
     torch.cuda.synchronize()
+    optimization_seconds = time.perf_counter() - optimize_started - checkpoint_seconds
     if not all(torch.isfinite(value).all() for value in params.values()):
         raise RuntimeError("non-finite learned parameters")
     np.savez_compressed(
@@ -229,10 +280,19 @@ def train(job_path):
             "peak_vram_reserved_bytes": torch.cuda.max_memory_reserved(),
             "training_seconds": time.perf_counter() - started,
             "iterations": config["iterations"],
+            "optimization_seconds": optimization_seconds,
+            "checkpoint_seconds": checkpoint_seconds,
+            "checkpoints": checkpoints,
+            "max_gaussians_seen": max_count,
             "initial_gaussians": count,
             "final_gaussians": len(params["means"]),
             "sh_degree": degree,
-            "loss": "RGB L1 + configured weight * valid axial-depth L1 (meters)",
+            "loss": {
+                "photometric": config.get("photometric_loss", "l1"),
+                "depth": config.get("depth_supervision", "l1"),
+                "depth_mask": config.get("depth_mask", "alpha"),
+                "depth_weight": config["depth_loss_weight"],
+            },
             "determinism": "Seeded; CUDA floating-point kernels may not be bitwise deterministic.",
         },
     )

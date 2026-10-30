@@ -267,3 +267,16 @@ refine-logs directory rather than replacing M5's historical experiment plan.
 Seven one-factor arms, three seeds and three checkpoint budgets are frozen before
 training. RGB-D initialization remains fixed when depth supervision is disabled.
 No simulation/frontend additions; implement/test before any new training.
+
+### Reconstruction-quality implementation controls (2026-10-30)
+
+- Extend the reconstruction contract with an opt-in study subclass so legacy
+  configuration serialization and historical M5 bindings remain valid.
+- Retain fixed optimization/densification schedules across budget checkpoints.
+  Parameter snapshots explicitly distinguish trajectory budget from actual age;
+  no optimizer-resume claim is made.
+- Use the existing M3 metric/evaluation pipeline only on validation, with strict
+  complete-split selection guards. Preserve legacy artifacts and record opaque
+  hashes rather than consuming historical test scores.
+- Reuse compute spec 3db6217d and isolated GPU environment; cap PyTorch allocator
+  at 4.5 GB and serialize jobs. No dependency or frontend/simulation changes.

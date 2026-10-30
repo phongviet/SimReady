@@ -277,6 +277,44 @@ class GsplatBackend:
                     "scope": "Learned 3D Gaussians; visual quality unassessed until M3.",
                 },
             )
+            metadata = json.loads((stage / "artifact.json").read_text())
+            for checkpoint in worker.get("checkpoints", []):
+                folder = stage / checkpoint["directory"]
+                snapshot = dict(metadata)
+                snapshot["checkpoint_step"] = checkpoint["step"]
+                snapshot["checkpoint_kind"] = "parameter snapshot; no optimizer resume state"
+                snapshot["worker"] = worker | {
+                    "iterations": checkpoint["step"],
+                    "final_gaussians": checkpoint["gaussians"],
+                    "optimization_seconds": checkpoint["optimization_seconds"],
+                    "peak_vram_allocated_bytes": checkpoint["peak_vram_allocated_bytes"],
+                    "peak_vram_reserved_bytes": checkpoint["peak_vram_reserved_bytes"],
+                    "max_gaussians_seen": checkpoint["max_gaussians_seen"],
+                    "training_seconds": None,
+                    "checkpoints": [],
+                }
+                snapshot["total_seconds"] = None
+                snapshot["files_sha256"] = {
+                    name: sha256_file(folder / name)
+                    for name in (
+                        "gaussians.npz",
+                        "gaussian.ply",
+                        "training-log.jsonl",
+                        "train-job.json",
+                        "checkpoint.json",
+                    )
+                }
+                write_json(folder / "artifact.json", snapshot)
+                validate_artifact(folder)
+            if worker.get("checkpoints"):
+                metadata["files_sha256"].update(
+                    {
+                        str(path.relative_to(stage)): sha256_file(path)
+                        for path in sorted((stage / "checkpoints").rglob("*"))
+                        if path.is_file()
+                    }
+                )
+                write_json(stage / "artifact.json", metadata)
             validate_artifact(stage)
         return output
 

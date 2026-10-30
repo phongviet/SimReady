@@ -3,7 +3,7 @@
 from pathlib import Path
 from typing import Literal, Protocol, Self
 
-from pydantic import Field, model_validator
+from pydantic import Field, StrictInt, model_validator
 
 from simready.data.schema import Contract, Identifier, Intrinsics, Matrix4, rigid_matrix
 
@@ -51,3 +51,25 @@ class ReconstructionBackend(Protocol):
     def render(self, artifact: Path, scene: Path, split: str, output: Path) -> Path: ...
 
     def render_cameras(self, artifact: Path, cameras: list[RenderCamera], output: Path) -> Path: ...
+
+
+class QualityTrainingConfig(ReconstructionConfig):
+    """Opt-in study controls; legacy configuration serialization stays unchanged."""
+
+    photometric_loss: Literal["l1", "mse", "l1_ssim"] = "l1"
+    ssim_weight: float = Field(default=0.2, ge=0, le=1)
+    depth_supervision: Literal["none", "l1", "relative_l1"] = "l1"
+    depth_mask: Literal["alpha", "gt_valid"] = "alpha"
+    checkpoint_steps: list[StrictInt] = Field(default_factory=list)
+    log_every: int = Field(default=10, ge=1, le=100)
+    memory_limit_bytes: int = Field(default=4_500_000_000, ge=100_000_000, le=4_500_000_000)
+
+    @model_validator(mode="after")
+    def quality_limits(self) -> Self:
+        if self.checkpoint_steps != sorted(set(self.checkpoint_steps)) or any(
+            type(n) is not int or not 1 <= n <= self.iterations for n in self.checkpoint_steps
+        ):
+            raise ValueError("checkpoints must be unique increasing steps inside the budget")
+        if self.depth_supervision == "none" and self.depth_loss_weight != 0:
+            raise ValueError("disabled depth supervision requires zero weight")
+        return self

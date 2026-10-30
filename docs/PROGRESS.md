@@ -697,3 +697,19 @@ only final model saved. Wrote focused hypotheses/controls/compute/acceptance pla
 and tracker under refine-logs/reconstruction-quality-1 before new training. All
 runs remain unexecuted; no new quality claim. Current historical outputs stay
 read-only, and previously inspected test results are excluded from selection.
+
+### Reconstruction-quality implementation gate
+
+2026-10-30: Added opt-in strict loss/depth/checkpoint/memory controls; differentiable
+objectives; cumulative convergence/timing records; reloadable parameter snapshots;
+source/config/data/history seals; immutable stage ledger; complete-validation
+selection; automatic cost/quality/seed-delta/SD tables, Pareto/convergence figures
+and deterministic actual-image failure montages. No historical output was edited.
+
+Verification before TUM dispatch: Torch CPU analytic objectives/gradients passed;
+four actual GPU tests passed (including each photometric mode and snapshot tensor
+identity/reload/render); seeded gsplat CUDA witness passed on GTX1660Ti. Eight
+focused study tests passed, including held-out pixel exclusion and protocol/source/
+history mutation detection. Frontend5 tests/build and CLI smoke passed. Final full CPU
+regression:189 passed/4 GPU-skipped; lint and formatting passed before sealing.
+No new TUM metric or improvement claim is made here.

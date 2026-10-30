@@ -41,3 +41,39 @@ def test_trained_checkpoint_reloads_and_renders_frozen_camera(scene, tmp_path):
         assert (alpha > 0.1).any()
         assert np.isfinite(depth).all()
         assert np.median(depth[alpha > 0.1]) == pytest.approx(2.0, abs=0.3)
+
+
+@pytest.mark.gpu
+def test_quality_snapshot_objectives_reload(scene, tmp_path):
+    if os.environ.get("SIMREADY_GPU_TESTS") != "1":
+        pytest.skip("requires isolated CUDA worker")
+    from simready.reconstruction.contracts import QualityTrainingConfig
+
+    base = json.loads(Path("configs/recon_smoke.json").read_text())
+    backend = GsplatBackend()
+    for mode in ("l1", "l1_ssim", "mse"):
+        config = QualityTrainingConfig(
+            **(
+                base
+                | {
+                    "photometric_loss": mode,
+                    "depth_supervision": "relative_l1",
+                    "checkpoint_steps": [20, 40],
+                }
+            )
+        )
+        model = backend.train(scene, config, tmp_path / mode)
+        for step in config.checkpoint_steps:
+            snapshot = model / "checkpoints" / f"step_{step:06d}"
+            meta = validate_artifact(snapshot)
+            assert meta["checkpoint_step"] == meta["worker"]["iterations"] == step
+            assert meta["worker"]["optimization_seconds"] > 0
+            assert meta["worker"]["peak_vram_allocated_bytes"] < config.memory_limit_bytes
+            assert meta["config"]["iterations"] == 40
+            backend.render(snapshot, scene, "validation", tmp_path / f"{mode}-{step}")
+        with (
+            np.load(model / "gaussians.npz") as a,
+            np.load(model / "checkpoints/step_000040/gaussians.npz") as b,
+        ):
+            for key in a.files:
+                np.testing.assert_array_equal(a[key], b[key])
