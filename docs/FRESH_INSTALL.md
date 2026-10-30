@@ -28,11 +28,11 @@ Fresh checkout commands actually executed:
 
 ```bash
 UV_CACHE_DIR=/home/phong/simready/.cache/uv uv sync --frozen
-npm ci --cache /home/phong/simready/frontend/.npm-cache --no-audit --no-fund
-npm test
-npm run build
+npm --prefix frontend ci --cache /home/phong/simready/frontend/.npm-cache --no-audit --no-fund
+npm --prefix frontend test
+npm --prefix frontend run build
 # From frontend, using an already installed shared Chromium binary:
-PLAYWRIGHT_BROWSERS_PATH=/home/phong/simready/.cache/playwright npx playwright test
+(cd frontend && PLAYWRIGHT_BROWSERS_PATH=/home/phong/simready/.cache/playwright npx playwright test)
 ```
 
 Frontend:5 tests passed; TypeScript/Vite production build passed. Browser:7 tests
