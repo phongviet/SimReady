@@ -6,6 +6,8 @@ build-backend = "hatchling.build"
 name = "simready"
 version = "0.0.1"
 description = "Local RGB-D reconstruction and scene editing studio"
+license = "MIT"
+license-files = ["LICENSE", "THIRD_PARTY.md"]
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
 dependencies = [

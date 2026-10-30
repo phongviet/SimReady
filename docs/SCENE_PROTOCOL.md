@@ -62,6 +62,7 @@ Implemented `/api/v1`: health, scene list/detail, object update, revision histor
 individual historical revisions and registered assets. Asset requests use scene ID
 and a registered asset key, with scene-relative paths, symlink containment and
 content-hash verification. Arbitrary filesystem path requests are unsupported.
-Errors carry request IDs. No review or role-spoofable approval endpoint exists.
-The server binds to loopback; authenticated review and persistent compute jobs
-remain later milestones. This is not production identity/access management.
+Errors carry request IDs. The server binds to loopback. Current authenticated
+review/audit/export and persistent compute jobs are described in REVIEW_PROTOCOL.md
+and PIPELINE_API.md. Server-side roles prohibit self-approval and role spoofing;
+these local accounts are not production identity/access management.

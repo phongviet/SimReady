@@ -10,15 +10,30 @@ from simready.storage import PROJECT_ROOT
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--study", type=Path, required=True)
+    parser.add_argument("--study", type=Path, nargs="+", required=True)
     args = parser.parse_args()
-    study = args.study.resolve()
-    if not study.is_relative_to(PROJECT_ROOT):
-        raise ValueError("study output index must stay inside the project")
-    files = sorted(
-        p for p in study.rglob("*") if p.is_file() and not p.name.endswith((".lock", ".pending"))
-    )
-    files += sorted((PROJECT_ROOT / "refine-logs").glob("*.md"))
+    files = set()
+    for candidate in args.study:
+        study = candidate.resolve()
+        if not study.is_relative_to(PROJECT_ROOT) or not study.is_dir():
+            raise ValueError("study output index requires a directory inside the project")
+        files.update(
+            p
+            for p in study.rglob("*")
+            if p.is_file() and not p.name.endswith((".lock", ".pending"))
+        )
+    # Preserve earlier indexed studies when adding another run.
+    manifest = PROJECT_ROOT / "MANIFEST.md"
+    if manifest.exists():
+        for line in manifest.read_text().splitlines():
+            columns = line.split("|")
+            if len(columns) == 7:
+                name = columns[3].strip()
+                path = (PROJECT_ROOT / name).resolve()
+                if path.is_relative_to(PROJECT_ROOT) and path.is_file():
+                    files.add(path)
+    files.update((PROJECT_ROOT / "refine-logs").glob("*.md"))
+    files = sorted(files)
     if len(files) <= 15:
         return
     lines = [
@@ -38,6 +53,8 @@ def main():
         timestamp = datetime.fromtimestamp(path.stat().st_mtime, ZoneInfo("Asia/Bangkok"))
         if name.startswith("refine-logs/"):
             skill, stage, label = "/experiment-plan", "implementation", "frozen plan or tracker"
+        elif name.startswith("experiments/m6-benchmark-"):
+            skill, stage, label = "local benchmark", "review", "measured shipping output"
         elif "/analysis-" in name:
             skill, stage, label = "/analyze-results", "review", "measured analysis output"
         else:

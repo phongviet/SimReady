@@ -219,3 +219,13 @@ model/report, metric proxy edits, observed-map replay and separate automated
 local review roles. No live retraining or human endorsement is implied. Tokens
 are switched in browser storage and never displayed in the recording. Source
 and measured reports are preserved; new review history belongs only to this demo.
+
+### M6 license and interface reconciliation
+
+2026-10-30: Original project source uses MIT, matching the existing reviewed-export
+notice. Authored fixtures remain CC0; TUM-derived imagery remains attributed
+CC BY4.0; dependencies retain their own distribution notices. Redwood data is
+not redistributed. The output manifest now preserves earlier indexed studies
+when adding companion/benchmark runs. ReconstructionBackend now declares the
+implemented supplied-camera method explicitly. Native local serving is the
+verified deployment fallback; this WSL distro reports Docker unavailable.

@@ -537,3 +537,12 @@ and WALKTHROUGH.md. Earlier registries/recordings remain ignored, never overwrit
 Recording server terminated. Added CV_EVIDENCE.md with explicit measured scopes,
 negative recapture result and prohibited unsupported claims. M6 remains open for
 current documentation/license/interface reconciliation and the final full audit.
+
+### M6 specification reconciliation increment
+
+2026-10-30: Added root source license and third-party/data notices, removed stale
+README/scene/simulation statements, and repaired multi-study output indexing.
+Actual reindex retained all previous rows and added companion/benchmark outputs
+(5,455 files). Lint passes. Docker CLI reports no integration in this WSL distro;
+no container runtime or hosted deployment is claimed. Native clean-install demo
+is verified. Training-view sample renders and comprehensive interface audit follow.

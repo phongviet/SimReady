@@ -3,7 +3,7 @@
 The implementation is a deterministic CPU simulator over a metric XZ grid in the
 same canonical Y-up frame as the reconstruction and proxies. It is not an
 independent physics engine or real robot validation. M4 review/approval/export
-and readiness diagnostics are still pending.
+and readiness diagnostics are now documented in REVIEW_PROTOCOL.md.
 
 ## Map and floor evidence
 

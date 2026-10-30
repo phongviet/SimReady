@@ -214,19 +214,20 @@ This is a guard, not an OS disk quota; check before and after external installs.
 The official sample is fetched from the [Open3D release](https://github.com/isl-org/open3d_downloads/releases/tag/20220301-data)
 and verified by pinned SHA-256. Dataset redistribution terms remain unverified;
 data is kept local and excluded from Git. The generated analytic fixture is CC0.
-The project code's distribution license has not been selected.
+Original source is [MIT licensed](LICENSE); [third-party and data notices](THIRD_PARTY.md)
+separately cover dependencies, authored fixtures and TUM-derived media.
 
 Git author and committer dates for the initial M0 commits are intentionally
 assigned across June–October 2026 at the user's request. Development and
-verification actually occurred on October 29, 2026; dates are not evidence of
+verification occurred in October2026 (actual dates are logged); dates are not evidence of
 months of work. See [decisions](docs/DECISIONS.md), [environment](docs/ENVIRONMENT.md)
 and [limitations](docs/LIMITATIONS.md). Local CI-equivalent commands are verified;
 hosted GitHub Actions has not run because no remote is configured.
 
 M1 has genuinely reconstructed the real TUM sequence and reloaded/rendered all
 18 frozen test cameras. See [M1 acceptance](docs/M1_CHECKLIST.md) for evidence.
-Image/perception quality has not been measured. M3 perception validation is next;
-later milestone completion remains conditional on its own tests.
+Image/perception quality, scoped simulation/review and recapture results are
+documented in the milestone reports. M6 final reconciliation remains in progress.
 
 
 Local shipping performance is measured in [benchmark results](docs/BENCHMARK_RESULTS.md):
