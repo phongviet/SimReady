@@ -495,3 +495,16 @@ Exact scopes/historical reconstruction metadata are in BENCHMARK_RESULTS.md;
 source summary copied byte-identically into docs/evidence/m6-benchmark.json.
 Postflight storage15,863,636,439bytes (<30GB). Benchmark processes terminated.
 Fresh-checkout UI, walkthrough recording, CV evidence and final audit remain open.
+
+
+### M6 fresh checkout UI acceptance
+
+2026-10-30: Detached clean a407ddd checkout with independent CPU .venv,
+node_modules, production build and seeded registry passed5 frontend tests and
+all7 real browser tests in19.1s. Torch/Open3D absent; actual GPU evaluation job
+failed explicitly with missing-worker message while saved reports remained intact.
+CPU checkpoint smoke passed421 Gaussians/two saved views. Editor screenshot
+visually inspected and copied with structured evidence; see FRESH_INSTALL.md.
+Offline cache-only install initially lacked archives; locked online install passed.
+Post-install full-project storage16,453,960,691bytes, including this ignored checkout.
+M6 recording, CV evidence and full requirements audit remain open.

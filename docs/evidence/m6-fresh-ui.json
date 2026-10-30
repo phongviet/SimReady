@@ -1,0 +1,13 @@
+{
+  "source_commit": "a407ddd91e0923a26b00e4acf8f6517825a38a03",
+  "torch_installed": false,
+  "open3d_installed": false,
+  "fresh_evaluation_status": "failed",
+  "error": "GPU worker is not installed; follow docs/GPU_SETUP.md",
+  "existing_reports_unchanged": true,
+  "saved_checkpoint_gaussians": 421,
+  "saved_views": 2,
+  "browser_tests": 7,
+  "frontend_tests": 5,
+  "production_build": "passed"
+}

@@ -21,7 +21,8 @@ adapter and a genuinely trained analytic demo for CPU smoke checks. See
 ## Setup
 
 Run from the repository root. Python 3.12, uv and npm are required. Node 20.20.2
-is tested (Vite also supports compatible Node 22.12+). No GPU is required.
+is tested (Vite also supports compatible Node 22.12+). No GPU is required. The [fresh CPU demo acceptance](docs/FRESH_INSTALL.md)
+records an independently installed checkout, browser tests and missing-GPU fallback.
 
 ```bash
 make setup

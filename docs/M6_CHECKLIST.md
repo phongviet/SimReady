@@ -6,7 +6,8 @@
 - [x] Queued reconstruction HTTP path, controlled artifact downloads and actual CUDA acceptance.
 - [x] Supplied-camera render HTTP path; actual CUDA import/train/render/download acceptance.
 - [x] Fresh installed CPU wheel smoke without torch/Open3D; saved model/report and API import.
-- [ ] Fresh-checkout frontend/API demo, including fallback.
+- [x] Fresh-checkout frontend/API demo, including saved-camera and missing-GPU fallback.
+      See FRESH_INSTALL.md; own installed dependencies/registry/build,7 browser tests.
 - [ ] End-to-end current-source regression, browser visual inspection and failure handling.
 - [x] Measured render throughput/resolution, evaluation throughput and API p50/p95.
       See BENCHMARK_RESULTS.md and raw samples; historical training timing is separately labeled.
