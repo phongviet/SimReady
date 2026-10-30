@@ -688,3 +688,12 @@ for lookup when original objects are absent and invalid alias rejection. Five
 history/analysis unit tests passed; actual frozen45-stage/216-row inspection
 passed unchanged. Fresh-clone source-pin verification and leased remote update
 follow. Original backup bundle remains ignored locally.
+
+### Reconstruction-quality study specification (new task)
+
+2026-10-30: Reviewed worker, adapter/config contracts and reconstruction/evaluation
+protocols. Existing baseline is1200steps, SH1,40kcap, RGB L1+0.05supported depthL1;
+only final model saved. Wrote focused hypotheses/controls/compute/acceptance plan
+and tracker under refine-logs/reconstruction-quality-1 before new training. All
+runs remain unexecuted; no new quality claim. Current historical outputs stay
+read-only, and previously inspected test results are excluded from selection.

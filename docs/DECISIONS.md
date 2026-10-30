@@ -258,3 +258,12 @@ backup bundle preserves the original objects. Frozen scientific records retain
 original IDs/hashes; a tracked commit alias map and source resolver preserve their
 meaning without fabricating new experiment execution. Publication uses explicit
 force-with-lease conditions against observed remote refs.
+
+### Reconstruction-quality ablation scope
+
+2026-10-30: New study reconstruction-quality-1 is validation-only and preserves
+all historical outputs/splits. Its focused specification is scoped under a new
+refine-logs directory rather than replacing M5's historical experiment plan.
+Seven one-factor arms, three seeds and three checkpoint budgets are frozen before
+training. RGB-D initialization remains fixed when depth supervision is disabled.
+No simulation/frontend additions; implement/test before any new training.
