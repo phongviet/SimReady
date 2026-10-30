@@ -619,3 +619,19 @@ research package hashes after f864106's checkout-policy fix. No application code
 changed from tested22afb45. RC1 tag/archives stay preserved; RC2 and its checksums
 are prepared next. Bundle restore explicitly selects main. Public publication
 remains pending the destination/account already requested.
+
+### RC2 handoff verified; publication prerequisite remains
+
+2026-10-30: Annotated v0.0.1-rc.2 points to191105d. Its full-history bundle (HEAD,
+main, tag),354-entry source archive and CPU wheel have verified checksums under
+artifacts/releases/v0.0.1-rc.2. Restored the actual bundle on main with
+core.autocrlf=true and validated the cloned421-Gaussian/two-view checkpoint and
+research package. Runtime code-tree descriptor exactly matches tested22afb45;
+checkout policy is separately pinned/verified. RC1 is preserved and superseded.
+Tool stdout logs were moved into ignored project cache for accounting. Combined
+project plus conservative legacy external pytest accounting is about18.0GB,
+below30GB; exact postflight in evidence/m6-release-candidate.json.
+Local source/archive/wheel are concrete and reviewable. No Git remote, credential
+helper, GitHub tool/account or public destination is configured. Destination was
+requested through the pending async question; no publication/hosted CI is claimed.
+The full project goal remains active awaiting that required information.

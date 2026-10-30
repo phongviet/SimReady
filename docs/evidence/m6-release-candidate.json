@@ -1,0 +1,33 @@
+{
+  "tag": "v0.0.1-rc.2",
+  "release_commit": "191105d643a430abdf17a4339d92f88664f92dbb",
+  "tested_code_commit": "22afb45790b6ae939ce6fb78bfd51e6e9d06cf65",
+  "runtime_code_identical_to_tested_source": true,
+  "code_tree_descriptor_sha256": "8afb3d044659fa56deccb615dec74d87c7c4bd77a380efb58cd231ae9fcb3c2b",
+  "checkout_policy_sha256": "2c5cc39d2fbe771dc3189b4393644668315993e6b8058b5c5d2f56d7d5c99b68",
+  "checkout_policy_witness": "docs/evidence/m6-byte-exact-checkout.json",
+  "source_archive_entries": 354,
+  "files": {
+    "simready-v0.0.1-rc.2.bundle": {
+      "bytes": 17900056,
+      "sha256": "e649741bcc97248cfc520e51bc5fdcf6f1d5c43272fc1c225f4aa631359e4c87"
+    },
+    "simready-v0.0.1-rc.2.tar.gz": {
+      "bytes": 17797385,
+      "sha256": "bc3b7fb04ca9ebabc902f15a39835d06a2e3b3b9c6518da97154e1b7093fd64d"
+    },
+    "simready-0.0.1-py3-none-any.whl": {
+      "bytes": 2371781,
+      "sha256": "82e19a438f45d2a37059368f6dc0e35c9c06d37f2695931c8098fec9191ffa62"
+    }
+  },
+  "publication": "pending destination/account; no remote/hosted CI claimed",
+  "restored_bundle_autocrlf_true": "Passed actual restored main checkout; CPU checkpoint and research package hashes validated.",
+  "postflight_storage": {
+    "project_bytes": 17589331297,
+    "legacy_external_pytest_conservative_bytes": 408873985,
+    "limit_bytes": 30000000000,
+    "tool_logs_relocated_inside_project": 26,
+    "combined_upper_bound_bytes": 17998205282
+  }
+}
