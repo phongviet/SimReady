@@ -8,8 +8,8 @@
 - [x] Fresh installed CPU wheel smoke without torch/Open3D; saved model/report and API import.
 - [ ] Fresh-checkout frontend/API demo, including fallback.
 - [ ] End-to-end current-source regression, browser visual inspection and failure handling.
-- [ ] Measured render throughput/resolution, evaluation throughput and API p50/p95.
-      Existing training times/allocator peaks are evidence, not these missing benchmarks.
+- [x] Measured render throughput/resolution, evaluation throughput and API p50/p95.
+      See BENCHMARK_RESULTS.md and raw samples; historical training timing is separately labeled.
 - [ ] Current CLI/API/setup/data/license documentation and architecture diagram.
 - [ ] Walkthrough script and short actual demo recording.
 - [ ] docs/CV_EVIDENCE.md with only measured/implemented claims and traceable sources.

@@ -216,3 +216,9 @@ M1 has genuinely reconstructed the real TUM sequence and reloaded/rendered all
 18 frozen test cameras. See [M1 acceptance](docs/M1_CHECKLIST.md) for evidence.
 Image/perception quality has not been measured. M3 perception validation is next;
 later milestone completion remains conditional on its own tests.
+
+
+Local shipping performance is measured in [benchmark results](docs/BENCHMARK_RESULTS.md):
+320×240 warm GPU rasterization656.77FPS (excludes IO/startup/browser), fresh
+18-pair evaluation12.77s, sequential loopback read API p95≤3.82ms. Raw samples,
+hardware, exclusions and a reproducible command accompany these observations.

@@ -483,3 +483,15 @@ walkthrough recording, CV evidence and complete requirements audit remain open.
 2026-10-30: Added `scripts/run_benchmark.py`, isolated `workers/render_benchmark.py`,
 `make benchmark` and `docs/BENCHMARK_PROTOCOL.md`. CLI help and Ruff pass. Measurement
 results remain pending until the source-pinned actual GPU/evaluation/API run.
+
+
+### M6 measured shipping performance
+
+2026-10-30: `make benchmark` completed from clean df422ba.180 synchronized warm
+320×240 RGB+ED frames:656.770FPS; fresh18-pair real TUM evaluation12.768s;
+100 samples/endpoint loopback TCP p95health2.198ms/list3.813ms/detail3.491ms.
+Raw sample recomputation, source pins and full evaluation binding passed.
+Exact scopes/historical reconstruction metadata are in BENCHMARK_RESULTS.md;
+source summary copied byte-identically into docs/evidence/m6-benchmark.json.
+Postflight storage15,863,636,439bytes (<30GB). Benchmark processes terminated.
+Fresh-checkout UI, walkthrough recording, CV evidence and final audit remain open.
