@@ -1,0 +1,41 @@
+{
+  "repository": "https://github.com/phongviet/SimReady",
+  "public": true,
+  "run_id": 41002820745,
+  "run_url": "https://github.com/phongviet/SimReady/actions/runs/41002820745",
+  "head_sha": "f007390b6ec9e26d1ac1ddb03acbc9a97056472c",
+  "status": "completed",
+  "conclusion": "success",
+  "jobs": [
+    {
+      "name": "frontend-browser",
+      "conclusion": "success",
+      "html_url": "https://github.com/phongviet/SimReady/actions/runs/41002820745/job/123890902195"
+    },
+    {
+      "name": "official-sample",
+      "conclusion": "success",
+      "html_url": "https://github.com/phongviet/SimReady/actions/runs/41002820745/job/123890902482"
+    },
+    {
+      "name": "geometry",
+      "conclusion": "success",
+      "html_url": "https://github.com/phongviet/SimReady/actions/runs/41002820745/job/123890902550"
+    },
+    {
+      "name": "cpu",
+      "conclusion": "success",
+      "html_url": "https://github.com/phongviet/SimReady/actions/runs/41002820745/job/123890902849"
+    }
+  ],
+  "previous_failed_runs": [
+    41002058943,
+    41002399387
+  ],
+  "diagnosed_failure": "Missing parent for configured pytest basetemp on cold checkout; fixed in f007390.",
+  "cold_checkout_local_checks": {
+    "passed": 42,
+    "seconds": 9.09
+  },
+  "scope": "Actual public GitHub repository and hosted CPU/official-sample/geometry/frontend-browser jobs. CUDA and full real-TUM checks are local, not hosted."
+}

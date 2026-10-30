@@ -1,12 +1,12 @@
-# PLAN.md completion audit — local gates verified, publication open
+# PLAN.md completion audit — required gates verified
 
 Audited2026-10-30 against the current source and local artifacts. This is a
 requirements ledger, not a declaration that shipping is complete. PASS means the
 listed evidence supports that limited requirement; OPEN remains work; FALLBACK
 identifies an explicit tested alternative/unsupported boundary allowed by PLAN.md;
 OPTIONAL does not block P0/P1. Current-source final regression and credential/Git review are now recorded in
-FINAL_VERIFICATION.md. Publication remains unverified; do not mark the whole
-project complete while it remains open.
+FINAL_VERIFICATION.md. Publication and actual hosted acceptance are now verified in PUBLICATION.md.
+Optional/unsupported targets remain explicitly scoped rather than claimed.
 
 ## Priority requirements and user stories (PLAN1–2)
 
@@ -31,7 +31,7 @@ project complete while it remains open.
 |P3 dynamic agents, removal, weather, USD/external simulator|OPTIONAL|PLAN explicitly optional afterM6; none claimed; M7 not selected|
 |Objective1 new reviewer launches, edits/reloads, evaluates/reads reports|PASS|fresh CPU browser path + saved reports; fresh GPU evaluation has separate actual acceptance; no GPU inference implied on CPU|
 |Objective2 scientific masks/units/no leakage/raw predictions|PASS|frozen hashes/access gates, EVALUATION_PROTOCOL.md, raw M5 audits; temporal dependence disclosed|
-|Objective3 tests in CI|PASS locally / hosted OPEN|workflow config plus local CPU/GPU/frontend/browser evidence; no remote/hosted run|
+|Objective3 tests in CI|PASS local + hosted|workflow config plus local CPU/GPU/frontend/browser evidence; actual successful hosted run41002820745|
 |Objective4 source/split/config/seed/version/Git/GPU/timing|PASS|artifact/evaluation/study manifests and pinned outputs; raw chronology limitations retained|
 |Objective5 honest feature/result claims|PASS with ongoing audit|negative/undefined results retained, no fixtures mislabeled as real; M6 remains open|
 |Builder1–5 import/reconstruct, inspect, edit, evaluate, simulation/export|PASS|CLI/API pipeline, editor, evaluation/review modules; explicit registration joins model/collider|
@@ -53,7 +53,7 @@ project complete while it remains open.
 |Mypy gradual / MLflow optional|OPTIONAL|runtime typed validation/Ruff/TS/tests implemented; these optional tools are not claimed|
 |Docker Compose preferred deployment|FALLBACK|actual WSL command reports engine integration unavailable; tested native deployment in DEPLOYMENT.md; no container claim|
 |GPU6GB budget/OOM/unsupported worker|PASS|conservative presets, actual witnesses, persisted worker failures; hardware scope in GPU_SETUP.md|
-|Licenses/model/data/privacy|PASS locally|LICENSE, THIRD_PARTY.md, source manifests/weight digests; no raw Redwood/weights committed; public publication review still open|
+|Licenses/model/data/privacy|PASS locally|LICENSE, THIRD_PARTY.md, source manifests/weight digests; no raw Redwood/weights committed; public source and notices verified|
 |Data-source priority synthetic/public posed RGB-D|PASS|analytic, synthetic Redwood, real TUM; personal/Replica/video/LiDAR are optional later sources|
 |Canonical manifest/frames/splits/calib/RGB/depth/masks|PASS|strict versioned schema; optional masks/distortion unsupported and disclosed, not fabricated|
 |Metric RH Y-up / OpenCV c2w / conversions/roundtrips|PASS|data/camera.py and camera tests; browser known-marker parity test|
@@ -143,15 +143,15 @@ server-bound roles, self-review prohibition and persistent failures are tested.
 |Initial target CLI commands|PASS adaptation|CLI.md +25 actual help subprocesses; explicit output/reference paths; split validation and report location semantics disclosed|
 |Make setup/test/demo/benchmark, GPU opt-in skip|PASS|Makefile, actual runs and test markers|
 |QA matrix schema/geometry/reconstruction/metrics/matching/editor/UI/jobs/review/sim/protocol|PASS incremental|tests/unit + integration + browser; final CPU/CUDA/frontend/browser regression passed|
-|QA CI CPU install/build/sample report|PASS locally / hosted OPEN|fresh installed environments, report/browser acceptance, workflow config; no hosted run|
+|QA CI CPU install/build/sample report|PASS local + hosted|fresh installed environments, report/browser acceptance, workflow config; no hosted run|
 |Research references/literature integrity|PASS qualified|related-work comparison in M5; no novelty claim; no false baseline reproduction|
-|Public repository + code/licenses/tests/configs/fetch/reproduce|OPEN|local materials ready; no remote/account destination configured, no publication claimed|
+|Public repository + code/licenses/tests/configs/fetch/reproduce|PASS|https://github.com/phongviet/SimReady; actual hosted acceptance, source tags and notices; PUBLICATION.md|
 |Working captured reconstruction/web demo/dataset report/failure/limits/video|PASS|real walkthrough, M3/M5 evidence, FRESH_INSTALL and limitations|
 |Git date range June–October2026|PASS locally|first assigned June1, latest actual October30; assignment disclosed; final history scan passed|
 |Total storage<30,000,000,000bytes|PASS incremental|combined project/legacy-temp accounting<18GB; final evidence/postflight recorded|
-|Incremental execution, verified claims and milestones|PASS ongoing|focused commits, checklists, raw evidence; project remains active until remaining gates are resolved|
+|Incremental execution, verified claims and milestones|PASS ongoing|focused commits, checklists, raw evidence; all required gates verified; optional M7 stays unselected|
 
-## Concrete remaining work
+## Closure notes
 
 1. UI gaps above are now implemented and verified in8 browser tests. Preserve
    thumbnail/latest-base-QA scope and tested-center/unknown-coverage labels.
@@ -159,8 +159,8 @@ server-bound roles, self-review prohibition and persistent failures are tested.
    FINAL_VERIFICATION.md and the retained warnings/scopes.
 3. Git/content/export/link/package/storage audits passed through tested source
    22afb45. Source archives retain exact release/tested revisions and checksums.
-4. Resolve public repository destination/account only after local release is
-   concrete and reviewable. No hosted CI or public URL is asserted in advance.
+4. User supplied the destination; source was published without force and all
+   four hosted jobs passed. PUBLICATION.md records the actual run and initial failures.
 
 This audit retains the full objective. Optional/unsupported boundaries are
 explicit PLAN-authorized alternatives, not hidden claims of implementation.

@@ -1,9 +1,8 @@
-# Local release verification — publication pending
+# Release verification
 
-Local P0/P1 and the completed P2 case studies are verified. The public repository
-and hosted CI remain pending; the full project goal is still active. No remote
-or public service has been created or claimed. The requested repository destination
-is the only outstanding external prerequisite identified by the current audit.
+P0/P1 and the completed P2 case studies are verified. The public repository and
+hosted acceptance are recorded in PUBLICATION.md. The application is a verified
+local service; public source publication is not a claim of a hosted application.
 
 Tested code: `22afb45790b6ae939ce6fb78bfd51e6e9d06cf65`, 2026-10-30. Later release
 notes and Git checkout policy do not change application code. [Structured verification](evidence/m6-final-verification.json)
@@ -51,10 +50,10 @@ third-party model weights are fetched separately through documented bounded path
 A source archive, Git-history bundle, wheel and checksum manifest are prepared
 under `artifacts/releases`; those local build outputs are not committed.
 
-After a destination/account is supplied: configure the intended remote, publish
-the reviewed code/history/tag, confirm visibility and execute/inspect hosted CI.
-Do not interpret local green checks as an already-run hosted workflow. The
-requirements audit retains publication/hosted execution as open until verified.
+The supplied public destination now contains the reviewed history/tag. Actual
+hosted CPU/data/geometry/frontend jobs passed; PUBLICATION.md identifies their
+source and URLs. Earlier local-only evidence remains a historical snapshot and
+is supplemented by the publication observation, not retroactively relabeled.
 
 ## Handoff checkout correction
 

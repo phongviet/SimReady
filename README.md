@@ -1,5 +1,7 @@
 # SimReady
 
+[![CI](https://github.com/phongviet/SimReady/actions/workflows/ci.yml/badge.svg)](https://github.com/phongviet/SimReady/actions/workflows/ci.yml)
+
 SimReady is a local RGB-D-to-3DGS studio for inspecting reconstructions, editing
 rigid proxy obstacles, comparing held-out perception results, and running a
 simple navigation scenario with scoped review and export.
@@ -9,16 +11,15 @@ an actual learned analytic model. Gaussian appearance, coarse collision geometry
 and inserted overlays are kept separate. Reports expose blur, missing predictions
 and unknown regions; approval applies only to a named local experiment.
 
-M0–M5 are verified locally. The recapture case study reports a negative result:
+M0–M6 are complete with verified local and hosted acceptance. The recapture case study reports a negative result:
 risk-based acquisition did not outperform random acquisition here. See
-[results](docs/M5_RESULTS.md). M6 local release checks are verified; public
-repository publication and hosted CI remain pending in the
+[results](docs/M5_RESULTS.md). The [public repository and hosted CI](docs/PUBLICATION.md) are verified; see the
 [shipping checklist](docs/M6_CHECKLIST.md). [PLAN.md](PLAN.md) is the specification.
 
 Authenticated queued [import, reconstruction and supplied-camera render APIs](docs/PIPELINE_API.md)
 have actual local subprocess/CUDA acceptance evidence. [Progress](docs/PROGRESS.md)
 records execution and measured limits. A [local release candidate handoff](docs/RELEASE_HANDOFF.md)
-is prepared; it does not imply public publication.
+is retained alongside the published source and final version tag.
 
 ## Recorded walkthrough
 
@@ -201,8 +202,8 @@ make test-browser
 
 Browser tests execute the live API and actual WebGL2 renderer, verify nonempty
 rendered pixels and orbit movement, and exercise edits, reload, deletion,
-visibility, conflicts and saved-camera fallback. Hosted CI is configured but
-has not run because no remote is configured.
+visibility, conflicts and saved-camera fallback. Hosted CPU/data/geometry/frontend acceptance has run successfully; see
+[publication evidence](docs/PUBLICATION.md).
 
 ## Storage and provenance
 
@@ -227,12 +228,12 @@ assigned across June–October 2026 at the user's request. Development and
 verification occurred in October 2026 (actual dates are logged); dates are not evidence of
 months of work. See [decisions](docs/DECISIONS.md), [environment](docs/ENVIRONMENT.md)
 and [limitations](docs/LIMITATIONS.md). Local CI-equivalent commands are verified;
-hosted GitHub Actions has not run because no remote is configured.
+hosted GitHub Actions results are recorded in [publication evidence](docs/PUBLICATION.md).
 
 M1 has genuinely reconstructed the real TUM sequence and reloaded/rendered all
 18 frozen test cameras. See [M1 acceptance](docs/M1_CHECKLIST.md) for evidence.
 Image/perception quality, scoped simulation/review and recapture results are
-documented in the milestone reports. [Final local verification](docs/FINAL_VERIFICATION.md) is complete; publication is pending.
+documented in the milestone reports. [Final verification](docs/FINAL_VERIFICATION.md) and [publication](docs/PUBLICATION.md) are complete.
 
 
 Local shipping performance is measured in [benchmark results](docs/BENCHMARK_RESULTS.md):

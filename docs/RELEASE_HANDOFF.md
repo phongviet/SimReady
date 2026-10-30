@@ -1,8 +1,9 @@
 # Local release candidate handoff
 
-Current candidate: **v0.0.1-rc.2**. Publication and hosted CI are pending a
-repository destination/account. This is a local verified handoff, not an already
-published repository or hosted service.
+Archived candidate: **v0.0.1-rc.2**. Public source and hosted acceptance are now
+verified in PUBLICATION.md. The final **v0.0.1** tag also includes the subsequent
+cold-test setup fix. RC2 remains a reproducible historical handoff; it is not
+rewritten or presented as the final fixed test runner. No hosted service is claimed.
 
 Files are generated under `artifacts/releases/v0.0.1-rc.2/`:
 
@@ -47,7 +48,6 @@ from the earlier wheel used during the initial verification stage.
 
 ## Publication next step
 
-After the destination/account is supplied, publish the reviewed history/tag and
-verify repository visibility plus hosted CI results. No remote is configured at
-this stage. The native local service remains the verified deployment; optional
-Docker/cloud/external simulator targets are unsupported as documented.
+The destination is https://github.com/phongviet/SimReady. Publication/hosted
+acceptance are verified in PUBLICATION.md. The native local service remains the
+verified deployment; Docker/cloud/external simulator targets are unsupported.

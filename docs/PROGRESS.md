@@ -27,7 +27,7 @@ exact tested package versions are recorded in `ENVIRONMENT.md` and the lockfiles
 - [x] M3: perception validation, real held-out report and nine inspected failures; see M3_CHECKLIST.md.
 - [x] M4: readiness, local roles, scoped review/audit, navigation and reviewed exports; see M4_CHECKLIST.md.
 - [x] M5: real recapture study and labeled synthetic companion verified, with explicit negative/undefined outcomes.
-- [ ] M6: local release gates verified; public repository publication/hosted CI pending destination.
+- [x] M6: local release gates, public repository and actual hosted CI verified; see PUBLICATION.md.
 - [ ] M7: optional integrations (not started).
 
 Detailed acceptance criteria: [M0 checklist](M0_CHECKLIST.md).
@@ -656,3 +656,15 @@ Ubuntu did not fix that independent configuration bug. Added a pytest configure
 hook creating only basetemp's parent; pytest retains ownership/cleanup of its base.
 No tests or assertions were skipped/weakened. Cold-checkout and hosted rechecks
 follow; initial hosted failures remain recorded rather than called successful.
+
+### M6 public acceptance passed
+
+2026-10-30: Public repository https://github.com/phongviet/SimReady verified.
+Actual hosted run41002820745 on f007390 completed successfully for CPU, official
+synthetic sample, geometry and frontend/browser jobs. Earlier two hosted failures
+are retained; their cold-cache parent bug is fixed, not hidden. Current local
+CUDA tests passed3in91.17s and real TUM test passed1in4.07s. PUBLICATION.md and
+API observations separate public source/hosted CPU checks from local CUDA and
+real-capture evidence. All named required PLAN gates are now supported, with
+optional M7/unsupported targets explicitly unchanged. Final tag/remote recheck
+follows this documentation-only completion commit.

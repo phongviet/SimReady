@@ -1,7 +1,8 @@
 # Implemented and measured portfolio evidence
 
 Verified locally through 2026-10-30. This ledger supports limited statements;
-it does not assert public deployment, hosted CI, human approval or broad accuracy.
+it does not assert a public application deployment, human approval or broad accuracy.
+Public source and actual hosted CI are now verified in PUBLICATION.md.
 The initial June–October Git dates were assigned at the user's request and do not
 prove months of work. Actual execution dates are in PROGRESS.md.
 
@@ -50,5 +51,5 @@ Do not claim: state-of-the-art reconstruction, novel recapture algorithm,
 real-world detector accuracy, safety certification, sim-to-real transfer,
 production IAM, Isaac/CARLA integration, physically correct weather/removal,
 interactive browser 656 FPS, independent-scene validation, or a public service.
-Local M6 gates are verified in FINAL_VERIFICATION.md. Public publication and
-hosted CI remain pending; do not describe those as completed.
+M6 gates are verified in FINAL_VERIFICATION.md; public source and hosted CI
+are verified in PUBLICATION.md. Do not conflate them with a public hosted service.

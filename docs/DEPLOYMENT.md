@@ -39,7 +39,7 @@ conditional on the core shipping gate; no external simulator claim is made.
 ## Repository and CI
 
 GitHub Actions defines CPU, official-sample, optional geometry and frontend/browser
-checks. Their local equivalents are verified; hosted execution has not occurred
-because this checkout has no Git remote. A public repository/service URL is not
-claimed. Final publication needs a destination/account and the completed local
-release audit; local delivery and externally hosted publication are separate facts.
+checks. Their local equivalents and actual hosted runs are verified. The public
+repository is https://github.com/phongviet/SimReady; see PUBLICATION.md. This
+publishes source, not a hosted application service. Local application delivery
+and public code publication are separately documented facts.

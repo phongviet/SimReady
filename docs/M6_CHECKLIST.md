@@ -1,4 +1,4 @@
-# M6 local gates verified — publication pending
+# M6 acceptance verified
 
 - [x] Finish M5 companion integrity review and report; retain real-study negative outcome.
 - [x] Audit every PLAN.md interface and deliverable against current implementation; see REQUIREMENTS_AUDIT.md.
@@ -7,7 +7,7 @@
 - [x] Supplied-camera render HTTP path; actual CUDA import/train/render/download acceptance.
 - [x] Fresh installed CPU wheel smoke without torch/Open3D; saved model/report and API import.
 - [x] Fresh-checkout frontend/API demo, including saved-camera and missing-GPU fallback.
-      See FRESH_INSTALL.md; own installed dependencies/registry/build,7 browser tests.
+      See FRESH_INSTALL.md; own installed dependencies/registry/build,8 browser tests.
 - [x] End-to-end current-source regression, browser visual inspection and failure handling; see FINAL_VERIFICATION.md.
 - [x] Measured render throughput/resolution, evaluation throughput and API p50/p95.
       See BENCHMARK_RESULTS.md and raw samples; historical training timing is separately labeled.
@@ -15,10 +15,10 @@
 - [x] Walkthrough script and short actual demo recording;50.8s real-TUM clip, playback/export verified.
 - [x] docs/CV_EVIDENCE.md with only measured/implemented claims and traceable sources.
 - [x] Final local storage/Git/history/credential/export review and requirement-by-requirement audit.
-- [ ] Publish to the user-specified public repository and inspect hosted CI; destination/account pending.
+- [x] Publish to the user-specified public repository and inspect hosted CI; PUBLICATION.md records successful actual jobs.
 
-Local state at entry: no remote configured; hosted CI/public deployment have not
-run. Existing local review approval is an automated acceptance fixture, not human
+At milestone entry no remote/hosted run existed. Source is now public and hosted
+CI is verified; the application itself remains a supported local deployment. Existing local review approval is an automated acceptance fixture, not human
 endorsement. M7 is explicitly optional and conditional on M6, per PLAN.md.
 
 Current implemented HTTP areas: health, scenes/assets/revisions, proxy edits,
