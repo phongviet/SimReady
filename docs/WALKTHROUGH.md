@@ -1,10 +1,10 @@
 # Recorded real-scene walkthrough
 
-[Play the50.8-second recording](media/tum-walkthrough.webm) ·
+[Play the 50.8-second recording](media/tum-walkthrough.webm) ·
 [chapters](evidence/m6-walkthrough-chapters.json) ·
 [hashes and acceptance evidence](evidence/m6-walkthrough.json)
 
-Recorded2026-10-30 from clean source `3907377`, at1440×1000 in headless Chromium
+Recorded 2026-10-30 from clean source `3907377`, at 1440×1000 in headless Chromium
 with software WebGL. This is actual product UI acting on the genuine saved TUM
 fr1 desk Gaussian model and its18-view measured report. It does not show live
 training; the saved input/reconstruction comparison appears before editing.
@@ -17,7 +17,7 @@ No responses, renders or navigation outcomes were mocked.
 |0:05|“Orbit inspection uses Spark; scientific measurements use frozen gsplat views.”|
 |0:09|“Insert and save a metric rigid box. Its mesh and collider share this transform.”|
 |0:11|“Base-render evaluation stays frozen; inserted-object perception is unverified.”|
-|0:22|“The observed coarse-map simulator reaches its goal over1.15m, with unknown cells blocked.”|
+|0:22|“The observed coarse-map simulator reaches its goal over 1.15 m, with unknown cells blocked.”|
 |0:35|“The Builder submits this limited regression and acknowledges measured failures.”|
 |0:46|“A distinct automated local Reviewer records a scoped decision and builds the verified export.”|
 
@@ -26,9 +26,9 @@ for this known-map regression and listed reference cameras; it is not independen
 human endorsement, detection accuracy or safety certification. The visible QA
 retains48 reference predictions, zero rendered predictions and incomplete geometry.
 
-The final50.8s WebM (10,120,465bytes) played to completion in Chromium. Decoded
+The final50.8 s WebM (10,120,465 bytes) played to completion in Chromium. Decoded
 comparison, navigation and review frames were visually inspected. There were
-zero page errors. The route was1.150m with zero replay collisions. Its exported
+zero page errors. The route was1.150 m with zero replay collisions. Its exported
 ZIP contains213 individually hash-verified payloads, source revision3 and
 approved revision5. SHA-256 for the published clip:
 `ee09273afc9afe8b36505e2d600d137f615e1eaa2d055b6c8f1302cb318897ce`.
@@ -72,7 +72,7 @@ switched via browser storage, never displayed in the clip. GPU inference is not
 needed to replay these saved assets. The recording server was stopped after this run.
 
 Reference/derived TUM imagery: **TUM RGB-D benchmark, freiburg1_desk**, Sturm et al.,
-IROS2012, [CC BY4.0](https://creativecommons.org/licenses/by/4.0/),
+IROS 2012, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/),
 [source and attribution](https://cvg.cit.tum.de/data/datasets/rgbd-dataset).
 The video includes derived renders/overlays and product UI; the full raw dataset
 and third-party weights are not bundled. See DATASET_PROTOCOL.md for source hashes.

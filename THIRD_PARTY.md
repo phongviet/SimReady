@@ -9,7 +9,7 @@ those distributions. This repository does not vendor their implementations.
 |---|---|
 |gsplat1.5.3+pt24cu124|Apache2.0; installed wheel `licenses/LICENSE`; upstream rasterization/DefaultStrategy used through an adapter|
 |PyTorch2.4.1 / torchvision0.19.1|BSD-family notices retained in installed packages; no weights committed|
-|LPIPS0.1.4|BSD-style license in installed `lpips-0.1.4.dist-info/LICENSE`; SqueezeNet and package calibration hashes pinned separately|
+|LPIPS 0.1.4|BSD-style license in installed `lpips-0.1.4.dist-info/LICENSE`; SqueezeNet and package calibration hashes pinned separately|
 |Open3D CPU0.19|MIT project license plus dependency notices in installed LICENSE.txt; geometry extra only|
 |React / Three.js / Spark / Vite|MIT according to pinned installed package.json/license files|
 |Playwright|Apache2.0 according to pinned package metadata; browser/tool binaries not redistributed|
@@ -27,13 +27,13 @@ EVALUATION_PROTOCOL.md. No third-party model weights are bundled in Git.
 - Analytic plane/bench source fixtures are authored synthetic data, CC0. The
   bundled analytic model/renders/report derive from these fixtures; see
   `src/simready/demo/analytic-plane/LICENSE.txt` and their provenance.
-- TUM RGB-D **freiburg1_desk** is attributed to Sturm et al., IROS2012, under
-  [CC BY4.0](https://creativecommons.org/licenses/by/4.0/), as identified by the
+- TUM RGB-D **freiburg1_desk** is attributed to Sturm et al., IROS 2012, under
+  [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), as identified by the
   [publisher](https://cvg.cit.tum.de/data/datasets/rgbd-dataset). Raw capture stays
   ignored and is fetched from the publisher with a pinned checksum.
 - TUM-derived screenshots, comparisons, reports, research plots and
   `docs/media/tum-walkthrough.webm` preserve that attribution. They include modified
-  images, learned renders, residuals, annotations or UI overlays. CC BY4.0 applies
+  images, learned renders, residuals, annotations or UI overlays. CC BY 4.0 applies
   to the included TUM-derived imagery; original product source remains MIT.
 - The Open3D Redwood sample is **synthetic ICL-NUIM**, not a real capture. Its
   redistribution terms remain unverified here. It is fetched only for local

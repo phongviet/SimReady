@@ -26,7 +26,7 @@ rooted API GPU worker concurrently. No packages or weights should be downloaded.
   host transfers, encoding, file output, HTTP and browser rendering. Report exact
   resolution/count, finite output witness and PyTorch peak allocated/reserved bytes.
   These allocator figures exclude driver/context memory and are not total VRAM.
-- Evaluation:one fresh run of all18 test view pairs with the pinned detector,
+- Evaluation:one fresh run of all 18 test view pairs with the pinned detector,
   LPIPS, image/depth metrics and report exporter. Time the complete `evaluate`
   call including worker startup/model loading, staging and report writes. Excludes
   model training and render generation. Count paired views, not36 separate images.
@@ -40,6 +40,6 @@ rooted API GPU worker concurrently. No packages or weights should be downloaded.
   labeled historical, rather than implying this benchmark retrains it. The worker
   timer excludes process startup and CPU data preparation; report its exact scope.
 
-GTX1660Ti6GB under WSL2 is the tested hardware. Host load, GPU clocks and WSL
+GTX 1660 Ti6 GB under WSL2 is the tested hardware. Host load, GPU clocks and WSL
 scheduling can change results. These observations do not imply a speedup over
 another backend, interactive-browser FPS or real robot performance.

@@ -1,8 +1,8 @@
 # Local shipping measurements
 
-Measured2026-10-30, clean source `df422ba`, GTX1660Ti6GB under WSL2,
-Intel i7-10750H (12 logical CPUs). Isolated Python3.10.20, torch2.4.1+cu124,
-gsplat1.5.3+pt24cu124; CPU runner Python3.12.3. No competing project GPU job was
+Measured 2026-10-30, clean source `df422ba`, GTX 1660 Ti6 GB under WSL2,
+Intel i7-10750H (12 logical CPUs). Isolated Python 3.10.20, torch2.4.1+cu124,
+gsplat1.5.3+pt24cu124; CPU runner Python 3.12.3. No competing project GPU job was
 observed. These are local observations, not cross-system guarantees or speedups.
 
 [Raw samples and source pins](evidence/m6-benchmark.json) are a byte-identical copy
@@ -15,11 +15,11 @@ path if the default already exists).
 | Measurement | Observed result | Scope |
 |---|---:|---|
 | GPU RGB+expected-depth render throughput |656.77 frames/s|17,828 Gaussians;320×240;18 cameras cycled;10 warmups then180 synchronized frames|
-| Render latency p50 / p95 |1.459 /1.882ms|Python dispatch and CUDA sync; excludes loading, transfers, PNG/NPY, HTTP, browser|
-| Render peak allocated / reserved |18,117,632 /29,360,128bytes|PyTorch allocator; excludes driver/context and total device usage|
-| Fresh evaluation |18 pairs /12.768s =1.410 pairs/s|Saved real TUM test renders; startup, pinned SSDLite/LPIPS, metrics, staging and report writes included|
-| Historical reconstruction loop/run |9.813s;1,200 iterations|Original real baseline worker timer, including its tensor setup/model serialization; excludes process startup and CPU training-data preparation|
-| Historical reconstruction peak allocated / reserved |86,880,768 /102,760,448bytes|Original worker record, not a new training run; PyTorch allocator only|
+| Render latency p50 / p95 |1.459 /1.882 ms|Python dispatch and CUDA sync; excludes loading, transfers, PNG/NPY, HTTP, browser|
+| Render peak allocated / reserved |18,117,632 /29,360,128 bytes|PyTorch allocator; excludes driver/context and total device usage|
+| Fresh evaluation |18 pairs /12.768 s =1.410 pairs/s|Saved real TUM test renders; startup, pinned SSDLite/LPIPS, metrics, staging and report writes included|
+| Historical reconstruction loop/run |9.813 s;1,200 iterations|Original real baseline worker timer, including its tensor setup/model serialization; excludes process startup and CPU training-data preparation|
+| Historical reconstruction peak allocated / reserved |86,880,768 /102,760,448 bytes|Original worker record, not a new training run; PyTorch allocator only|
 
 | Sequential loopback endpoint |p50 ms|p95 ms|
 |---|---:|---:|
@@ -41,6 +41,6 @@ selection or model configuration changed in response to these timing results.
 
 One evaluation run supplies no timing uncertainty estimate. Warm render timing
 is deliberately narrower than full service or browser rendering: do not present
-656.77FPS as the studio's interactive FPS. Historical model quality remains the
+656.77 FPS as the studio's interactive FPS. Historical model quality remains the
 same limited real TUM baseline documented in [M3](M3_CHECKLIST.md); high throughput
 does not establish reconstruction or perception quality.

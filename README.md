@@ -1,31 +1,32 @@
 # SimReady
 
-`PLAN.md` is the specification. **M0–M5 are complete locally, with qualified research evidence.** The user has
-authorized completing the full project.
-The studio supports persistent rigid proxy editing and frozen-view perception
-evaluation, deterministic navigation and scoped local review/export.
-M5's real recapture case study, labeled analytic companion, integrity audits and
-research dashboard are documented. Risk-based recapture did not outperform random
-on this case study; see [results](docs/M5_RESULTS.md). M6 shipping checks remain
-open in the [shipping checklist](docs/M6_CHECKLIST.md). Authenticated queued
-[import, reconstruction and supplied-camera render APIs](docs/PIPELINE_API.md)
-have local subprocess/CUDA acceptance evidence.
+SimReady is a local RGB-D-to-3DGS studio for inspecting reconstructions, editing
+rigid proxy obstacles, comparing held-out perception results, and running a
+simple navigation scenario with scoped review and export.
 
-M0 provides a CPU-only RGB-D import/validation package, explicit camera
-conventions, an analytic fixture with known metric geometry, frozen dataset
-splits, and a React/TypeScript shell. M1 adds an isolated gsplat training/render
-adapter and a genuinely trained analytic demo for CPU smoke checks. See
-[progress](docs/PROGRESS.md) and the
-[acceptance checklist](docs/M0_CHECKLIST.md) for actual verification evidence.
+The project includes a genuine real TUM reconstruction and a CPU demo built from
+an actual learned analytic model. Gaussian appearance, coarse collision geometry
+and inserted overlays are kept separate. Reports expose blur, missing predictions
+and unknown regions; approval applies only to a named local experiment.
+
+M0–M5 are verified locally. The recapture case study reports a negative result:
+risk-based acquisition did not outperform random acquisition here. See
+[results](docs/M5_RESULTS.md). M6 local release checks are verified; public
+repository publication and hosted CI remain pending in the
+[shipping checklist](docs/M6_CHECKLIST.md). [PLAN.md](PLAN.md) is the specification.
+
+Authenticated queued [import, reconstruction and supplied-camera render APIs](docs/PIPELINE_API.md)
+have actual local subprocess/CUDA acceptance evidence. [Progress](docs/PROGRESS.md)
+records execution and measured limits.
 
 ## Recorded walkthrough
 
-[Watch the50.8-second real-scene walkthrough](docs/media/tum-walkthrough.webm):
+[Watch the 50.8-second real-scene walkthrough](docs/media/tum-walkthrough.webm):
 saved TUM reconstruction →metric box edit →frozen QA →simulated route replay
 →scoped automated local review/export. [Script, chapters and verification](docs/WALKTHROUGH.md).
 The clip uses a genuine saved model/report; it does not imply live training or
-human endorsement. TUM reference/derived imagery: Sturm et al., IROS2012,
-[CC BY4.0](https://creativecommons.org/licenses/by/4.0/).
+human endorsement. TUM reference/derived imagery: Sturm et al., IROS 2012,
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 [Measured CV evidence](docs/CV_EVIDENCE.md) lists supported claims and exclusions.
 
 [Current CLI reference](docs/CLI.md) · [deployment boundary](docs/DEPLOYMENT.md) ·
@@ -132,7 +133,7 @@ adjustment was made to improve the test result.
 ## Navigation and scoped review
 
 The Navigation tab saves metric scenarios, blocks unknown floor cells and runs
-A* plus swept replay. Actual TUM coarse-map regression:1.05m baseline,1.15m detour
+A* plus swept replay. Actual TUM coarse-map regression:1.05 m baseline,1.15 m detour
 around an inserted box, and no route after a barrier. These results concern our
 simplified known map, not real robot performance.
 
@@ -222,7 +223,7 @@ separately cover dependencies, authored fixtures and TUM-derived media.
 
 Git author and committer dates for the initial M0 commits are intentionally
 assigned across June–October 2026 at the user's request. Development and
-verification occurred in October2026 (actual dates are logged); dates are not evidence of
+verification occurred in October 2026 (actual dates are logged); dates are not evidence of
 months of work. See [decisions](docs/DECISIONS.md), [environment](docs/ENVIRONMENT.md)
 and [limitations](docs/LIMITATIONS.md). Local CI-equivalent commands are verified;
 hosted GitHub Actions has not run because no remote is configured.
@@ -230,10 +231,10 @@ hosted GitHub Actions has not run because no remote is configured.
 M1 has genuinely reconstructed the real TUM sequence and reloaded/rendered all
 18 frozen test cameras. See [M1 acceptance](docs/M1_CHECKLIST.md) for evidence.
 Image/perception quality, scoped simulation/review and recapture results are
-documented in the milestone reports. M6 final reconciliation remains in progress.
+documented in the milestone reports. [Final local verification](docs/FINAL_VERIFICATION.md) is complete; publication is pending.
 
 
 Local shipping performance is measured in [benchmark results](docs/BENCHMARK_RESULTS.md):
-320×240 warm GPU rasterization656.77FPS (excludes IO/startup/browser), fresh
-18-pair evaluation12.77s, sequential loopback read API p95≤3.82ms. Raw samples,
+320×240 warm GPU rasterization 656.77 FPS (excludes IO/startup/browser), fresh
+18-pair evaluation 12.77 s, sequential loopback read API p95≤3.82 ms. Raw samples,
 hardware, exclusions and a reproducible command accompany these observations.

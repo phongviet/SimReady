@@ -1,12 +1,12 @@
-# PLAN.md completion audit — open
+# PLAN.md completion audit — local gates verified, publication open
 
 Audited2026-10-30 against the current source and local artifacts. This is a
 requirements ledger, not a declaration that shipping is complete. PASS means the
 listed evidence supports that limited requirement; OPEN remains work; FALLBACK
 identifies an explicit tested alternative/unsupported boundary allowed by PLAN.md;
-OPTIONAL does not block P0/P1. Full current-source final regression, credential/Git
-review and publication remain unverified. Do not mark the project complete from
-this table alone.
+OPTIONAL does not block P0/P1. Current-source final regression and credential/Git review are now recorded in
+FINAL_VERIFICATION.md. Publication remains unverified; do not mark the whole
+project complete while it remains open.
 
 ## Priority requirements and user stories (PLAN1–2)
 
@@ -126,15 +126,15 @@ server-bound roles, self-review prohibition and persistent failures are tested.
 |README/PLAN/AGENTS/pyproject/locks/CI/configs/module separation|PASS|tracked files and actual installed/build evidence|
 |scripts fetch/prepare/benchmark/demo targets|PASS adaptation|fetch scripts + CLI import/synthetic/scene demo; run_benchmark.py; walkthrough tooling|
 |docs architecture/data/evaluation/decisions/progress/limitations/CV|PASS|all named documents exist; CLI.md/DEPLOYMENT.md clarify adaptations|
-|Data/artifacts/experiments/dependencies/caches/builds ignored|PASS locally|.gitignore and current Git status; final entire-history scan remains OPEN|
+|Data/artifacts/experiments/dependencies/caches/builds ignored|PASS locally|.gitignore and current Git status; entire-history scan passed through tested source22afb45|
 |M0 all tasks/DoD|PASS|M0_CHECKLIST.md, M0_REVERIFICATION.md; preserved later work|
 |M1 all tasks/DoD|PASS|M1_CHECKLIST.md, actual real source, isolated worker and saved CPU demo|
 |M2 all tasks/DoD|PASS|M2_CHECKLIST.md; actual metric edits/collider alignment/reload/occlusion disclosure|
 |M3 all tasks/DoD|PASS|M3_CHECKLIST.md; actual18-view evaluation and nine inspected failures|
 |M4 all tasks/DoD|PASS|M4_CHECKLIST.md; real layout/QA/review/export evidence|
 |M5 all tasks/DoD|PASS qualified|M5_CHECKLIST.md, real negative result, companion, audits; no novelty claim|
-|M6 tests/UX/data integrity|OPEN|latest frontend8-browser/5-unit accepted; final current-source full regression remains|
-|M6 all CLI/setup/data/license docs and architecture|PASS incremental|CLI25 help entries, license wheel inclusion, current protocols; final link/command review remains|
+|M6 tests/UX/data integrity|PASS|179CPU/3CUDA checks and fresh8-browser/5-unit acceptance passed; FINAL_VERIFICATION.md|
+|M6 all CLI/setup/data/license docs and architecture|PASS incremental|CLI25 help entries, license wheel inclusion, current protocols; CLI25 entry points, wheel and local link review passed|
 |M6 recording/examples/results/README|PASS|WALKTHROUGH.md; actual50.8s clip; failure cases, figures and benchmark links|
 |M6 memory/train/render/evaluation/API measurements|PASS|BENCHMARK_RESULTS.md with raw samples, exclusions and historical training metadata|
 |M6 fresh install/fallback/unsupported labels|PASS|fresh wheel/checkout, missing-worker persistence, saved views; DEPLOYMENT.md|
@@ -142,23 +142,23 @@ server-bound roles, self-review prohibition and persistent failures are tested.
 |M7 choose one extension only afterM6|OPTIONAL|explicitly not selected; does not block core release|
 |Initial target CLI commands|PASS adaptation|CLI.md +25 actual help subprocesses; explicit output/reference paths; split validation and report location semantics disclosed|
 |Make setup/test/demo/benchmark, GPU opt-in skip|PASS|Makefile, actual runs and test markers|
-|QA matrix schema/geometry/reconstruction/metrics/matching/editor/UI/jobs/review/sim/protocol|PASS incremental|tests/unit + integration + browser; final full regression remains OPEN|
+|QA matrix schema/geometry/reconstruction/metrics/matching/editor/UI/jobs/review/sim/protocol|PASS incremental|tests/unit + integration + browser; final CPU/CUDA/frontend/browser regression passed|
 |QA CI CPU install/build/sample report|PASS locally / hosted OPEN|fresh installed environments, report/browser acceptance, workflow config; no hosted run|
 |Research references/literature integrity|PASS qualified|related-work comparison in M5; no novelty claim; no false baseline reproduction|
 |Public repository + code/licenses/tests/configs/fetch/reproduce|OPEN|local materials ready; no remote/account destination configured, no publication claimed|
 |Working captured reconstruction/web demo/dataset report/failure/limits/video|PASS|real walkthrough, M3/M5 evidence, FRESH_INSTALL and limitations|
-|Git date range June–October2026|PASS locally|first assigned June1, latest actual October30; assignment disclosed; final history scan remains|
-|Total storage<30,000,000,000bytes|PASS incremental|current make storage<17GB; final postflight remains|
+|Git date range June–October2026|PASS locally|first assigned June1, latest actual October30; assignment disclosed; final history scan passed|
+|Total storage<30,000,000,000bytes|PASS incremental|combined project/legacy-temp accounting<18GB; final evidence/postflight recorded|
 |Incremental execution, verified claims and milestones|PASS ongoing|focused commits, checklists, raw evidence; project remains active until remaining gates are resolved|
 
 ## Concrete remaining work
 
 1. UI gaps above are now implemented and verified in8 browser tests. Preserve
    thumbnail/latest-base-QA scope and tested-center/unknown-coverage labels.
-2. Finish current-source full CPU/GPU/frontend/browser regression and review its
-   failure cases; repair anything uncovered rather than weakening acceptance.
-3. Audit tracked content/history for credentials/raw data, validate current exports,
-   links/docs/package contents and total storage; record exact source revision.
+2. Current-source full CPU/GPU/frontend/browser regression passed; see
+   FINAL_VERIFICATION.md and the retained warnings/scopes.
+3. Git/content/export/link/package/storage audits passed through tested source
+   22afb45. Source archives retain exact release/tested revisions and checksums.
 4. Resolve public repository destination/account only after local release is
    concrete and reviewable. No hosted CI or public URL is asserted in advance.
 

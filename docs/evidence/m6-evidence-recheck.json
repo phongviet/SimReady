@@ -1,0 +1,22 @@
+{
+  "scope": "Read-only deterministic content/provenance/matching replay; no neural retraining or inference rerun, no new semantic audit verdict.",
+  "study_checks": {
+    "complete_stage_matrix": 45,
+    "all_content_hashes": true,
+    "recorded_release_order": true,
+    "selection_replay": true,
+    "common_test_observations_and_cameras": true,
+    "identical_real_predictions": true,
+    "rgb_depth_matching_replayed": 216,
+    "frozen_equal_training_configs": true,
+    "source_matches_recorded_git_objects": true
+  },
+  "study_models": 12,
+  "study_test_view_rows": 216,
+  "analysis_manifest_sha256": "ae98e83d2cb6e2c413ff21cedc6139b1d55928f776a603b3b57edc5750c50e81",
+  "companion_analysis_files_verified": 5,
+  "reviewed_export_payloads_verified": 213,
+  "video_hash_verified": true,
+  "bundled_and_full_research_packages_verified": true,
+  "real_tsdf_verified": true
+}

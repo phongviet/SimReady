@@ -1,0 +1,98 @@
+{
+  "tested_code_commit": "22afb45790b6ae939ce6fb78bfd51e6e9d06cf65",
+  "cpu": {
+    "passed": 179,
+    "gpu_skips": 3,
+    "seconds": 148.24,
+    "optional_geometry_research": true,
+    "real_tum_official_sample_enabled": true,
+    "temporary_outputs": "project .cache/pytest"
+  },
+  "gpu": {
+    "passed": 3,
+    "deselected": 179,
+    "seconds": 39.58,
+    "actual_cuda_workers": true
+  },
+  "frontend": {
+    "unit_passed": 5,
+    "browser_passed": 8,
+    "clean_checkout_browser_seconds": 20.7,
+    "production_build": "passed",
+    "prettier": "passed"
+  },
+  "fresh_cpu": {
+    "source_commit": "22afb45",
+    "python": "3.12.3",
+    "module_scope": "fresh release checkout independent CPU environment",
+    "torch_installed": false,
+    "open3d_installed": false,
+    "cpu_smoke": {
+      "mode": "CPU validation of a trained analytic synthetic checkpoint and saved views",
+      "dataset_kind": "synthetic",
+      "gaussians": 421,
+      "saved_views": 2,
+      "gpu_used": false,
+      "runtime_rendering_performed": false
+    },
+    "scene_id": "analytic-demo",
+    "api_route_count": 38,
+    "browser_tests_passed": 8,
+    "frontend_tests_passed": 5,
+    "browser_seconds": 20.7,
+    "build": "passed"
+  },
+  "git": {
+    "blobs_scanned_including_unreachable": 547,
+    "credential_patterns": [
+      "github_token",
+      "openai_style_key",
+      "aws_access_key",
+      "private_key",
+      "literal_local_token"
+    ],
+    "findings": [],
+    "history": {
+      "source_commit": "22afb45790b6ae939ce6fb78bfd51e6e9d06cf65",
+      "commits_checked": 52,
+      "historical_forbidden_paths": [],
+      "earliest_author_date": "2026-06-01T09:00:00+07:00",
+      "latest_author_date": "2026-10-30T09:58:47+07:00",
+      "earliest_committer_date": "2026-06-01T09:00:00+07:00",
+      "latest_committer_date": "2026-10-30T09:58:47+07:00",
+      "date_assignment_disclosed": "Initial M0 June\u2013October dates were user-assigned; later commits use actual dates."
+    },
+    "fsck": "No corrupt/missing object errors; dangling loose objects reported and preserved."
+  },
+  "links": {
+    "checked_against": "release documentation worktree; code unchanged from22afb45",
+    "markdown_files": 48,
+    "local_links_checked": 136,
+    "absolute_local_links": 56,
+    "missing": [],
+    "scope": "Filesystem existence only; remote URLs/anchors excluded; raw audit links intentionally reference local study outputs."
+  },
+  "wheel": {
+    "sha256": "a95f11533e1232d5abe9ea0c4fecfda90a0dc92f4f905d05132ff3fd3e999ec2",
+    "bytes": 2371713,
+    "license_notices_verified": true,
+    "cache_dependency_exclusion_verified": true
+  },
+  "storage": {
+    "project_bytes": 17384113505,
+    "legacy_external_pytest_conservative_bytes": 408873985,
+    "combined_upper_bound_bytes": 17792987490,
+    "limit_bytes": 30000000000
+  },
+  "publication": {
+    "remote_configured": false,
+    "hosted_ci_executed": false,
+    "destination_requested": true,
+    "status": "pending user destination"
+  },
+  "limits": [
+    "Pattern-based scan is not a guarantee against every secret format.",
+    "Fresh CPU smoke validates saved artifacts; does not perform live Gaussian inference.",
+    "Native deployment is verified; Docker/remote GPU/external simulator are unsupported."
+  ]
+}

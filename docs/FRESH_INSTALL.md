@@ -1,6 +1,12 @@
 # Fresh CPU demo acceptance
 
-On2026-10-30 a detached clean checkout of `a407ddd` was created under
+Latest release-source recheck: clean `22afb45` in a second independent checkout.
+CPU dependencies installed from the populated locked cache; torch/Open3D absent.
+Saved-model smoke/API import, 5 frontend tests, build and all 8 browser tests
+passed (20.7 s). See FINAL_VERIFICATION.md for exact results. The earlier run
+below remains historical evidence, including the actual missing-GPU failure.
+
+On 2026-10-30 a detached clean checkout of `a407ddd` was created under
 `.cache/m6-fresh-checkout`. It had its own `.venv`, `node_modules`, frontend build,
 SQLite registry and demo assets. Python imports resolved to that checkout;
 `torch` and `open3d` were absent. It reused package/browser download caches but
@@ -36,7 +42,7 @@ npm --prefix frontend run build
 ```
 
 Frontend:5 tests passed; TypeScript/Vite production build passed. Browser:7 tests
-passed in19.1s against a newly launched API and demo registry. They exercised:
+passed in 19.1 s against a newly launched API and demo registry. They exercised:
 
 - Actual Gaussian loading and nonuniform rendered pixels, orbit, proxy transform
   persistence/reload/delete, version conflict and saved-camera editing fallback.

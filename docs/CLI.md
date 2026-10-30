@@ -7,10 +7,10 @@ paths must be new. Configs are JSON rather than the illustrative YAML in PLAN.md
 
 | Command | Main arguments / behavior |
 |---|---|
-|`storage`|`--root` optional; conservative30GB budget check|
+|`storage`|`--root` optional; conservative 30 GB budget check|
 |`data synthetic`|`--out`; eight analytic posed RGB-D frames with frozen splits|
 |`data fetch`|`--out`; pinned official synthetic Redwood sample, bounded acquisition|
-|`data import`|`--source --format tum_rgbd\|open3d_redwood_sample --out`; TUM `--max-frames` default100|
+|`data import`|`--source --format tum_rgbd\|open3d_redwood_sample --out`; TUM `--max-frames` default 100|
 |`data validate`|`--scene`; complete manifest/files/calibration/depth/split validation|
 |`data split`|`--scene`; revalidate frozen splits; does not repartition an existing dataset|
 |`recon train`|`--scene --out --preset smoke\|local_6gb`; optional `--config --python`; isolated GPU worker|
@@ -33,7 +33,7 @@ paths must be new. Configs are JSON rather than the illustrative YAML in PLAN.md
 |`research analyze`|`--study --out`; use `uv run --frozen --extra research` for plots|
 |`research register`|`--id --analysis`; optional `--root`; controlled read-only dashboard package|
 
-Default registry root: `artifacts/studio`; default port8000. Served assets use
+Default registry root: `artifacts/studio`; default port 8000. Served assets use
 registered keys and hashes, not arbitrary filesystem URLs. A new model/import
 is not automatically a scene: build independent geometry, render frozen views,
 then `scene create`. For supplied custom cameras use the bounded render HTTP API

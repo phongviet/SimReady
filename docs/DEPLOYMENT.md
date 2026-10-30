@@ -1,7 +1,7 @@
 # Verified local deployment and unsupported targets
 
 The supported deployment is a single-machine loopback service with filesystem
-artifacts, SQLite and subprocess jobs. It is verified under Ubuntu24.04/WSL2;
+artifacts, SQLite and subprocess jobs. It is verified under Ubuntu 24.04/WSL2;
 CPU API/UI and optional isolated GPU worker environments are separate.
 
 ```bash

@@ -27,7 +27,7 @@ exact tested package versions are recorded in `ENVIRONMENT.md` and the lockfiles
 - [x] M3: perception validation, real held-out report and nine inspected failures; see M3_CHECKLIST.md.
 - [x] M4: readiness, local roles, scoped review/audit, navigation and reviewed exports; see M4_CHECKLIST.md.
 - [x] M5: real recapture study and labeled synthetic companion verified, with explicit negative/undefined outcomes.
-- [ ] M6: shipping in progress; measured benchmarks, fresh demo and recording verified; final audit open.
+- [ ] M6: local release gates verified; public repository publication/hosted CI pending destination.
 - [ ] M7: optional integrations (not started).
 
 Detailed acceptance criteria: [M0 checklist](M0_CHECKLIST.md).
@@ -585,3 +585,20 @@ exist (47documents); raw audit links intentionally include local study outputs.
 Found252MBof legacy pytest temporary output outside the project; moved future
 test basetemp into ignored `.cache/pytest` for budget accounting and serialized
 acceptance. Reverification follows this configuration change.
+
+
+### M6 local release verification
+
+2026-10-30: Tested source22afb45 passed179CPU tests/3CUDA skips in148.24s with
+geometry/research extras and real/official data enabled; actual CUDA suite passed
+3tests in39.58s. A second independent clean CPU checkout passed saved421-Gaussian/
+two-view smoke,38-route API import,5frontend tests/build and8browser tests in20.7s.
+Ruff/Prettier/whitespace and licensed wheel content checks passed. Current-source
+artifact replay verified45stages/12models/216test rows, package/companion hashes,
+real TSDF,213reviewed ZIP payloads and video hash, without rerunning neural
+inference or inventing a new semantic verdict.547Git blobs including unreachable
+objects had zero declared credential-pattern hits;52commit trees had no forbidden
+outputs; fsck had no corrupt/missing object errors (dangling objects preserved).
+Evidence capture combined root/legacy external pytest upper bound17,792,987,490bytes
+(<30GB). FINAL_VERIFICATION.md and JSON retain scopes. Only public publication /
+hosted CI remain open; destination requested asynchronously. Full goal remains active.
