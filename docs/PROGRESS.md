@@ -635,3 +635,15 @@ Local source/archive/wheel are concrete and reviewable. No Git remote, credentia
 helper, GitHub tool/account or public destination is configured. Destination was
 requested through the pending async question; no publication/hosted CI is claimed.
 The full project goal remains active awaiting that required information.
+
+### Public repository published; hosted CI findings
+
+2026-10-30: User supplied git@github.com:phongviet/SimReady.git. SSH read access
+worked; the destination was verified public/empty. Published main a0ff29f and
+v0.0.1-rc.2 without overwriting history. Actual hosted run41002058943 passed
+public synthetic sample and frontend/browser jobs; CPU/geometry tests failed.
+Direct log-download API needs additional admin authentication; public check
+annotations exposed exit codes but not test traces. Added bounded JUnit failure
+annotations (escaped, preserving test failures) and pinned the runner to tested
+Ubuntu24.04 rather than migrating ubuntu-latest. Exact failing assertions remain
+unproven until the diagnostic run. No all-green/whole-project claim is made.

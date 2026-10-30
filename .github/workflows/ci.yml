@@ -8,7 +8,7 @@ env:
   PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.cache/playwright
 jobs:
   cpu:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -21,10 +21,12 @@ jobs:
       - run: uv sync --frozen
       - run: uv run --frozen ruff check .
       - run: uv run --frozen ruff format --check src tests scripts workers
-      - run: uv run --frozen pytest -q -m 'not real_data and not official_data and not gpu and not geometry'
+      - run: uv run --frozen pytest -q --junitxml=.cache/ci-cpu.xml -m 'not real_data and not official_data and not gpu and not geometry'
+      - if: always()
+        run: python .github/scripts/annotate_pytest.py .cache/ci-cpu.xml
       - run: make demo storage
   official-sample:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -37,7 +39,7 @@ jobs:
       - run: uv sync --frozen
       - run: make test-official storage
   geometry:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -48,10 +50,12 @@ jobs:
           version: '0.12.2'
           enable-cache: false
       - run: uv sync --frozen --extra geometry
-      - run: OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 uv run --frozen --extra geometry pytest -q -m geometry
+      - run: OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 uv run --frozen --extra geometry pytest -q --junitxml=.cache/ci-geometry.xml -m geometry
+      - if: always()
+        run: python .github/scripts/annotate_pytest.py .cache/ci-geometry.xml
       - run: make storage
   frontend-browser:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
