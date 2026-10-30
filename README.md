@@ -17,7 +17,8 @@ repository publication and hosted CI remain pending in the
 
 Authenticated queued [import, reconstruction and supplied-camera render APIs](docs/PIPELINE_API.md)
 have actual local subprocess/CUDA acceptance evidence. [Progress](docs/PROGRESS.md)
-records execution and measured limits.
+records execution and measured limits. A [local release candidate handoff](docs/RELEASE_HANDOFF.md)
+is prepared; it does not imply public publication.
 
 ## Recorded walkthrough
 

@@ -610,3 +610,12 @@ A further restore under Git core.autocrlf=true reproduced a train-job.json hash
 mismatch from line-ending conversion. Root evidence stayed unchanged. Added Git
 attributes protecting hashed demo/evidence bytes and LF source checkout; actual
 restore recheck follows. Preserve RC1 rather than rewriting its tag.
+
+### Byte-exact checkout reverified
+
+2026-10-30: Fresh clone with core.autocrlf=true imported the cloned source and
+passed saved421-Gaussian/two-view smoke plus geometry, evaluation and measured
+research package hashes after f864106's checkout-policy fix. No application code
+changed from tested22afb45. RC1 tag/archives stay preserved; RC2 and its checksums
+are prepared next. Bundle restore explicitly selects main. Public publication
+remains pending the destination/account already requested.

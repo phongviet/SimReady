@@ -55,3 +55,13 @@ After a destination/account is supplied: configure the intended remote, publish
 the reviewed code/history/tag, confirm visibility and execute/inspect hosted CI.
 Do not interpret local green checks as an already-run hosted workflow. The
 requirements audit retains publication/hosted execution as open until verified.
+
+## Handoff checkout correction
+
+RC1 restore under core.autocrlf=true exposed a hashed train-job.json conversion.
+The root model was unchanged. Explicit Git attributes now preserve hashed bytes;
+a fresh clone under the same setting passed checkpoint/geometry/evaluation/
+research package verification. The application code still matches tested22afb45.
+RC1 stays preserved; RC2 supersedes it. See RELEASE_HANDOFF.md and the checkout
+witness. Package hashes in the test JSON describe that stage's wheel; the candidate
+manifest identifies the latest handoff artifacts exactly.
