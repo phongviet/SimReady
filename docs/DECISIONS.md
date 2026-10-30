@@ -203,3 +203,11 @@ scene; model and output hashes bind jobs/downloads. Custom views are marked
 unverified and excluded from held-out evaluation. Actual GPU HTTP import/train/
 render/download test passed (2 tests,20.02s); CPU failure/validation tests passed
 (2 passed,1 GPU skip). Full M6 shipping acceptance remains open.
+
+### M6 measurement boundaries
+
+2026-10-30: Shipping performance uses a source-pinned harness rather than inferred
+FPS from historical training time. Warm synchronized render timing excludes IO;
+fresh evaluation throughput includes startup/reporting; loopback API p50/p95 uses
+sequential real TCP reads. Raw samples and exact scopes accompany all summaries.
+No performance target, baseline speedup or browser FPS is inferred from these runs.

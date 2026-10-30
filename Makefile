@@ -67,3 +67,8 @@ gpu-setup: storage
 
 test-gpu:
 	SIMREADY_GPU_TESTS=1 uv run --frozen pytest -q -m gpu
+
+# Requires the real TUM model/renders and the validated isolated GPU environment.
+benchmark: storage
+	uv run --frozen python scripts/run_benchmark.py --out experiments/m6-benchmark-1
+	$(MAKE) storage

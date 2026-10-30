@@ -477,3 +477,9 @@ Final CUDA pipeline regression:3 passed in19.71s, including same-scene model
 binding and all custom-view channel downloads. Postflight storage:
 15,844,983,255bytes of30,000,000,000. M6 benchmarks, fresh-checkout UI,
 walkthrough recording, CV evidence and complete requirements audit remain open.
+
+### M6 benchmark implementation
+
+2026-10-30: Added `scripts/run_benchmark.py`, isolated `workers/render_benchmark.py`,
+`make benchmark` and `docs/BENCHMARK_PROTOCOL.md`. CLI help and Ruff pass. Measurement
+results remain pending until the source-pinned actual GPU/evaluation/API run.
