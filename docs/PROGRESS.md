@@ -522,3 +522,18 @@ sorting over the route/robot. Diagnostic map, route and robot now have explicit
 transparent-layer order and no depth writes; robot opacity is0.9. These remain
 labeled overlays, not physical compositing.5 frontend tests, production build,
 Prettier and all7 actual browser tests passed (31.8s). Final recording pending.
+
+
+### M6 actual recording and CV evidence
+
+2026-10-30: Final recording from clean3907377 completed the real TUM saved-model/
+report workflow, metric box save, actual1.15m zero-collision route replay,
+submission, distinct automated Reviewer approval and ZIP build. No page errors.
+The50.8s1440×1000WebM played to completion; comparison/replay/review frames were
+decoded and visually inspected. All213 exported payload hashes passed. Published
+clip is10,120,465bytes, SHAee09273afc9afe8b36505e2d600d137f615e1eaa2d055b6c8f1302cb318897ce.
+Source inputs, script hashes, chapters and limits are in evidence/m6-walkthrough.json
+and WALKTHROUGH.md. Earlier registries/recordings remain ignored, never overwritten.
+Recording server terminated. Added CV_EVIDENCE.md with explicit measured scopes,
+negative recapture result and prohibited unsupported claims. M6 remains open for
+current documentation/license/interface reconciliation and the final full audit.

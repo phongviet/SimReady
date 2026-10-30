@@ -1,0 +1,39 @@
+{
+  "completed": true,
+  "scope": "Actual saved real-TUM model/report; automated local role fixture; no live retraining or human endorsement",
+  "chapters": [
+    {
+      "name": "Saved genuine reconstruction: TUM fr1 desk; source run, not live training",
+      "seconds": 0.371
+    },
+    {
+      "name": "Real input and learned render: measured held-out comparison",
+      "seconds": 2.697
+    },
+    {
+      "name": "Interactive learned Gaussian scene; overlays are not depth-composited",
+      "seconds": 5.29
+    },
+    {
+      "name": "Insert metric rigid box, persist its shared mesh/collider transform",
+      "seconds": 8.685
+    },
+    {
+      "name": "Base-render QA remains frozen; edited-scene perception is unverified",
+      "seconds": 11.315
+    },
+    {
+      "name": "Observed coarse-map simulated route replay; unknown space remains blocked",
+      "seconds": 22.069
+    },
+    {
+      "name": "Builder submits a limited regression with measured failures acknowledged",
+      "seconds": 35.103
+    },
+    {
+      "name": "Distinct automated local Reviewer: scoped decision, audit and verified ZIP",
+      "seconds": 46.16
+    }
+  ],
+  "page_errors": []
+}

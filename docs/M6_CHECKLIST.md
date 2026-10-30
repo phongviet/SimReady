@@ -12,8 +12,8 @@
 - [x] Measured render throughput/resolution, evaluation throughput and API p50/p95.
       See BENCHMARK_RESULTS.md and raw samples; historical training timing is separately labeled.
 - [ ] Current CLI/API/setup/data/license documentation and architecture diagram.
-- [ ] Walkthrough script and short actual demo recording.
-- [ ] docs/CV_EVIDENCE.md with only measured/implemented claims and traceable sources.
+- [x] Walkthrough script and short actual demo recording;50.8s real-TUM clip, playback/export verified.
+- [x] docs/CV_EVIDENCE.md with only measured/implemented claims and traceable sources.
 - [ ] Final storage/Git/history/credential/export review and requirement-by-requirement audit.
 
 Local state at entry: no remote configured; hosted CI/public deployment have not

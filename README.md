@@ -18,6 +18,16 @@ adapter and a genuinely trained analytic demo for CPU smoke checks. See
 [progress](docs/PROGRESS.md) and the
 [acceptance checklist](docs/M0_CHECKLIST.md) for actual verification evidence.
 
+## Recorded walkthrough
+
+[Watch the50.8-second real-scene walkthrough](docs/media/tum-walkthrough.webm):
+saved TUM reconstruction →metric box edit →frozen QA →simulated route replay
+→scoped automated local review/export. [Script, chapters and verification](docs/WALKTHROUGH.md).
+The clip uses a genuine saved model/report; it does not imply live training or
+human endorsement. TUM reference/derived imagery: Sturm et al., IROS2012,
+[CC BY4.0](https://creativecommons.org/licenses/by/4.0/).
+[Measured CV evidence](docs/CV_EVIDENCE.md) lists supported claims and exclusions.
+
 ## Setup
 
 Run from the repository root. Python 3.12, uv and npm are required. Node 20.20.2

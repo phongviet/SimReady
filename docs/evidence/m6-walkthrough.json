@@ -1,0 +1,43 @@
+{
+  "attribution": "Derived from TUM RGB-D freiburg1_desk; Sturm et al., IROS 2012; CC BY 4.0. This video contains derived reference/render imagery and product UI, not the full raw dataset.",
+  "export": {
+    "approved_version": 5,
+    "bytes": 27018963,
+    "sha256": "0a50934fc0f5c9c840c7374b131e45daf9b6a368d14ca7b2da9aff735e32358c",
+    "source_version": 3,
+    "verified_payloads": 213
+  },
+  "inputs": {
+    "scenario_sha256": "1b56bb7ed30025dc029adb5ee253b527cf8440a13795636a16aef9d260f033bf",
+    "scene_id": "tum-walkthrough",
+    "scope": "Saved genuine TUM reconstruction and measured report; no live retraining; automated distinct local roles, no human endorsement.",
+    "source_artifact_sha256": "0f9cbc9d5c304a44f4b316c54e201b95b3b8faf17a740e6aa4967fc966254084"
+  },
+  "page_errors": [],
+  "recording_attempt": 4,
+  "review_is_automated_local_fixture": true,
+  "scope": "Actual saved real-TUM model/report; automated local role fixture; no live retraining or human endorsement",
+  "simulation": {
+    "collisions": 0,
+    "elapsed_simulated_s": 7.66666666666667,
+    "path_length_m": 1.1500000000000004,
+    "reason": "goal reached",
+    "route_success": true,
+    "travel_distance_m": 1.1500000000000004
+  },
+  "source_commit": "3907377",
+  "source_files_sha256": {
+    "frontend/scripts/record_walkthrough.mjs": "5f3ed0235ad3c26601665fb2c93155c85cf84f09307d9ae76c4ef93eb220b0e7",
+    "frontend/src/Viewer.tsx": "40f0bec05c4b7b591ee4d697068a818074e035f370a270f3363d9764b752a320",
+    "scripts/prepare_walkthrough.py": "d6a1bffa77dc89322eb1a82ea8d51516247035647dbbb8d06f4e0044eda0368c"
+  },
+  "video": {
+    "bytes": 10120465,
+    "duration_seconds": 50.8,
+    "height": 1000,
+    "path": "docs/media/tum-walkthrough.webm",
+    "playback_to_end": true,
+    "sha256": "ee09273afc9afe8b36505e2d600d137f615e1eaa2d055b6c8f1302cb318897ce",
+    "width": 1440
+  }
+}
