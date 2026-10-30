@@ -647,3 +647,12 @@ annotations exposed exit codes but not test traces. Added bounded JUnit failure
 annotations (escaped, preserving test failures) and pinned the runner to tested
 Ubuntu24.04 rather than migrating ubuntu-latest. Exact failing assertions remain
 unproven until the diagnostic run. No all-green/whole-project claim is made.
+
+### Hosted cold-cache failure diagnosed
+
+2026-10-30: Run41002399387 annotations reproduce FileNotFoundError creating
+.cache/pytest because its parent does not exist on the fresh runner. Pinning
+Ubuntu did not fix that independent configuration bug. Added a pytest configure
+hook creating only basetemp's parent; pytest retains ownership/cleanup of its base.
+No tests or assertions were skipped/weakened. Cold-checkout and hosted rechecks
+follow; initial hosted failures remain recorded rather than called successful.
