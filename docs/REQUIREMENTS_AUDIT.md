@@ -143,12 +143,12 @@ server-bound roles, self-review prohibition and persistent failures are tested.
 |Initial target CLI commands|PASS adaptation|CLI.md +25 actual help subprocesses; explicit output/reference paths; split validation and report location semantics disclosed|
 |Make setup/test/demo/benchmark, GPU opt-in skip|PASS|Makefile, actual runs and test markers|
 |QA matrix schema/geometry/reconstruction/metrics/matching/editor/UI/jobs/review/sim/protocol|PASS incremental|tests/unit + integration + browser; final CPU/CUDA/frontend/browser regression passed|
-|QA CI CPU install/build/sample report|PASS local + hosted|fresh installed environments, report/browser acceptance, workflow config; no hosted run|
+|QA CI CPU install/build/sample report|PASS local + hosted|fresh installed environments, report/browser acceptance, workflow config; successful hosted runs41002820745 and41003523510|
 |Research references/literature integrity|PASS qualified|related-work comparison in M5; no novelty claim; no false baseline reproduction|
 |Public repository + code/licenses/tests/configs/fetch/reproduce|PASS|https://github.com/phongviet/SimReady; actual hosted acceptance, source tags and notices; PUBLICATION.md|
 |Working captured reconstruction/web demo/dataset report/failure/limits/video|PASS|real walkthrough, M3/M5 evidence, FRESH_INSTALL and limitations|
 |Git date range June–October2026|PASS locally|first assigned June1, latest actual October30; assignment disclosed; final history scan passed|
-|Total storage<30,000,000,000bytes|PASS incremental|combined project/legacy-temp accounting<18GB; final evidence/postflight recorded|
+|Total storage<30,000,000,000bytes|PASS incremental|combined project/legacy-temp accounting remains below30GB; measured postflights are recorded|
 |Incremental execution, verified claims and milestones|PASS ongoing|focused commits, checklists, raw evidence; all required gates verified; optional M7 stays unselected|
 
 ## Closure notes

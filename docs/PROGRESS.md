@@ -668,3 +668,12 @@ API observations separate public source/hosted CPU checks from local CUDA and
 real-capture evidence. All named required PLAN gates are now supported, with
 optional M7/unsupported targets explicitly unchanged. Final tag/remote recheck
 follows this documentation-only completion commit.
+
+### Final remote state verified
+
+2026-10-30: Main and annotated v0.0.1 both resolve to4b5ffac. Actual hosted runs
+41003523510 and41003523291 completed successfully for the final publication
+commit. All4jobs passed on both runs. Later documentation-only corrections
+remove stale hosted-CI/storage wording; no runtime/test code is changed. Public
+repository visibility, branch/tag hashes and clean working tree were checked.
+The supported full project scope M0–M6 is delivered; optional M7 remains unselected.
