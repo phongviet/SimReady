@@ -1,0 +1,111 @@
+{
+  "closure_date_client": "2026-10-31T09:08:45.451964+07:00",
+  "evidence_sha256": {
+    "postrun-cli-smoke.log": "ce1bc03a548b9d6cce030e9679581fd3302ddcc4b2a9d383b705b3e16896ed12",
+    "postrun-command-records.json": "09c44cca4fccf7e5330f079eb1230bd79319b22698de406ed6d803d51807aa0b",
+    "postrun-cpu-junit.xml": "6b8d66d31785de0154e14f2fcb8735f49c7c79ff59f8c0963ec773466d48a98c",
+    "postrun-cpu-tests.log": "5186d17a146615531359b8c0e378f19fbfdb361442f22fa1b304c6278ab7825e",
+    "postrun-format.log": "1a9301f4cf03fa0d5c4d8f77f50252de3a09f3dbe30fd813f1131981eceb1770",
+    "postrun-frontend-build.log": "1eb89565fafc2f1a287629dfb4d364cc0f0b56cdd5a828e76f8989362eac25db",
+    "postrun-frontend-tests.log": "6a722c447decc87ff368a9258ec58a6d4cdf64575a624a9789a6da395f179643",
+    "postrun-gpu-junit.xml": "30cebfe243c79f250158398e37c6bec38caf0abe593c253b5d34ab2659eb37f5",
+    "postrun-gpu-tests.log": "370adec0779545443f570f5f08ba38aba4898fb1f2c7793785f2da24bcf2fb79",
+    "postrun-lint.log": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+  },
+  "frozen_core_sources_verified": true,
+  "frozen_training_source_commit": "15d783b702003037a17fc638a1dd9c899e6f1684",
+  "historical_files_verified": 5458,
+  "other_commands": [
+    {
+      "command": [
+        "uv",
+        "run",
+        "--frozen",
+        "ruff",
+        "check",
+        "."
+      ],
+      "completed_utc": "2026-10-31T02:05:55.259525+00:00",
+      "log": "postrun-lint.log",
+      "returncode": 0,
+      "started_utc": "2026-10-31T02:05:55.165763+00:00"
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "--frozen",
+        "ruff",
+        "format",
+        "--check",
+        "src",
+        "tests",
+        "scripts",
+        "workers",
+        "docs/evidence/reconstruction-quality-1/replay.py"
+      ],
+      "completed_utc": "2026-10-31T02:05:55.307336+00:00",
+      "log": "postrun-format.log",
+      "returncode": 0,
+      "started_utc": "2026-10-31T02:05:55.259541+00:00"
+    },
+    {
+      "command": [
+        "npm",
+        "--prefix",
+        "frontend",
+        "test"
+      ],
+      "completed_utc": "2026-10-31T02:05:56.781342+00:00",
+      "log": "postrun-frontend-tests.log",
+      "returncode": 0,
+      "started_utc": "2026-10-31T02:05:55.307352+00:00"
+    },
+    {
+      "command": [
+        "npm",
+        "--prefix",
+        "frontend",
+        "run",
+        "build"
+      ],
+      "completed_utc": "2026-10-31T02:05:58.341624+00:00",
+      "log": "postrun-frontend-build.log",
+      "returncode": 0,
+      "started_utc": "2026-10-31T02:05:56.781359+00:00"
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "--frozen",
+        "simready",
+        "recon",
+        "smoke"
+      ],
+      "completed_utc": "2026-10-31T02:05:59.222883+00:00",
+      "log": "postrun-cli-smoke.log",
+      "returncode": 0,
+      "started_utc": "2026-10-31T02:05:58.341648+00:00"
+    }
+  ],
+  "scope": "Post-run checks only; these logs do not prove pre-training chronology.",
+  "tests": {
+    "cpu": {
+      "errors": 0,
+      "failures": 0,
+      "junit_timestamp_as_recorded": "2026-10-30T19:17:37.405716+07:00",
+      "passed": 189,
+      "skipped": 4,
+      "tests": 193
+    },
+    "gpu": {
+      "errors": 0,
+      "failures": 0,
+      "junit_timestamp_as_recorded": "2026-10-31T09:05:32.642551+07:00",
+      "passed": 4,
+      "skipped": 0,
+      "tests": 4
+    }
+  }
+}

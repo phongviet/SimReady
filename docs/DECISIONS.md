@@ -280,3 +280,18 @@ No simulation/frontend additions; implement/test before any new training.
   hashes rather than consuming historical test scores.
 - Reuse compute spec 3db6217d and isolated GPU environment; cap PyTorch allocator
   at 4.5 GB and serialize jobs. No dependency or frontend/simulation changes.
+
+### Reconstruction-quality reporting and audit closure (2026-10-31)
+
+- Preserve the original study output bytes. Supply missing all-seed baseline
+  discrepancy flags through a new post-run replay supplement; never rewrite the
+  primary automatic report or historical experiments.
+- Describe the intervention at matched updates: objective changes also alter
+  densification/count and runtime. Keep secondary-metric regressions, masked
+  depth support and same-validation selection optimism explicit.
+- A largest signed degradation can be negative. Retain its signed value and
+  original selection rule, and describe these cases as least improvement.
+- Keep original pre-training transcript assertions distinct from durable fresh
+  post-run logs. Retain the audit's WARN, same-family/provisional classification.
+- Publish curated metrics, source/config/data pins and scientific plots; keep
+  raw RGB-D, models and complete image evaluations in ignored local outputs.

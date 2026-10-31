@@ -1,0 +1,777 @@
+{
+  "retrieved_utc": "2026-10-30T12:17:38.124865+00:00",
+  "source": "GitHub public REST API",
+  "run": {
+    "id": 41049601408,
+    "name": "SimReady acceptance",
+    "node_id": "WFR_kwLOVcluxM8AAAAJjr81gA",
+    "head_branch": "main",
+    "head_sha": "15d783b702003037a17fc638a1dd9c899e6f1684",
+    "path": ".github/workflows/ci.yml",
+    "display_title": "feat(research): add sealed validation-only reconstruction ablations",
+    "run_number": 10,
+    "event": "push",
+    "status": "completed",
+    "conclusion": "success",
+    "workflow_id": 401368010,
+    "check_suite_id": 111273119380,
+    "check_suite_node_id": "CS_kwDOVcluxM8AAAAZ6GUOlA",
+    "url": "https://api.github.com/repos/phongviet/SimReady/actions/runs/41049601408",
+    "html_url": "https://github.com/phongviet/SimReady/actions/runs/41049601408",
+    "pull_requests": [],
+    "created_at": "2026-10-30T11:39:06Z",
+    "updated_at": "2026-10-30T11:40:03Z",
+    "actor": {
+      "login": "phongviet",
+      "id": 162717702,
+      "node_id": "U_kgDOCbLgBg",
+      "avatar_url": "https://avatars.githubusercontent.com/u/162717702?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/phongviet",
+      "html_url": "https://github.com/phongviet",
+      "followers_url": "https://api.github.com/users/phongviet/followers",
+      "following_url": "https://api.github.com/users/phongviet/following{/other_user}",
+      "gists_url": "https://api.github.com/users/phongviet/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/phongviet/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/phongviet/subscriptions",
+      "organizations_url": "https://api.github.com/users/phongviet/orgs",
+      "repos_url": "https://api.github.com/users/phongviet/repos",
+      "events_url": "https://api.github.com/users/phongviet/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/phongviet/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "run_attempt": 1,
+    "referenced_workflows": [],
+    "run_started_at": "2026-10-30T11:39:06Z",
+    "triggering_actor": {
+      "login": "phongviet",
+      "id": 162717702,
+      "node_id": "U_kgDOCbLgBg",
+      "avatar_url": "https://avatars.githubusercontent.com/u/162717702?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/phongviet",
+      "html_url": "https://github.com/phongviet",
+      "followers_url": "https://api.github.com/users/phongviet/followers",
+      "following_url": "https://api.github.com/users/phongviet/following{/other_user}",
+      "gists_url": "https://api.github.com/users/phongviet/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/phongviet/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/phongviet/subscriptions",
+      "organizations_url": "https://api.github.com/users/phongviet/orgs",
+      "repos_url": "https://api.github.com/users/phongviet/repos",
+      "events_url": "https://api.github.com/users/phongviet/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/phongviet/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "jobs_url": "https://api.github.com/repos/phongviet/SimReady/actions/runs/41049601408/jobs",
+    "logs_url": "https://api.github.com/repos/phongviet/SimReady/actions/runs/41049601408/logs",
+    "check_suite_url": "https://api.github.com/repos/phongviet/SimReady/check-suites/111273119380",
+    "artifacts_url": "https://api.github.com/repos/phongviet/SimReady/actions/runs/41049601408/artifacts",
+    "cancel_url": "https://api.github.com/repos/phongviet/SimReady/actions/runs/41049601408/cancel",
+    "rerun_url": "https://api.github.com/repos/phongviet/SimReady/actions/runs/41049601408/rerun",
+    "previous_attempt_url": null,
+    "workflow_url": "https://api.github.com/repos/phongviet/SimReady/actions/workflows/401368010",
+    "head_commit": {
+      "id": "15d783b702003037a17fc638a1dd9c899e6f1684",
+      "tree_id": "29487818b87f163e0f5868c693ca398df134c4e9",
+      "message": "feat(research): add sealed validation-only reconstruction ablations",
+      "timestamp": "2026-10-30T11:29:29Z",
+      "author": {
+        "name": "phongviet",
+        "email": "162717702+phongviet@users.noreply.github.com"
+      },
+      "committer": {
+        "name": "phongviet",
+        "email": "162717702+phongviet@users.noreply.github.com"
+      }
+    },
+    "repository": {
+      "id": 1439264452,
+      "node_id": "R_kgDOVcluxA",
+      "name": "SimReady",
+      "full_name": "phongviet/SimReady",
+      "private": false,
+      "owner": {
+        "login": "phongviet",
+        "id": 162717702,
+        "node_id": "U_kgDOCbLgBg",
+        "avatar_url": "https://avatars.githubusercontent.com/u/162717702?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/phongviet",
+        "html_url": "https://github.com/phongviet",
+        "followers_url": "https://api.github.com/users/phongviet/followers",
+        "following_url": "https://api.github.com/users/phongviet/following{/other_user}",
+        "gists_url": "https://api.github.com/users/phongviet/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/phongviet/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/phongviet/subscriptions",
+        "organizations_url": "https://api.github.com/users/phongviet/orgs",
+        "repos_url": "https://api.github.com/users/phongviet/repos",
+        "events_url": "https://api.github.com/users/phongviet/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/phongviet/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "html_url": "https://github.com/phongviet/SimReady",
+      "description": null,
+      "fork": false,
+      "url": "https://api.github.com/repos/phongviet/SimReady",
+      "forks_url": "https://api.github.com/repos/phongviet/SimReady/forks",
+      "keys_url": "https://api.github.com/repos/phongviet/SimReady/keys{/key_id}",
+      "collaborators_url": "https://api.github.com/repos/phongviet/SimReady/collaborators{/collaborator}",
+      "teams_url": "https://api.github.com/repos/phongviet/SimReady/teams",
+      "hooks_url": "https://api.github.com/repos/phongviet/SimReady/hooks",
+      "issue_events_url": "https://api.github.com/repos/phongviet/SimReady/issues/events{/number}",
+      "events_url": "https://api.github.com/repos/phongviet/SimReady/events",
+      "assignees_url": "https://api.github.com/repos/phongviet/SimReady/assignees{/user}",
+      "branches_url": "https://api.github.com/repos/phongviet/SimReady/branches{/branch}",
+      "tags_url": "https://api.github.com/repos/phongviet/SimReady/tags",
+      "blobs_url": "https://api.github.com/repos/phongviet/SimReady/git/blobs{/sha}",
+      "git_tags_url": "https://api.github.com/repos/phongviet/SimReady/git/tags{/sha}",
+      "git_refs_url": "https://api.github.com/repos/phongviet/SimReady/git/refs{/sha}",
+      "trees_url": "https://api.github.com/repos/phongviet/SimReady/git/trees{/sha}",
+      "statuses_url": "https://api.github.com/repos/phongviet/SimReady/statuses/{sha}",
+      "languages_url": "https://api.github.com/repos/phongviet/SimReady/languages",
+      "stargazers_url": "https://api.github.com/repos/phongviet/SimReady/stargazers",
+      "contributors_url": "https://api.github.com/repos/phongviet/SimReady/contributors",
+      "subscribers_url": "https://api.github.com/repos/phongviet/SimReady/subscribers",
+      "subscription_url": "https://api.github.com/repos/phongviet/SimReady/subscription",
+      "commits_url": "https://api.github.com/repos/phongviet/SimReady/commits{/sha}",
+      "git_commits_url": "https://api.github.com/repos/phongviet/SimReady/git/commits{/sha}",
+      "comments_url": "https://api.github.com/repos/phongviet/SimReady/comments{/number}",
+      "issue_comment_url": "https://api.github.com/repos/phongviet/SimReady/issues/comments{/number}",
+      "contents_url": "https://api.github.com/repos/phongviet/SimReady/contents/{+path}",
+      "compare_url": "https://api.github.com/repos/phongviet/SimReady/compare/{base}...{head}",
+      "merges_url": "https://api.github.com/repos/phongviet/SimReady/merges",
+      "archive_url": "https://api.github.com/repos/phongviet/SimReady/{archive_format}{/ref}",
+      "downloads_url": "https://api.github.com/repos/phongviet/SimReady/downloads",
+      "issues_url": "https://api.github.com/repos/phongviet/SimReady/issues{/number}",
+      "pulls_url": "https://api.github.com/repos/phongviet/SimReady/pulls{/number}",
+      "milestones_url": "https://api.github.com/repos/phongviet/SimReady/milestones{/number}",
+      "notifications_url": "https://api.github.com/repos/phongviet/SimReady/notifications{?since,all,participating}",
+      "labels_url": "https://api.github.com/repos/phongviet/SimReady/labels{/name}",
+      "releases_url": "https://api.github.com/repos/phongviet/SimReady/releases{/id}",
+      "deployments_url": "https://api.github.com/repos/phongviet/SimReady/deployments"
+    },
+    "head_repository": {
+      "id": 1439264452,
+      "node_id": "R_kgDOVcluxA",
+      "name": "SimReady",
+      "full_name": "phongviet/SimReady",
+      "private": false,
+      "owner": {
+        "login": "phongviet",
+        "id": 162717702,
+        "node_id": "U_kgDOCbLgBg",
+        "avatar_url": "https://avatars.githubusercontent.com/u/162717702?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/phongviet",
+        "html_url": "https://github.com/phongviet",
+        "followers_url": "https://api.github.com/users/phongviet/followers",
+        "following_url": "https://api.github.com/users/phongviet/following{/other_user}",
+        "gists_url": "https://api.github.com/users/phongviet/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/phongviet/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/phongviet/subscriptions",
+        "organizations_url": "https://api.github.com/users/phongviet/orgs",
+        "repos_url": "https://api.github.com/users/phongviet/repos",
+        "events_url": "https://api.github.com/users/phongviet/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/phongviet/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "html_url": "https://github.com/phongviet/SimReady",
+      "description": null,
+      "fork": false,
+      "url": "https://api.github.com/repos/phongviet/SimReady",
+      "forks_url": "https://api.github.com/repos/phongviet/SimReady/forks",
+      "keys_url": "https://api.github.com/repos/phongviet/SimReady/keys{/key_id}",
+      "collaborators_url": "https://api.github.com/repos/phongviet/SimReady/collaborators{/collaborator}",
+      "teams_url": "https://api.github.com/repos/phongviet/SimReady/teams",
+      "hooks_url": "https://api.github.com/repos/phongviet/SimReady/hooks",
+      "issue_events_url": "https://api.github.com/repos/phongviet/SimReady/issues/events{/number}",
+      "events_url": "https://api.github.com/repos/phongviet/SimReady/events",
+      "assignees_url": "https://api.github.com/repos/phongviet/SimReady/assignees{/user}",
+      "branches_url": "https://api.github.com/repos/phongviet/SimReady/branches{/branch}",
+      "tags_url": "https://api.github.com/repos/phongviet/SimReady/tags",
+      "blobs_url": "https://api.github.com/repos/phongviet/SimReady/git/blobs{/sha}",
+      "git_tags_url": "https://api.github.com/repos/phongviet/SimReady/git/tags{/sha}",
+      "git_refs_url": "https://api.github.com/repos/phongviet/SimReady/git/refs{/sha}",
+      "trees_url": "https://api.github.com/repos/phongviet/SimReady/git/trees{/sha}",
+      "statuses_url": "https://api.github.com/repos/phongviet/SimReady/statuses/{sha}",
+      "languages_url": "https://api.github.com/repos/phongviet/SimReady/languages",
+      "stargazers_url": "https://api.github.com/repos/phongviet/SimReady/stargazers",
+      "contributors_url": "https://api.github.com/repos/phongviet/SimReady/contributors",
+      "subscribers_url": "https://api.github.com/repos/phongviet/SimReady/subscribers",
+      "subscription_url": "https://api.github.com/repos/phongviet/SimReady/subscription",
+      "commits_url": "https://api.github.com/repos/phongviet/SimReady/commits{/sha}",
+      "git_commits_url": "https://api.github.com/repos/phongviet/SimReady/git/commits{/sha}",
+      "comments_url": "https://api.github.com/repos/phongviet/SimReady/comments{/number}",
+      "issue_comment_url": "https://api.github.com/repos/phongviet/SimReady/issues/comments{/number}",
+      "contents_url": "https://api.github.com/repos/phongviet/SimReady/contents/{+path}",
+      "compare_url": "https://api.github.com/repos/phongviet/SimReady/compare/{base}...{head}",
+      "merges_url": "https://api.github.com/repos/phongviet/SimReady/merges",
+      "archive_url": "https://api.github.com/repos/phongviet/SimReady/{archive_format}{/ref}",
+      "downloads_url": "https://api.github.com/repos/phongviet/SimReady/downloads",
+      "issues_url": "https://api.github.com/repos/phongviet/SimReady/issues{/number}",
+      "pulls_url": "https://api.github.com/repos/phongviet/SimReady/pulls{/number}",
+      "milestones_url": "https://api.github.com/repos/phongviet/SimReady/milestones{/number}",
+      "notifications_url": "https://api.github.com/repos/phongviet/SimReady/notifications{?since,all,participating}",
+      "labels_url": "https://api.github.com/repos/phongviet/SimReady/labels{/name}",
+      "releases_url": "https://api.github.com/repos/phongviet/SimReady/releases{/id}",
+      "deployments_url": "https://api.github.com/repos/phongviet/SimReady/deployments"
+    }
+  },
+  "jobs": {
+    "total_count": 4,
+    "jobs": [
+      {
+        "id": 124042085921,
+        "run_id": 41049601408,
+        "workflow_name": "SimReady acceptance",
+        "head_branch": "main",
+        "run_url": "https://api.github.com/repos/phongviet/SimReady/actions/runs/41049601408",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOVcluxM8AAAAc4XwGIQ",
+        "head_sha": "15d783b702003037a17fc638a1dd9c899e6f1684",
+        "url": "https://api.github.com/repos/phongviet/SimReady/actions/jobs/124042085921",
+        "html_url": "https://github.com/phongviet/SimReady/actions/runs/41049601408/job/124042085921",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-30T11:39:06Z",
+        "started_at": "2026-10-30T11:39:09Z",
+        "completed_at": "2026-10-30T11:39:25Z",
+        "name": "official-sample",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-30T11:39:10Z",
+            "completed_at": "2026-10-30T11:39:11Z"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-30T11:39:11Z",
+            "completed_at": "2026-10-30T11:39:12Z"
+          },
+          {
+            "name": "Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-30T11:39:12Z",
+            "completed_at": "2026-10-30T11:39:12Z"
+          },
+          {
+            "name": "Run astral-sh/setup-uv@v6",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-30T11:39:12Z",
+            "completed_at": "2026-10-30T11:39:13Z"
+          },
+          {
+            "name": "Run uv sync --frozen",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-30T11:39:13Z",
+            "completed_at": "2026-10-30T11:39:15Z"
+          },
+          {
+            "name": "Run make test-official storage",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-30T11:39:15Z",
+            "completed_at": "2026-10-30T11:39:21Z"
+          },
+          {
+            "name": "Post Run astral-sh/setup-uv@v6",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10,
+            "started_at": "2026-10-30T11:39:21Z",
+            "completed_at": "2026-10-30T11:39:22Z"
+          },
+          {
+            "name": "Post Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11,
+            "started_at": "2026-10-30T11:39:22Z",
+            "completed_at": "2026-10-30T11:39:22Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12,
+            "started_at": "2026-10-30T11:39:22Z",
+            "completed_at": "2026-10-30T11:39:22Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13,
+            "started_at": "2026-10-30T11:39:22Z",
+            "completed_at": "2026-10-30T11:39:22Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/phongviet/SimReady/check-runs/124042085921",
+        "labels": [
+          "ubuntu-24.04"
+        ],
+        "runner_id": 1000000874,
+        "runner_name": "GitHub Actions 1000000874",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      },
+      {
+        "id": 124042086219,
+        "run_id": 41049601408,
+        "workflow_name": "SimReady acceptance",
+        "head_branch": "main",
+        "run_url": "https://api.github.com/repos/phongviet/SimReady/actions/runs/41049601408",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOVcluxM8AAAAc4XwHSw",
+        "head_sha": "15d783b702003037a17fc638a1dd9c899e6f1684",
+        "url": "https://api.github.com/repos/phongviet/SimReady/actions/jobs/124042086219",
+        "html_url": "https://github.com/phongviet/SimReady/actions/runs/41049601408/job/124042086219",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-30T11:39:06Z",
+        "started_at": "2026-10-30T11:39:08Z",
+        "completed_at": "2026-10-30T11:40:03Z",
+        "name": "frontend-browser",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-30T11:39:09Z",
+            "completed_at": "2026-10-30T11:39:10Z"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-30T11:39:10Z",
+            "completed_at": "2026-10-30T11:39:12Z"
+          },
+          {
+            "name": "Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-30T11:39:12Z",
+            "completed_at": "2026-10-30T11:39:16Z"
+          },
+          {
+            "name": "Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-30T11:39:16Z",
+            "completed_at": "2026-10-30T11:39:16Z"
+          },
+          {
+            "name": "Run astral-sh/setup-uv@v6",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-30T11:39:16Z",
+            "completed_at": "2026-10-30T11:39:17Z"
+          },
+          {
+            "name": "Run uv sync --frozen",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-30T11:39:17Z",
+            "completed_at": "2026-10-30T11:39:18Z"
+          },
+          {
+            "name": "Run npm --prefix frontend ci --no-audit --no-fund",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-30T11:39:18Z",
+            "completed_at": "2026-10-30T11:39:20Z"
+          },
+          {
+            "name": "Run npm --prefix frontend run format:check",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-30T11:39:20Z",
+            "completed_at": "2026-10-30T11:39:21Z"
+          },
+          {
+            "name": "Run npm --prefix frontend test",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-10-30T11:39:21Z",
+            "completed_at": "2026-10-30T11:39:21Z"
+          },
+          {
+            "name": "Run npm --prefix frontend run build",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10,
+            "started_at": "2026-10-30T11:39:21Z",
+            "completed_at": "2026-10-30T11:39:22Z"
+          },
+          {
+            "name": "Run cd frontend && npx playwright install --with-deps chromium",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11,
+            "started_at": "2026-10-30T11:39:22Z",
+            "completed_at": "2026-10-30T11:39:37Z"
+          },
+          {
+            "name": "Run cd frontend && npx playwright test",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12,
+            "started_at": "2026-10-30T11:39:37Z",
+            "completed_at": "2026-10-30T11:39:59Z"
+          },
+          {
+            "name": "Run make storage",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13,
+            "started_at": "2026-10-30T11:39:59Z",
+            "completed_at": "2026-10-30T11:39:59Z"
+          },
+          {
+            "name": "Post Run astral-sh/setup-uv@v6",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 23,
+            "started_at": "2026-10-30T11:39:59Z",
+            "completed_at": "2026-10-30T11:39:59Z"
+          },
+          {
+            "name": "Post Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 24,
+            "started_at": "2026-10-30T11:39:59Z",
+            "completed_at": "2026-10-30T11:39:59Z"
+          },
+          {
+            "name": "Post Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 25,
+            "started_at": "2026-10-30T11:39:59Z",
+            "completed_at": "2026-10-30T11:39:59Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 26,
+            "started_at": "2026-10-30T11:39:59Z",
+            "completed_at": "2026-10-30T11:40:00Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 27,
+            "started_at": "2026-10-30T11:40:00Z",
+            "completed_at": "2026-10-30T11:40:00Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/phongviet/SimReady/check-runs/124042086219",
+        "labels": [
+          "ubuntu-24.04"
+        ],
+        "runner_id": 1000000877,
+        "runner_name": "GitHub Actions 1000000877",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      },
+      {
+        "id": 124042086298,
+        "run_id": 41049601408,
+        "workflow_name": "SimReady acceptance",
+        "head_branch": "main",
+        "run_url": "https://api.github.com/repos/phongviet/SimReady/actions/runs/41049601408",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOVcluxM8AAAAc4XwHmg",
+        "head_sha": "15d783b702003037a17fc638a1dd9c899e6f1684",
+        "url": "https://api.github.com/repos/phongviet/SimReady/actions/jobs/124042086298",
+        "html_url": "https://github.com/phongviet/SimReady/actions/runs/41049601408/job/124042086298",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-30T11:39:06Z",
+        "started_at": "2026-10-30T11:39:08Z",
+        "completed_at": "2026-10-30T11:39:28Z",
+        "name": "geometry",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-30T11:39:09Z",
+            "completed_at": "2026-10-30T11:39:10Z"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-30T11:39:10Z",
+            "completed_at": "2026-10-30T11:39:11Z"
+          },
+          {
+            "name": "Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-30T11:39:11Z",
+            "completed_at": "2026-10-30T11:39:12Z"
+          },
+          {
+            "name": "Run astral-sh/setup-uv@v6",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-30T11:39:12Z",
+            "completed_at": "2026-10-30T11:39:13Z"
+          },
+          {
+            "name": "Run uv sync --frozen --extra geometry",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-30T11:39:13Z",
+            "completed_at": "2026-10-30T11:39:16Z"
+          },
+          {
+            "name": "Run OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 uv run --frozen --extra geometry pytest -q --junitxml=.cache/ci-geometry.xml -m geometry",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-30T11:39:16Z",
+            "completed_at": "2026-10-30T11:39:24Z"
+          },
+          {
+            "name": "Run python .github/scripts/annotate_pytest.py .cache/ci-geometry.xml",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-30T11:39:24Z",
+            "completed_at": "2026-10-30T11:39:24Z"
+          },
+          {
+            "name": "Run make storage",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-30T11:39:24Z",
+            "completed_at": "2026-10-30T11:39:24Z"
+          },
+          {
+            "name": "Post Run astral-sh/setup-uv@v6",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 14,
+            "started_at": "2026-10-30T11:39:24Z",
+            "completed_at": "2026-10-30T11:39:25Z"
+          },
+          {
+            "name": "Post Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15,
+            "started_at": "2026-10-30T11:39:25Z",
+            "completed_at": "2026-10-30T11:39:25Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16,
+            "started_at": "2026-10-30T11:39:25Z",
+            "completed_at": "2026-10-30T11:39:25Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 17,
+            "started_at": "2026-10-30T11:39:25Z",
+            "completed_at": "2026-10-30T11:39:25Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/phongviet/SimReady/check-runs/124042086298",
+        "labels": [
+          "ubuntu-24.04"
+        ],
+        "runner_id": 1000000876,
+        "runner_name": "GitHub Actions 1000000876",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      },
+      {
+        "id": 124042086301,
+        "run_id": 41049601408,
+        "workflow_name": "SimReady acceptance",
+        "head_branch": "main",
+        "run_url": "https://api.github.com/repos/phongviet/SimReady/actions/runs/41049601408",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOVcluxM8AAAAc4XwHnQ",
+        "head_sha": "15d783b702003037a17fc638a1dd9c899e6f1684",
+        "url": "https://api.github.com/repos/phongviet/SimReady/actions/jobs/124042086301",
+        "html_url": "https://github.com/phongviet/SimReady/actions/runs/41049601408/job/124042086301",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-30T11:39:06Z",
+        "started_at": "2026-10-30T11:39:08Z",
+        "completed_at": "2026-10-30T11:39:58Z",
+        "name": "cpu",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-30T11:39:09Z",
+            "completed_at": "2026-10-30T11:39:10Z"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-30T11:39:11Z",
+            "completed_at": "2026-10-30T11:39:12Z"
+          },
+          {
+            "name": "Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-30T11:39:12Z",
+            "completed_at": "2026-10-30T11:39:12Z"
+          },
+          {
+            "name": "Run astral-sh/setup-uv@v6",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-30T11:39:12Z",
+            "completed_at": "2026-10-30T11:39:13Z"
+          },
+          {
+            "name": "Run uv sync --frozen",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-30T11:39:13Z",
+            "completed_at": "2026-10-30T11:39:15Z"
+          },
+          {
+            "name": "Run uv run --frozen ruff check .",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-30T11:39:15Z",
+            "completed_at": "2026-10-30T11:39:15Z"
+          },
+          {
+            "name": "Run uv run --frozen ruff format --check src tests scripts workers",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-30T11:39:15Z",
+            "completed_at": "2026-10-30T11:39:15Z"
+          },
+          {
+            "name": "Run uv run --frozen pytest -q --junitxml=.cache/ci-cpu.xml -m 'not real_data and not official_data and not gpu and not geometry'",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-30T11:39:15Z",
+            "completed_at": "2026-10-30T11:39:51Z"
+          },
+          {
+            "name": "Run python .github/scripts/annotate_pytest.py .cache/ci-cpu.xml",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-10-30T11:39:51Z",
+            "completed_at": "2026-10-30T11:39:51Z"
+          },
+          {
+            "name": "Run make demo storage",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10,
+            "started_at": "2026-10-30T11:39:51Z",
+            "completed_at": "2026-10-30T11:39:55Z"
+          },
+          {
+            "name": "Post Run astral-sh/setup-uv@v6",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 18,
+            "started_at": "2026-10-30T11:39:55Z",
+            "completed_at": "2026-10-30T11:39:55Z"
+          },
+          {
+            "name": "Post Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 19,
+            "started_at": "2026-10-30T11:39:55Z",
+            "completed_at": "2026-10-30T11:39:56Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 20,
+            "started_at": "2026-10-30T11:39:56Z",
+            "completed_at": "2026-10-30T11:39:56Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 21,
+            "started_at": "2026-10-30T11:39:56Z",
+            "completed_at": "2026-10-30T11:39:56Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/phongviet/SimReady/check-runs/124042086301",
+        "labels": [
+          "ubuntu-24.04"
+        ],
+        "runner_id": 1000000875,
+        "runner_name": "GitHub Actions 1000000875",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      }
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "mode": "CPU validation of a trained analytic synthetic checkpoint and saved views",
+  "dataset_kind": "synthetic",
+  "gaussians": 421,
+  "saved_views": 2,
+  "gpu_used": false,
+  "runtime_rendering_performed": false
+}

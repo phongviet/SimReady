@@ -1,0 +1,56 @@
+[
+  {
+    "frame_id": "frame_00058",
+    "lpips": 0.31247907876968384,
+    "paired_delta": -0.07125625014305115,
+    "rule": "worst",
+    "run": "l1-ssim-s42",
+    "seed": "42",
+    "step": 3600
+  },
+  {
+    "frame_id": "frame_00056",
+    "lpips": 0.22220319509506226,
+    "paired_delta": -0.055858612060546875,
+    "rule": "largest-paired-degradation",
+    "run": "l1-ssim-s42",
+    "seed": "42",
+    "step": 3600
+  },
+  {
+    "frame_id": "frame_00058",
+    "lpips": 0.3098803758621216,
+    "paired_delta": -0.0868833065032959,
+    "rule": "worst",
+    "run": "l1-ssim-s43",
+    "seed": "43",
+    "step": 3600
+  },
+  {
+    "frame_id": "frame_00063",
+    "lpips": 0.2472507357597351,
+    "paired_delta": -0.0496695339679718,
+    "rule": "largest-paired-degradation",
+    "run": "l1-ssim-s43",
+    "seed": "43",
+    "step": 3600
+  },
+  {
+    "frame_id": "frame_00058",
+    "lpips": 0.32739734649658203,
+    "paired_delta": -0.07223844528198242,
+    "rule": "worst",
+    "run": "l1-ssim-s44",
+    "seed": "44",
+    "step": 3600
+  },
+  {
+    "frame_id": "frame_00063",
+    "lpips": 0.24812160432338715,
+    "paired_delta": -0.05785192549228668,
+    "rule": "largest-paired-degradation",
+    "run": "l1-ssim-s44",
+    "seed": "44",
+    "step": 3600
+  }
+]

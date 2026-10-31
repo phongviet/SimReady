@@ -166,6 +166,14 @@ This is one correlated capture, not a general method or detection-accuracy claim
 [Reproduction and registration](docs/RECAPTURE_PROTOCOL.md) ·
 [Fresh provisional integrity audit](docs/EXPERIMENT_AUDIT.md)
 
+## Reconstruction-quality ablation
+
+The [reconstruction-quality study](docs/RECONSTRUCTION_QUALITY_RESULTS.md) records
+24 training runs and 67 validation evaluations with frozen source/config/data
+hashes, checkpoint comparisons, runtime tables and actual failure images.
+Selection uses validation only. The report retains negative results and the
+fresh audit’s provisional warnings. [Reproduce the study](docs/RECONSTRUCTION_QUALITY_PROTOCOL.md).
+
 ## Local scene workspace
 
 ```bash

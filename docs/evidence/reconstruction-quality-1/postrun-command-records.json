@@ -1,0 +1,74 @@
+[
+  {
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "ruff",
+      "check",
+      "."
+    ],
+    "started_utc": "2026-10-31T02:05:55.165763+00:00",
+    "completed_utc": "2026-10-31T02:05:55.259525+00:00",
+    "returncode": 0,
+    "log": "postrun-lint.log"
+  },
+  {
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "ruff",
+      "format",
+      "--check",
+      "src",
+      "tests",
+      "scripts",
+      "workers",
+      "docs/evidence/reconstruction-quality-1/replay.py"
+    ],
+    "started_utc": "2026-10-31T02:05:55.259541+00:00",
+    "completed_utc": "2026-10-31T02:05:55.307336+00:00",
+    "returncode": 0,
+    "log": "postrun-format.log"
+  },
+  {
+    "command": [
+      "npm",
+      "--prefix",
+      "frontend",
+      "test"
+    ],
+    "started_utc": "2026-10-31T02:05:55.307352+00:00",
+    "completed_utc": "2026-10-31T02:05:56.781342+00:00",
+    "returncode": 0,
+    "log": "postrun-frontend-tests.log"
+  },
+  {
+    "command": [
+      "npm",
+      "--prefix",
+      "frontend",
+      "run",
+      "build"
+    ],
+    "started_utc": "2026-10-31T02:05:56.781359+00:00",
+    "completed_utc": "2026-10-31T02:05:58.341624+00:00",
+    "returncode": 0,
+    "log": "postrun-frontend-build.log"
+  },
+  {
+    "command": [
+      "uv",
+      "run",
+      "--frozen",
+      "simready",
+      "recon",
+      "smoke"
+    ],
+    "started_utc": "2026-10-31T02:05:58.341648+00:00",
+    "completed_utc": "2026-10-31T02:05:59.222883+00:00",
+    "returncode": 0,
+    "log": "postrun-cli-smoke.log"
+  }
+]

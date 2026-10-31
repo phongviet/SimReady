@@ -713,3 +713,34 @@ focused study tests passed, including held-out pixel exclusion and protocol/sour
 history mutation detection. Frontend5 tests/build and CLI smoke passed. Final full CPU
 regression:189 passed/4 GPU-skipped; lint and formatting passed before sealing.
 No new TUM metric or improvement claim is made here.
+
+### Reconstruction-quality study closure (2026-10-31)
+
+The frozen study executed on 2026-10-30 from clean source 15d783b:24 training runs,
+79,200 updates,67 complete validation evaluations/1,072 pairs; all 91 stages
+completed. No candidate/test observations selected settings. All143 frozen source
+hashes and 5,458 historical file hashes remained unchanged. No simulation/frontend
+features were added.
+
+The rule selected L1+SSIM/3,600 for all three seeds: mean validation LPIPS 0.24201
+versus matched control 0.28287. Gaussian count and optimization time also increased;
+masked depth MAE was slightly worse. Cap20k, SH0 and depth-off LPIPS regressions,
+relative-depth's mixed result, SSIM regressions and visible holes/blur remain in
+[results](RECONSTRUCTION_QUALITY_RESULTS.md). These are exposed-sequence validation
+observations, not fixed-density causal effects or independent-test quality claims.
+
+Numerical replay reproduced all 1,072 RGB/depth/detector calculations and selection,
+re-aggregated saved LPIPS, and checked 132 allowed observation files. Cached-stage
+verification passed without retraining. A separate fresh same-family audit also
+verified nested hashes/aggregates/checkpoints and ten CPU LPIPS forwards (maximum
+saved-GPU difference 4.47e-8). Overall semantic verdict is WARN/provisional for
+support conditioning, count/runtime mediation and limited validation scope.
+The original report's seed42-only baseline flag is preserved; a new supplement
+checks seeds43/44 as well, all within the predeclared tolerances.
+
+Original pre-training test stdout is in the parent execution transcript; it was
+not saved as raw repository logs. During closure, separately labeled durable
+post-run JUnit/logs captured 189 CPU passes (four GPU skips), four actual CUDA
+passes, lint/formatting, frontend 5 tests/build and CLI smoke. Hosted implementation
+CI 41049601408 passed all four jobs. Curated evidence excludes dataset imagery and
+learned scene parameters; full local reports/montages remain Git-ignored.

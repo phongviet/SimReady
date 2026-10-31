@@ -1,0 +1,81 @@
+{
+  "acceptance_status": "provisional",
+  "artifact_policy": "Only review-narrative.md and review-narrative.json were written. Original audit, source, narrative, datasets and experiment outputs were preserved.",
+  "audit_skill": "experiment-audit",
+  "audited_input_hashes": {
+    "docs/RECONSTRUCTION_QUALITY_RESULTS.md": "sha256:29b0fb1ce43b3d64476118a9e631d5cadf8f057861e721c77a9f6f9676fa8f6b",
+    "docs/evidence/reconstruction-quality-1/acceptance.json": "sha256:951747fb7a0b7cd892451de5664967aac56d1f4eeb818999c778d2719156647c",
+    "docs/evidence/reconstruction-quality-1/aggregates.json": "sha256:a6b9cbc075964add7a9f3c809b5829e03c953f1cb72f09cb5f11b64a65ecbdc9",
+    "docs/evidence/reconstruction-quality-1/baseline-checks.json": "sha256:8e8111ecd6611cc6e5e9479a6a428e6b3d7cbf9cc45cd406baf2deb6a68602d8",
+    "docs/evidence/reconstruction-quality-1/failure-selection.json": "sha256:fcbab79646c2973e0ac8412fe79c63351bc90d9ffd93a7903f052c3f18e7236a",
+    "docs/evidence/reconstruction-quality-1/provenance.json": "sha256:68ee011ea9ea6b6e538c49ee622e85dd5dde38111d245dca953317ac3f873c8c",
+    "docs/evidence/reconstruction-quality-1/quality-runtime.csv": "sha256:c5b72c18cdf9868bb0cc8c81b127f7c2c6160920ad02315cd8b26222a503c19a",
+    "docs/evidence/reconstruction-quality-1/summary-table.md": "sha256:047168c138f07b16aa29b13c8dbeaff3dd530f4cd507eee3bf1ceaa4a24c7fe9"
+  },
+  "checks": {
+    "copied_evidence": {
+      "details": "Eight linked CSV/JSON/plot copies are byte-identical to frozen analysis outputs; acceptance.json is byte-identical to replay-result-v2.json; all copied provenance fields and catalog/verifier hashes agree with the frozen protocol.",
+      "status": "PASS"
+    },
+    "hosted_ci": {
+      "details": "Public run page identifies commit 15d783b and success; all four public job pages independently show succeeded. This supports the hosted-CI statement, not the earlier local pre-training test counts.",
+      "sources": {
+        "cpu": "https://github.com/phongviet/SimReady/actions/runs/41049601408/job/124042086301",
+        "frontend-browser": "https://github.com/phongviet/SimReady/actions/runs/41049601408/job/124042086219",
+        "geometry": "https://github.com/phongviet/SimReady/actions/runs/41049601408/job/124042086298",
+        "official-sample": "https://github.com/phongviet/SimReady/actions/runs/41049601408/job/124042085921",
+        "run": "https://github.com/phongviet/SimReady/actions/runs/41049601408"
+      },
+      "status": "PASS"
+    },
+    "narrative_numbers": {
+      "details": "Study/run/update/view totals, historical reference and reproduction deltas, six arm-vs-control LPIPS differences, selected configurations, stage span, optimization/IO sums, memory peaks, SSIM regression and frame IDs agree with the primary artifacts.",
+      "status": "PASS"
+    },
+    "numeric_tables": {
+      "details": "Independently regenerated all 10 data rows in each document (20 rendered rows total) from the 67 saved candidates: means, sample SDs, rounding, counts, and optimization seconds all agree exactly.",
+      "status": "PASS"
+    },
+    "pretraining_local_gate_assertions": {
+      "details": "The precise pre-training local CPU/CUDA/focused/frontend/lint/CLI pass counts are stated alongside independently replayed experiment evidence, but no corresponding pre-training raw execution files were supplied to this auditor. The executor confirms these outputs exist only in the parent tool transcript. The tracker repeats the claim; it is not a separate execution witness. This is an evidence-attribution limitation, not a finding that the checks failed or the counts are false.",
+      "status": "WARN"
+    },
+    "scope_interpretation": {
+      "details": "The narrative explicitly states same-capture validation exposure and multiple comparisons, changing depth support, count/densification mediation, mixed secondary metrics, unrandomized local runtime, least-improved rather than actually degraded views, and no independent-test/generalization/significance/detection-accuracy claim.",
+      "status": "PASS"
+    }
+  },
+  "claims": [
+    {
+      "details": "Control LPIPS improves through 3600 while PSNR largely plateaus after 2400; the narrative retains SSIM and other mixed outcomes and makes no extrapolation claim.",
+      "id": "H1",
+      "impact": "supported_with_stated_qualifiers"
+    },
+    {
+      "details": "The reported comparison is correctly described as whole training policies at matched updates, with count/time/depth-support differences and no objective-only or portable runtime claim.",
+      "id": "H2",
+      "impact": "supported_with_stated_qualifiers"
+    }
+  ],
+  "findings": [
+    {
+      "correction": "Introduce these sentences as executor-reported pre-training checks recorded in the parent execution transcript, which this fresh reviewer did not independently inspect. Keep any newly captured post-run verification explicitly separate; it cannot establish pre-training chronology.",
+      "details": "The precise pre-training local CPU/CUDA/focused/frontend/lint/CLI pass counts are stated alongside independently replayed experiment evidence, but no corresponding pre-training raw execution files were supplied to this auditor. The executor confirms these outputs exist only in the parent tool transcript. The tracker repeats the claim; it is not a separate execution witness. This is an evidence-attribution limitation, not a finding that the checks failed or the counts are false.",
+      "end_line": 133,
+      "file": "docs/RECONSTRUCTION_QUALITY_RESULTS.md",
+      "id": "N1",
+      "impact": "Does not change H1/H2 measurement support or the verified results table.",
+      "kind": "acceptance_evidence_provenance",
+      "priority": "low",
+      "start_line": 131,
+      "status": "needs_qualifier"
+    }
+  ],
+  "generated_at": "2026-10-30T12:17:59.340463+00:00",
+  "reason_code": "local_pretraining_checks_need_evidence_attribution",
+  "relation_to_original_audit": "The narrative addresses the original scientific interpretation warnings. This addendum does not erase the original experiment audit or assert cross-family acceptance.",
+  "review_independence": "same-family",
+  "summary": "No numerical, result-scope, or H1/H2 interpretation error found. All displayed values and qualifiers agree with verified primary artifacts. One low-priority clarification is needed to distinguish executor-reported pre-training test counts from independently reviewed raw evidence.",
+  "type": "narrative_addendum",
+  "verdict": "WARN"
+}

@@ -1,0 +1,16 @@
+{
+  "acceptance_status": "provisional",
+  "actions": {
+    "assurance": "WARN and same-family provisional status retained; no independent-test/generalization claim.",
+    "baseline_checks": "All three seeds checked in separate immutable replay-result-v2 supplement; primary output unchanged.",
+    "failure_label": "Negative signed deltas identified as least improvement, not actual degradation.",
+    "scientific_scope": "Matched-update policy comparison; counts, runtime, depth support, validation optimism and metric regressions explicit.",
+    "test_attribution": "Pre-training counts attributed to parent transcript; fresh post-run logs separately dated and captured."
+  },
+  "date_client": "2026-10-31",
+  "final_narrative_sha256": "58672452413f4ee062d32b85e6c4c9f6bab40876b167648e1dcb98a9e52225c9",
+  "narrative_audit_sha256": "6b918fc363012f66b1b5404c6c615ebd54861c793fd0542cfffcccab8fbeccfd",
+  "primary_audit_sha256": "53f231d3449a353df1558d0f02ac9ccf4d80d328d537ea0c1883ee25a6bd2b83",
+  "review_independence": "same-family",
+  "verdict": "WARN"
+}

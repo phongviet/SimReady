@@ -1,0 +1,13 @@
+
+> simready-shell@0.0.1 test
+> vitest run
+
+
+ RUN  v4.1.12 /home/phong/simready/frontend
+
+
+ Test Files  4 passed (4)
+      Tests  5 passed (5)
+   Start at  09:05:56
+   Duration  491ms (transform 334ms, setup 0ms, import 527ms, tests 25ms, environment 1ms)
+

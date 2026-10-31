@@ -1,0 +1,18 @@
+[
+  {
+    "comparison": "fresh vs historical baseline",
+    "delta": {
+      "lpips": 0.0036430545151233673,
+      "psnr_db": -0.09715328031817094
+    },
+    "flag": false
+  },
+  {
+    "comparison": "trajectory-1200 vs standalone baseline",
+    "delta": {
+      "lpips": -0.0009167827665805817,
+      "psnr_db": -0.008855494057320001
+    },
+    "flag": false
+  }
+]
