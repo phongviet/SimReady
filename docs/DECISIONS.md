@@ -304,3 +304,14 @@ preflight reset, and a small shadcn-style button variant boundary. Bundle heavy
 workflow panels separately; report actual bundle increase rather than claiming
 an unmeasured speedup. Preserve the original personal resource guard in developer
 configuration; remove its presentation as a public product requirement.
+
+### Independent captures and annotation integrity (2026-10-31)
+
+Use official TUM captures while ScanNet access remains unconfirmed; never bypass
+its agreement. Treat additional sequences as recordings, not necessarily new
+sites. Preserve existing desk import limits and add explicit sequence-specific
+bounds. Fr2 duplicate-time conflicting poses are excluded in full with a source
+text hash and discarded-count log, not averaged or selected. Original failure
+records remain intact. Human approval binds every test frame, exact COCO bytes,
+dataset/split and class-rule hashes. No experiment runner issues approval or
+promotes detector outputs into GT. Ground-truth AP remains pending actual review.

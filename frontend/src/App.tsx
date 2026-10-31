@@ -1,5 +1,9 @@
 import * as Collapsible from "@radix-ui/react-collapsible";
-import { WorkbenchNav } from "./WorkbenchNav";
+import {
+  WorkbenchNav,
+  viewFromSearch,
+  type WorkbenchView,
+} from "./WorkbenchNav";
 import { Button } from "./components/ui/button";
 import { SceneCard } from "./SceneCard";
 import { AccountBar } from "./AccountBar";
@@ -52,13 +56,43 @@ export function App() {
   const [scene, setScene] = useState<SceneState | null>(null);
   const [objects, setObjects] = useState<ProxyObject[]>([]);
   const [selected, setSelected] = useState<string | null>(null);
+  const [deletedObject, setDeletedObject] = useState<ProxyObject | null>(null);
   const [dirty, setDirty] = useState(false),
     [busy, setBusy] = useState(false);
   const [error, setError] = useState(""),
     [notice, setNotice] = useState("");
-  const [view, setView] = useState<
-    "3d" | "saved" | "evaluation" | "simulation" | "review" | "research"
-  >("3d");
+  const [view, setView] = useState<WorkbenchView>(() =>
+    typeof window === "undefined"
+      ? "3d"
+      : viewFromSearch(window.location.search),
+  );
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    url.searchParams.set("view", view);
+    window.history.replaceState(null, "", url);
+  }, [view]);
+  useEffect(() => {
+    const restore = () => setView(viewFromSearch(window.location.search));
+    window.addEventListener("popstate", restore);
+    return () => window.removeEventListener("popstate", restore);
+  }, []);
+  useEffect(() => {
+    if (!dirty) return;
+    const warn = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = "";
+    };
+    window.addEventListener("beforeunload", warn);
+    return () => window.removeEventListener("beforeunload", warn);
+  }, [dirty]);
+  const navigate = (next: WorkbenchView) => {
+    const url = new URL(window.location.href);
+    url.searchParams.set("view", next);
+    if (url.href !== window.location.href)
+      window.history.pushState(null, "", url);
+    setView(next);
+  };
+  const contextual = ["evaluation", "research", "review"].includes(view);
   const [cameraIndex, setCameraIndex] = useState(0),
     [collision, setCollision] = useState(false);
   const [showCameras, setShowCameras] = useState(false);
@@ -72,6 +106,7 @@ export function App() {
     setDirty(false);
     setError("");
     setSelected(null);
+    setDeletedObject(null);
     setCameraIndex(0);
     placement.current = null;
   };
@@ -209,6 +244,8 @@ export function App() {
             <span>{["X", "Y", "Z"][index]}</span>
             <input
               aria-label={`${title} ${["X", "Y", "Z"][index]}`}
+              name={`${field}-${index}`}
+              autoComplete="off"
               type="number"
               step={field === "rotation" ? 1 : 0.01}
               value={Number(value.toFixed(3))}
@@ -220,7 +257,9 @@ export function App() {
     </div>
   );
   return (
-    <div className={`studio ${libraryOpen ? "" : "library-collapsed"}`}>
+    <div
+      className={`studio ${libraryOpen ? "" : "library-collapsed"} ${contextual ? "inspector-hidden" : ""}`}
+    >
       <a className="skip-link" href="#workspace">
         Skip to workspace
       </a>
@@ -258,7 +297,7 @@ export function App() {
         <aside className="library" aria-label="Scene library">
           <WorkbenchNav
             view={view}
-            onView={setView}
+            onView={navigate}
             collapsed={!libraryOpen}
             disabled={!scene}
           />
@@ -350,6 +389,23 @@ export function App() {
               {notice}
             </div>
           )}
+          {deletedObject && (
+            <div className="message" role="status">
+              Removed {deletedObject.name}.{" "}
+              <Button
+                variant="ghost"
+                disabled={!canEdit || busy || objects.length >= 128}
+                onClick={() => {
+                  setObjects((values) => [...values, deletedObject]);
+                  setSelected(deletedObject.object_id);
+                  setDeletedObject(null);
+                  setDirty(true);
+                }}
+              >
+                Undo removal
+              </Button>
+            </div>
+          )}
           {!scene ? (
             <div className="connection-panel">
               <h2>Start with a working scene.</h2>
@@ -365,7 +421,7 @@ export function App() {
             </div>
           ) : (
             <>
-              <div className="toolbar">
+              <div className="toolbar" hidden={contextual}>
                 <button
                   onClick={() => add("box")}
                   disabled={busy || !canEdit || objects.length >= 128}
@@ -531,7 +587,7 @@ export function App() {
           )}
         </Suspense>
       </main>
-      <aside className="inspector">
+      <aside className="inspector" hidden={contextual}>
         <div className="section-label">
           INSERTED OBJECTS <span>{objects.length}</span>
         </div>
@@ -611,6 +667,7 @@ export function App() {
             <button
               className="delete-button"
               onClick={() => {
+                setDeletedObject(object);
                 setObjects((values) =>
                   values.filter(
                     (value) => value.object_id !== object.object_id,

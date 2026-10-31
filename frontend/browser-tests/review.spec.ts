@@ -66,9 +66,14 @@ test("independent local reviewer approves scoped evidence, exports and preserves
   await expect(page.locator(".account-bar")).toContainText("Local Reviewer");
   await page.getByRole("button", { name: "Review queue", exact: true }).click();
   await expect(page.locator(".scene-card")).toContainText("submitted");
+  // Editing controls are contextual to Workspace; keep the permission assertion visible.
+  await page.getByRole("button", { name: "3D scene", exact: true }).click();
   await expect(
     page.getByRole("button", { name: "＋ Box", exact: true }),
   ).toBeDisabled();
+  await page
+    .getByRole("button", { name: "Readiness / review", exact: true })
+    .click();
   await panel
     .getByLabel("Reviewer justification")
     .fill(

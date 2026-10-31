@@ -83,7 +83,7 @@ protocol from the validation-only quality study above; the two are not pooled.
 ## Quick start
 
 Requires Python 3.12, uv and a supported Node.js version; see
-[installation](docs/ENVIRONMENT.md) for pinned compatibility.
+[installation](docs/INSTALLATION.md) for pinned compatibility.
 
 ```bash
 make setup

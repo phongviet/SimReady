@@ -5,8 +5,11 @@ fr1 depth; does not silently apply the raw-camera distortion coefficients.
 """
 
 import bisect
+import hashlib
+import json
 import shutil
 import tarfile
+from collections import Counter
 from pathlib import Path
 
 import numpy as np
@@ -19,6 +22,12 @@ TUM_WORLD_TO_CANONICAL = np.array(
 )
 MAX_UNCOMPRESSED = 1_500_000_000
 MAX_MEMBERS = 10000
+# Compressed/member-byte limits are explicit per supported capture.
+SEQUENCE_LIMITS = {
+    "rgbd_dataset_freiburg1_desk": (500_000_000, MAX_UNCOMPRESSED),
+    "rgbd_dataset_freiburg1_room": (900_000_000, 3_000_000_000),
+    "rgbd_dataset_freiburg2_desk": (2_200_000_000, 6_000_000_000),
+}
 
 
 def parse_rows(text: str, columns: int) -> list[list[str]]:
@@ -33,6 +42,34 @@ def parse_rows(text: str, columns: int) -> list[list[str]]:
     if not np.isfinite(times).all() or np.any(np.diff(times) <= 0):
         raise ValueError("TUM timestamps must be finite and strictly ordered")
     return rows
+
+
+def groundtruth_rows(text: str, sequence: str):
+    """Conservative explicit handling of publisher fr2 duplicate-time mocap records."""
+    if sequence != "rgbd_dataset_freiburg2_desk":
+        return parse_rows(text, 8), None
+    rows = [
+        line.split()
+        for line in text.splitlines()
+        if line.strip() and not line.lstrip().startswith("#")
+    ]
+    if not rows or any(len(row) != 8 for row in rows):
+        raise ValueError("TUM ground truth must have eight columns")
+    stamps = [float(row[0]) for row in rows]
+    if not np.isfinite(stamps).all():
+        raise ValueError("non-finite ground truth timestamp")
+    ambiguous = sorted(t for t, count in Counter(stamps).items() if count > 1)
+    rejected = set(ambiguous)
+    kept = [row for row in rows if float(row[0]) not in rejected]
+    parsed = parse_rows("\n".join(" ".join(row) for row in kept), 8)
+    return parsed, {
+        "policy": "exclude all records belonging to duplicated timestamps; no pose chosen",
+        "source_groundtruth_sha256": hashlib.sha256(text.encode()).hexdigest(),
+        "source_records": len(rows),
+        "kept_records": len(kept),
+        "excluded_records": len(rows) - len(kept),
+        "duplicated_timestamps": ambiguous,
+    }
 
 
 def quaternion_matrix(q: np.ndarray) -> np.ndarray:
@@ -82,21 +119,31 @@ def interpolate_pose(timestamp: float, groundtruth: np.ndarray) -> np.ndarray:
 
 def index_tum_archive(archive: Path):
     """Read only bounded indexes/poses and archive member metadata; never decode images."""
-    if archive.stat().st_size > 500_000_000:
-        raise ValueError("TUM archive exceeds 500 MB cap")
     metadata_text = {}
     members = set()
     uncompressed = 0
+    sequence_root = None
+    member_limit = MAX_UNCOMPRESSED
     with tarfile.open(archive, "r|gz") as bundle:
         for member in bundle:
             relative_path(member.name.rstrip("/"))
+            member_root = member.name.split("/")[0]
+            if sequence_root is None:
+                if member_root not in SEQUENCE_LIMITS:
+                    raise ValueError("unsupported TUM sequence calibration/provenance")
+                sequence_root = member_root
+                compressed_limit, member_limit = SEQUENCE_LIMITS[member_root]
+                if archive.stat().st_size > compressed_limit:
+                    raise ValueError("TUM archive exceeds sequence-specific compressed cap")
+            if member_root != sequence_root:
+                raise ValueError("TUM archive must contain one sequence root")
             if not (member.isdir() or member.isfile()):
                 raise ValueError("TUM archive links/special files are forbidden")
             if member.name in members:
                 raise ValueError("duplicate TUM archive member")
             members.add(member.name)
             uncompressed += member.size
-            if len(members) > MAX_MEMBERS or uncompressed > MAX_UNCOMPRESSED:
+            if len(members) > MAX_MEMBERS or uncompressed > member_limit:
                 raise ValueError("TUM archive exceeds extraction limits")
             if Path(member.name).name in ("rgb.txt", "depth.txt", "groundtruth.txt"):
                 if member.size > 2_000_000:
@@ -109,11 +156,12 @@ def index_tum_archive(archive: Path):
     if len(roots) != 1:
         raise ValueError("TUM archive must contain one sequence root")
     root = roots.pop()
-    if root != "rgbd_dataset_freiburg1_desk":
-        raise ValueError("this calibration/provenance adapter supports freiburg1_desk only")
     rgb_rows = parse_rows(metadata_text["rgb.txt"], 2)
     depth_rows = parse_rows(metadata_text["depth.txt"], 2)
-    truth = np.array(parse_rows(metadata_text["groundtruth.txt"], 8), dtype=float)
+    pose_rows, pose_filter = groundtruth_rows(metadata_text["groundtruth.txt"], root)
+    truth = np.array(pose_rows, dtype=float)
+    if pose_filter is not None:
+        metadata_text["pose-filter.json"] = json.dumps(pose_filter, indent=2) + "\n"
     if not np.isfinite(truth).all():
         raise ValueError("non-finite TUM ground truth")
     depth_times = [float(row[0]) for row in depth_rows]
@@ -141,7 +189,13 @@ def index_tum_archive(archive: Path):
     return metadata_text, members, root, associated
 
 
-def import_tum(archive: Path, output: Path, max_frames: int = 100) -> None:
+def import_tum(
+    archive: Path,
+    output: Path,
+    max_frames: int = 100,
+    *,
+    partitions: dict[str, list[str]] | None = None,
+) -> None:
     if not 8 <= max_frames <= 256:
         raise ValueError("TUM import requires 8 to 256 sampled frames")
     metadata_text, members, root, associated = index_tum_archive(archive)
@@ -198,10 +252,14 @@ def import_tum(archive: Path, output: Path, max_frames: int = 100) -> None:
         camera = Intrinsics(width=640, height=480, fx=525, fy=525, cx=319.5, cy=239.5)
         write_json(stage / "calib/intrinsics.json", camera.model_dump(mode="json"))
         metadata = dict(
-            scene_id="tum_fr1_desk",
+            scene_id=(
+                "tum_fr1_desk"
+                if root.endswith("freiburg1_desk")
+                else "tum_" + root.removeprefix("rgbd_dataset_")
+            ),
             kind="real",
             source=Source(
-                name="TUM RGB-D freiburg1_desk",
+                name="TUM RGB-D " + root.removeprefix("rgbd_dataset_"),
                 url="https://cvg.cit.tum.de/data/datasets/rgbd-dataset",
                 license="CC-BY-4.0",
                 attribution="Sturm et al., RGB-D SLAM Systems Benchmark, IROS 2012.",
@@ -213,12 +271,24 @@ def import_tum(archive: Path, output: Path, max_frames: int = 100) -> None:
             depth=DepthEncoding(meters_per_unit=0.0002, invalid_value=0),
             pose_provenance="Motion-capture optical-center c2w; linear translation and "
             "quaternion-SLERP at RGB time. No extrapolation; pose gaps <=50ms. "
-            "Source nominal Z-up rotated to canonical Y-up.",
+            "Source nominal Z-up rotated to canonical Y-up."
+            + (
+                " Duplicate-timestamp mocap records excluded in full; see calib/pose-filter.json."
+                if root == "rgbd_dataset_freiburg2_desk"
+                else ""
+            ),
             timestamp_provenance="Original Unix timestamps from RGB/depth indexes; "
             "unique nearest-depth association within 20ms.",
             association_tolerance=0.020001,
-            capture_conditions="Real Kinect desk sweep; publisher-registered depth "
-            "with already corrected depth scale.",
+            capture_conditions=(
+                (
+                    "Real Kinect desk sweep; "
+                    if root.endswith("freiburg1_desk")
+                    else "Real Kinect capture; "
+                )
+                + "publisher-registered depth "
+                "with already corrected depth scale."
+            ),
             privacy="Public benchmark; no additional identity/privacy auditing performed.",
             limitations=(
                 "ROS pinhole approximation follows publisher advice; residual errors possible.",
@@ -228,7 +298,7 @@ def import_tum(archive: Path, output: Path, max_frames: int = 100) -> None:
             ),
             T_canonical_source_world=TUM_WORLD_TO_CANONICAL.tolist(),
         )
-        finalize_dataset(stage, metadata, frames)
+        finalize_dataset(stage, metadata, frames, partitions=partitions)
         write_json(
             stage / "association-report.json",
             {

@@ -104,3 +104,8 @@ export function WorkbenchNav({
     </Tooltip.Provider>
   );
 }
+
+export function viewFromSearch(search: string): WorkbenchView {
+  const value = new URLSearchParams(search).get("view");
+  return destinations.find((item) => item.id === value)?.id || "3d";
+}

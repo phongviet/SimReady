@@ -43,3 +43,24 @@ def test_pose_extrapolation_forbidden(time):
 def test_zero_quaternion_rejected():
     with pytest.raises(ValueError, match="unit"):
         quaternion_matrix(np.zeros(4))
+
+
+def test_fr2_duplicate_poses_are_all_excluded_and_logged():
+    from simready.data.tum import groundtruth_rows
+
+    text = "1 0 0 0 0 0 0 1\n1.01 1 0 0 0 0 0 1\n1.01 2 0 0 0 0 0 1\n1.02 3 0 0 0 0 0 1\n"
+    rows, report = groundtruth_rows(text, "rgbd_dataset_freiburg2_desk")
+    assert [float(r[0]) for r in rows] == [1, 1.02]
+    assert report["excluded_records"] == 2
+    assert report["duplicated_timestamps"] == [1.01]
+    assert len(report["source_groundtruth_sha256"]) == 64
+    with pytest.raises(ValueError, match="strictly ordered"):
+        groundtruth_rows(text, "rgbd_dataset_freiburg1_desk")
+
+
+def test_fr2_remaining_pose_reversal_still_fails():
+    from simready.data.tum import groundtruth_rows
+
+    text = "2 0 0 0 0 0 0 1\n1 1 0 0 0 0 0 1\n"
+    with pytest.raises(ValueError, match="strictly ordered"):
+        groundtruth_rows(text, "rgbd_dataset_freiburg2_desk")

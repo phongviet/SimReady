@@ -43,3 +43,26 @@ The walkthrough and screenshots contain no account tokens. They show automated
 local role fixtures and derived public desk imagery, not a private capture or
 human endorsement. Local credentials, dataset archives and generated reviewed
 ZIPs remain ignored. See docs/DATASET_PROTOCOL.md for source and privacy scope.
+
+## Workstation and annotated-evaluation additions
+
+The workstation retains React/Vite and adapts the structure of shadcn/ui
+sidebar-07 (https://ui.shadcn.com/blocks), rather than incorporating a Next.js app.
+New locked dependencies observed during implementation:
+
+| Dependency | Version observed | License |
+|---|---|---|
+| Radix Collapsible | 1.2.1 | MIT |
+| Radix Tooltip | 1.4.1 | MIT |
+| class-variance-authority | 0.7.1 | Apache-2.0 |
+| clsx | 2.1.1 | MIT |
+| tailwind-merge | 3.7.0 | MIT |
+| Tailwind CSS | 4.3.3 | MIT |
+| Inter (@fontsource/inter) | 5.3.0 | SIL OFL-1.1 |
+| pycocotools (optional CPU annotation extra) | 2.0.11 | BSD/FreeBSD |
+
+Frontend package/font license texts are retained in frontend/public/licenses and
+included in the Vite public build. Inter credits The Inter Project Authors.
+pycocotools provides COCO bbox evaluation; installing it does not supply annotated
+ScanNet data or grant ScanNet access. Official access terms remain separate.
+No ScanNet data was acquired through an unofficial mirror or access bypass.

@@ -768,3 +768,38 @@ invalid mixed-build baseline failure. Full improvement brief is not complete.
 The previous optimized policy is frozen in evidence/improvement-intake/frozen-policy.json.
 Independent-sequence and extended-densification runs have not been executed.
 Trustworthy annotated-data access or actual human review remains unresolved.
+
+### Research-extension input and implementation gate (2026-10-31)
+
+Official ScanNet access requires an agreement/request; no authorized subset was
+confirmed locally or in the official repository tree. Used the user-authorized TUM
+fallback. Downloaded official fr1 room/fr2 desk archives with observed hashes.
+Fr1 room imports successfully. Fr2 initially failed on two conflicting poses at
+one timestamp; preserved the failure/protocol in improvement-data-1, documented
+an input-integrity amendment, excluded both ambiguous records, retained original
+GT/calibration provenance, and recovered under improvement-data-2. No poses were
+arbitrarily chosen and no test-driven policy change was made.
+
+Both datasets have256 frames and frozen112 train/32 validation/48 candidate/64 test
+splits. Only16 designated candidate pilots per capture were inspected for
+qualitative vocabulary coverage. The pilots contain plausible selected COCO
+objects, but no human-verified boxes/counts or AP numbers are claimed.
+
+Implemented offline COCO box editing/review with explicit per-frame checks,
+draft import/export, local recovery and hash-bound human approval; production
+packages remain pending_human_review. Added pycocotools2.0.11 as an isolated CPU
+optional extra, official AP50 matching, per-class results, recall/misses and paired
+render-minus-real evaluation. Missing/incomplete approval blocks accuracy. This
+is a tested pipeline, not executed real-data ground-truth accuracy.
+
+Acceptance before primary study freeze:205 CPU tests passed/four GPU skips;
+four actual CUDA tests passed; fresh kernel witness passed. Separate engineering
+40-step preflights trained/reloaded both real captures and evaluated32 validation
+views each; these are excluded from the27-run primary matrix. Six frontend unit
+tests/build and11 browser tests passed, including draft-review gating, URL state,
+contextual inspector and deletion undo. One review test initially expected a
+hidden edit control; it now navigates to Workspace and retains the same explicit
+reviewer-permission assertion. No failing permission assertion was removed.
+
+Primary independent-scene/densification measurements have not started at this gate.
+Protocols, source/config/data seals and immutable failure handling precede them.

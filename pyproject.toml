@@ -30,6 +30,9 @@ research = [
 geometry = [
     "open3d-cpu==0.19.0",
 ]
+annotations = [
+    "pycocotools==2.0.11",
+]
 
 [dependency-groups]
 dev = [

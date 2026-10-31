@@ -1,0 +1,10 @@
+{
+  "attribution": "Sturm et al., IROS 2012",
+  "bytes": 782381450,
+  "hash_provenance": "Observed official HTTPS bytes; not a publisher-signed digest.",
+  "license": "CC-BY-4.0",
+  "license_source": "https://cvg.cit.tum.de/data/datasets/rgbd-dataset#license",
+  "resolved_url": "https://webshare.cvg.cit.tum.de/g/rgbd/dataset/freiburg1/rgbd_dataset_freiburg1_room.tgz",
+  "sha256": "5ace47a1d2e53696bc939a84999293a04a7226958e848a609666691fd3cc38da",
+  "source": "https://cvg.cit.tum.de/rgbd/dataset/freiburg1/rgbd_dataset_freiburg1_room.tgz"
+}

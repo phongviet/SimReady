@@ -1,0 +1,7 @@
+{
+  "source": "https://api.github.com/repos/ScanNet/ScanNet/git/trees/master?recursive=1",
+  "paths": [
+    "Tasks/SemanticVoxelLabeling/torch/example_class_hist_scannet-20.txt"
+  ],
+  "truncated": false
+}

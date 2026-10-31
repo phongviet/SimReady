@@ -96,3 +96,36 @@ test("workstation navigation collapses without losing scene and supports mobile"
   await expect(toggle).toHaveAttribute("aria-expanded", "true");
   await expect(page.locator("#scene-library-content")).toBeVisible();
 });
+
+test("view URLs restore history and object deletion can be undone", async ({
+  page,
+}) => {
+  await page.goto("/?view=research");
+  await expect(
+    page.getByRole("region", { name: "Research dashboard" }),
+  ).toBeVisible();
+  await expect(page.locator(".inspector")).toBeHidden();
+  await page.getByRole("button", { name: "3D scene", exact: true }).click();
+  await expect(page).toHaveURL(/view=3d/);
+  await expect(page.locator(".inspector")).toBeVisible();
+  await page.getByRole("button", { name: "＋ Box", exact: true }).click();
+  const name = await page
+    .getByLabel("Object name", { exact: true })
+    .inputValue();
+  await page
+    .getByRole("button", { name: "Delete object", exact: true })
+    .click();
+  await page.getByRole("button", { name: "Undo removal", exact: true }).click();
+  await expect(page.getByLabel("Object name", { exact: true })).toHaveValue(
+    name,
+  );
+  await page
+    .getByRole("button", { name: "Reload / discard", exact: true })
+    .click();
+  await page.getByRole("button", { name: "Evaluation", exact: true }).click();
+  await expect(page).toHaveURL(/view=evaluation/);
+  await expect(page.locator(".inspector")).toBeHidden();
+  await page.goBack();
+  await expect(page).toHaveURL(/view=3d/);
+  await expect(page.locator(".inspector")).toBeVisible();
+});

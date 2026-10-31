@@ -1,0 +1,12 @@
+{
+  "tum-fr1-room": {
+    "frames.jsonl": "ef30a8da09a18abb24307d39f7a705820f9bc5362f3d29e932b2f554ffc4236c",
+    "manifest.json": "78bba23d9c15f064c1f9d41935a699fc235fa3ff76b6136e4eb02e25af5699b3",
+    "splits.json": "e8d9b824bc930b8a562b6c04cd19e8f467c6fea13e0d5c81a2ccca709f02d08b"
+  },
+  "tum-fr2-desk": {
+    "frames.jsonl": "a0a930005a067b9972b2569282cde798b63726cc2cba55a8540b8e2201e2ae32",
+    "manifest.json": "69e2bc182cc41ec14fcce046a5b400e09b51718ce00434781db2fd3916c67d49",
+    "splits.json": "ce981defb181c8aa186032475da6ac0bc3f635912120cd83f265f4d0b80b7fbf"
+  }
+}

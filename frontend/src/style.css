@@ -15,7 +15,7 @@
   color: var(--wb-text);
   background: var(--wb-canvas);
   font-synthesis: none;
-  font-size: 13px;
+  font-size: 14px;
 }
 * {
   box-sizing: border-box;
@@ -1231,5 +1231,30 @@ td,
     scroll-behavior: auto !important;
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+.studio.inspector-hidden {
+  grid-template-columns: 224px minmax(0, 1fr);
+}
+.studio.library-collapsed.inspector-hidden {
+  grid-template-columns: 60px minmax(0, 1fr);
+}
+.inspector[hidden],
+.toolbar[hidden] {
+  display: none;
+}
+.viewport-container {
+  height: clamp(480px, calc(100dvh - 270px), 1000px);
+  max-height: 1000px;
+}
+@media (max-width: 800px) {
+  .studio.inspector-hidden,
+  .studio.library-collapsed.inspector-hidden {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .viewport-container {
+    height: 55dvh;
+    min-height: 340px;
   }
 }

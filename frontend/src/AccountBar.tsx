@@ -54,6 +54,8 @@ export function AccountBar({
             <input
               aria-label="Local account token"
               type="password"
+              name="account-token"
+              spellCheck={false}
               autoComplete="off"
               value={token}
               onChange={(event) => setToken(event.target.value)}
