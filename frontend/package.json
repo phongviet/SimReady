@@ -12,7 +12,9 @@
     "test": "vitest run",
     "format": "prettier --write src browser-tests scripts *.ts",
     "format:check": "prettier --check src browser-tests scripts *.ts",
-    "test:browser": "playwright test"
+    "test:browser": "playwright test",
+    "test:presentation": "node --test scripts/publish_reconstruction.test.mjs",
+    "research:publish": "node scripts/publish_reconstruction.mjs"
   },
   "dependencies": {
     "@fontsource/inter": "^5.3.0",

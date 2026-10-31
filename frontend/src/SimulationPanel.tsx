@@ -230,6 +230,8 @@ export function SimulationPanel({
             Scenario name
             <input
               aria-label="Scenario name"
+              name="scenario-name"
+              autoComplete="off"
               value={config.name}
               onChange={(event) => change({ name: event.target.value })}
             />
@@ -255,6 +257,8 @@ export function SimulationPanel({
             Floor assumption note
             <textarea
               aria-label="Floor assumption note"
+              name="floor-assumption-note"
+              autoComplete="off"
               value={config.floor_note}
               onChange={(event) => change({ floor_note: event.target.value })}
             />
@@ -281,6 +285,8 @@ export function SimulationPanel({
             Optional waypoints x,z; x,z
             <input
               aria-label="Waypoints"
+              name="waypoints"
+              autoComplete="off"
               value={waypoints}
               onChange={(event) => {
                 setWaypoints(event.target.value);

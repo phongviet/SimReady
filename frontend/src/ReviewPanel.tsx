@@ -35,6 +35,7 @@ export function ReviewPanel({
   const [cameras, setCameras] = useState<string[]>([]),
     [ack, setAck] = useState(false),
     [reason, setReason] = useState("");
+  const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false),
     [error, setError] = useState("");
   const [exportVersion, setExportVersion] = useState(0),
@@ -46,6 +47,7 @@ export function ReviewPanel({
     } | null>(null);
   useEffect(() => {
     let active = true;
+    setLoading(true);
     setError("");
     setAck(false);
     setExported(null);
@@ -88,6 +90,9 @@ export function ReviewPanel({
       })
       .catch((value) => {
         if (active) setError(String(value));
+      })
+      .finally(() => {
+        if (active) setLoading(false);
       });
     return () => {
       active = false;
@@ -140,6 +145,16 @@ export function ReviewPanel({
     user?.role === "reviewer" &&
     scene.status === "submitted" &&
     user.user_id !== scene.review?.submitted_by.user_id;
+  if (loading)
+    return (
+      <section
+        className="review-panel"
+        aria-label="Readiness and scoped review"
+      >
+        <h2>Readiness evidence & scoped review</h2>
+        <p role="status">Loading recorded evidence…</p>
+      </section>
+    );
   return (
     <section className="review-panel" aria-label="Readiness and scoped review">
       <h2>Readiness evidence & scoped review</h2>
@@ -255,6 +270,8 @@ export function ReviewPanel({
           Named experiment
           <input
             aria-label="Named experiment"
+            name="named-experiment"
+            autoComplete="off"
             value={taskName}
             onChange={(event) => setTaskName(event.target.value)}
           />
@@ -397,6 +414,8 @@ export function ReviewPanel({
           Reviewer justification
           <textarea
             aria-label="Reviewer justification"
+            name="reviewer-justification"
+            autoComplete="off"
             value={reason}
             onChange={(event) => setReason(event.target.value)}
           />

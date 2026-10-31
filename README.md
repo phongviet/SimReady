@@ -7,16 +7,17 @@ still contain errors that matter to perception or simulation.
 
 ## Demo
 
-![SimReady workstation showing the learned analytic demo](docs/media/workstation-desktop.png)
+![SimReady workstation displaying a saved TUM Gaussian render](docs/media/workstation-tum-desktop.png)
 
-Current interface running the genuinely trained **synthetic analytic demo**.
-This screenshot is application evidence, not a real-scene reconstruction benchmark.
+Current interface displaying a saved **TUM fr1 desk Gaussian render**. Its visible
+blur and missing detail are reconstruction limitations, not image retouching.
+[Aligned validation and failure inspection](docs/media/workstation-validation-desktop.png)
+shows the existing measured baseline; these are not results of the new study.
 
 [Watch the recorded application walkthrough](docs/media/tum-walkthrough.webm)
 — a genuine TUM reconstruction, proxy editing, frozen-view validation, navigation
 replay and scoped review. [Recording details and limitations](docs/WALKTHROUGH.md).
-The recording predates the workstation-shell redesign. Individual workflow-panel
-refinements and research extensions remain in progress.
+The recording predates the workstation-shell redesign. Research extensions remain in progress.
 
 ## Capabilities
 

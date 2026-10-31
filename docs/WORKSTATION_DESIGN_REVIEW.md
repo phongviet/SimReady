@@ -1,65 +1,90 @@
-# Workstation shell review
+# Workstation design and interface review
 
-2026-10-31. This is the first UI slice, not acceptance of the complete improvement
-brief. The actual application was exercised with its learned analytic synthetic
-scene. No screenshot is labeled as a real capture or a new research result.
+2026-10-31. The redesign preserves React/Vite, real scene persistence, Gaussian
+rendering, saved cameras, validation, navigation, scoped review and recapture
+research. Scientific extension acceptance is separate from this interface review.
 
-## Visual inspection
+## Instructions and visual direction
 
-Desktop1440×1000: sidebar workflow navigation, scene evidence and inspector frame
-the main viewport. Removed decorative milestone/header claims; preserved scene
-controls and role-based editing. Mobile390×844: icon navigation, collapsed scene
-library, main viewport and stacked inspector fit without horizontal overflow.
-Actual screenshots: media/workstation-desktop.png and workstation-mobile.png.
+Read and applied Anthropic frontend-design, Vercel web-design-guidelines and
+react-best-practices. Source copies/URLs/SHA hashes are retained in the local
+.cache/improvement-skills intake. Sidebar-07 informed the collapsible navigation
+and inset workspace structure; this is not a Next.js migration or a claim to
+have installed the complete shadcn SidebarProvider. Radix Collapsible/Tooltip,
+Tailwind utilities and shadcn-style variant buttons adapt that structure to the
+existing app. No writing-guidelines skill was available.
 
-The first mobile screenshot was captured before the re-mounted WebGL viewport
-had rendered visible pixels. The regression now waits for varied framebuffer
-pixels before both screenshots; the second inspected mobile screenshot contains
-the actual splats and proxy. This was a capture-readiness issue, not evidence of
-successful rendering from a loading label alone.
+The specification preceded JSX in IMPROVEMENT_PLAN.md: local Inter, graphite
+surfaces, restrained blue states, consistent borders, contextual inspector,
+compact engineering controls and a dominant viewport. The measured metric
+summary is now a flat instrument strip, rather than six oversized cards.
 
-The initial attempted baseline run overlapped a frontend rebuild:7 passed and the
-research route returned404 while dist was replaced. It is not a valid clean
-baseline. A stable-build rerun passed all9 tests, followed by a targeted visual
-regression pass. Neither failure was deleted or counted as acceptance.
+## Actual visual inspection and iteration
 
-## Applied design instructions
+Inspected desktop1440/1600×1000 and mobile390×844 screenshots. The initial
+synthetic analytic screenshots establish functional WebGL rendering only;
+framebuffer-readiness assertions wait for varied pixels rather than trusting a
+loading label. Current real-TUM screenshots use a separate fresh registry with
+the saved baseline-1 model and its existing18-view report. No image was generated
+as a fake screenshot. Existing blur, missed detector predictions and geometry
+limitations remain visible.
 
-Anthropic frontend-design: viewport-led subject-specific hierarchy, compact
-Inter typography, graphite tokens, restrained blue states and explicit design
-plan before JSX. Sidebar-07 informed collapsible navigation/inset structure;
-existing React/Vite logic was retained. Radix Collapsible/Tooltip, Tailwind and
-shadcn-style variant controls were added incrementally.
+Reviewed saved camera, validation, experiments, navigation and scoped review at
+both sizes. Based on those images: increased explanatory scope text; reduced
+metric-card decoration; filtered the27-job ledger by study; expanded cramped
+mobile scenario fields to two columns; stacked mobile review inputs; supplied
+image aspect dimensions; and added a review-evidence loading state. Mobile
+screenshots collapse the scene library through its actual control. Their
+no-horizontal-overflow assertions pass, including tables with internal scroll.
 
-Vercel React practices: viewer remains lazy; evaluation, research, simulation and
-review now have separate lazy chunks and a contextual Suspense status. The new
-shell's primary bundle is511.75KB versus457.23KB before dependencies; no load-time
-speedup is claimed. Radix client directives generate Vite/Rolldown warnings in
-this client-only app; build succeeds. The separate Spark chunk remains large.
+Published examples: media/workstation-tum-desktop.png,
+media/workstation-validation-desktop.png and media/workstation-review-mobile.png.
+The screenshot capture tool records dataset, capture time and actual browser
+errors under .cache/workstation-review-1/capture.json. Screenshots of a scoped
+review interface do not constitute actual human approval of a scene or labels.
 
 ## Web interface guidelines audit
 
-frontend/src/App.tsx - added skip link, focusable workspace target, named library
-control and expanded state; existing async alerts/status and unsaved-edit guards
-remain. Corrected stale empty-state milestone text.
+- frontend/src/App.tsx:74 — synchronizes view URLs/history; unsaved-edit guards
+  and server conflicts remain. A skip link targets the focusable workspace.
+  Deletion offers an explicit undo until save/reload.
+- frontend/src/WorkbenchNav.tsx:65 — native keyboard-operable buttons, collapsed
+  accessible names, aria-current, decorative SVG hiding and Radix tooltips.
+- frontend/src/ReviewPanel.tsx:48 — asynchronous evidence now has a loading state;
+  distinct server roles and disabled approval controls remain enforced. Added
+  names/autocomplete hints to editable text fields.
+- frontend/src/ReconstructionStudy.tsx:40 — abortable reads and cleanup, explicit
+  loading/error/pending states, visible snapshot age, semantic table captions,
+  scoped headers and a functioning study selector. No fake cancel/queue controls.
+- frontend/src/EvaluationExplorer.tsx:280 and SavedView.tsx:34 — explicit aspect
+  dimensions prevent image layout shifts while preserving actual source pixels.
+- frontend/src/style.css:1154 — skip-link focus treatment, visible focus states,
+  dark native controls, mobile touch targets and reduced-motion handling. New
+  long scope notes use12px text and normal tracking. Graphite/blue semantics are
+  consistent across workflow panels; error colors remain distinct.
 
-frontend/src/WorkbenchNav.tsx - native buttons, labels for collapsed icons,
-aria-current, decorative SVG hiding and Radix keyboard/focus tooltips.
+These are targeted source and browser checks, not an accessibility certification
+or screen-reader compatibility claim. External assistive-technology testing and
+profiling on other GPUs/mobile devices have not been performed.
 
-frontend/src/SceneCard.tsx - supplied thumbnail dimensions to reduce layout shift.
+## React and performance checks
 
-frontend/src/style.css - dark native controls, visible focus, touch-sized mobile
-navigation, reduced-motion override, overflow-free tested mobile layout and
-consistent semantic surface tokens. Existing error/warning colors remain.
+Viewer and heavier workflow panels use separate lazy/Suspense boundaries. The
+current primary bundle is500.53KB versus457.23KB before the redesign dependencies;
+no load-time speedup is claimed. The separate viewer/Spark chunk is3,063.04KB.
+Vite/Rolldown reports large chunks and Radix client-directive warnings; build
+succeeds. Six frontend unit tests pass. Presentation-export regression rejects
+incomplete matrices and altered seals/analysis. Stable browser runs passed all11
+existing/extended tests, including reviewer permissions, editing, navigation,
+exports, URL history, undo and the synthetic annotation-review gate.
 
-Open: workflow states are not yet URL-synchronized; destructive object deletion
-still needs an undo/confirmation interaction; several legacy form inputs lack
-names/autocomplete hints; full per-view visual audit remains. These are outstanding
-findings, not a completed accessibility certification. Mobile screenshots currently
-cover the workspace; validation/research/simulation-specific visual refinements
-remain to be reviewed.
+The first baseline attempt overlapped a frontend rebuild:7 passed/one404, an
+invalid clean baseline. A later invocation omitted PLAYWRIGHT_BROWSERS_PATH and
+failed before browser launch. Both logs remain local; neither was counted as
+successful execution. The final stable-build verification is recorded in
+PROGRESS.md and its evidence directory.
 
-Sources read: https://github.com/anthropics/skills/tree/main/skills/frontend-design,
+Sources: https://github.com/anthropics/skills/tree/main/skills/frontend-design,
 https://github.com/vercel-labs/agent-skills,
 https://raw.githubusercontent.com/vercel-labs/web-interface-guidelines/main/command.md,
 https://ui.shadcn.com/blocks (sidebar-07).

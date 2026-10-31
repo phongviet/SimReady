@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { api } from "./api";
+import { ReconstructionStudy } from "./ReconstructionStudy";
+import { Button } from "./components/ui/button";
 
 export type Statistic = {
   mean: number | null;
@@ -52,6 +54,35 @@ const number = (value: number | null | undefined) =>
   value == null ? "N/A" : value.toFixed(5);
 
 export function ResearchDashboard() {
+  const [view, setView] = useState("reconstruction");
+  return (
+    <>
+      <div
+        className="experiment-switch"
+        role="group"
+        aria-label="Experiment family"
+      >
+        <Button
+          variant={view === "reconstruction" ? "default" : "ghost"}
+          aria-pressed={view === "reconstruction"}
+          onClick={() => setView("reconstruction")}
+        >
+          Reconstruction
+        </Button>
+        <Button
+          variant={view === "recapture" ? "default" : "ghost"}
+          aria-pressed={view === "recapture"}
+          onClick={() => setView("recapture")}
+        >
+          Recapture
+        </Button>
+      </div>
+      {view === "reconstruction" ? <ReconstructionStudy /> : <RecaptureStudy />}
+    </>
+  );
+}
+
+function RecaptureStudy() {
   const [studies, setStudies] = useState<ResearchStudy[]>([]);
   const [selected, setSelected] = useState("");
   const [error, setError] = useState("");

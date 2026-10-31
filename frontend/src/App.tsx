@@ -615,6 +615,8 @@ export function App() {
               Object name
               <input
                 aria-label="Object name"
+                name="object-name"
+                autoComplete="off"
                 value={object.name}
                 maxLength={80}
                 onChange={(event) =>

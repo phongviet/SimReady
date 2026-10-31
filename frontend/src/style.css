@@ -1258,3 +1258,106 @@ td,
     min-height: 340px;
   }
 }
+
+.experiment-switch {
+  display: flex;
+  gap: 6px;
+  border-bottom: 1px solid var(--wb-border);
+  padding-bottom: 12px;
+}
+.study-progress {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin: 20px 0 12px;
+}
+.study-progress label {
+  display: grid;
+  gap: 8px;
+  min-width: 180px;
+}
+.study-progress strong {
+  font-variant-numeric: tabular-nums;
+}
+.study-progress progress {
+  accent-color: var(--wb-accent);
+  width: 100%;
+  height: 6px;
+}
+.reconstruction-study code {
+  overflow-wrap: anywhere;
+}
+
+/* Measured values read as an instrument strip rather than oversized cards. */
+.metric-grid {
+  gap: 0;
+  border-block: 1px solid var(--wb-border);
+}
+.metric-card {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 12px 14px;
+}
+.metric-card strong {
+  font-size: 21px;
+  margin-top: 4px;
+}
+p.preview-banner {
+  font-size: 12px;
+  letter-spacing: 0;
+  line-height: 1.6;
+  border-radius: 3px;
+  border-bottom: 1px solid var(--wb-border);
+}
+.study-filter {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-block: 16px;
+  flex-wrap: wrap;
+}
+.study-filter select {
+  max-width: 100%;
+}
+@media (max-width: 600px) {
+  .scenario-fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .scenario-fields label {
+    min-width: 0;
+  }
+  .scenario-vector {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .metric-card {
+    padding: 10px 6px;
+  }
+  .metric-card small {
+    font-size: 12px;
+  }
+}
+@media (max-width: 600px) {
+  .review-fields label {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  .review-fields label:has(input[type="checkbox"]) {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  .review-fields input:not([type="checkbox"]),
+  .review-fields select,
+  .review-fields textarea {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+.comparison-images img {
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+}

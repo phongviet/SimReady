@@ -315,3 +315,13 @@ text hash and discarded-count log, not averaged or selected. Original failure
 records remain intact. Human approval binds every test frame, exact COCO bytes,
 dataset/split and class-rule hashes. No experiment runner issues approval or
 promotes detector outputs into GT. Ground-truth AP remains pending actual review.
+
+### Read-only experiment presentation (2026-10-31)
+
+Keep the sealed primary Python/worker/configuration inputs unchanged while it
+executes. Expose ledger progress through a separate Node presentation exporter,
+with no job-control endpoints. Publish test metrics only after all planned arms
+and hash-checked bound analysis complete. Show snapshot timestamps and distinguish
+status from live monitoring. Retain the existing recapture dashboard and its
+negative results. Scope notes use readable text; metric summaries use a compact
+instrument strip and mobile scenario fields use two columns.

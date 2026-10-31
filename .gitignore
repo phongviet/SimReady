@@ -20,3 +20,5 @@ frontend/.npm-cache/
 /frontend/test-results/
 *Zone.Identifier
 .env
+
+/frontend/public/research/

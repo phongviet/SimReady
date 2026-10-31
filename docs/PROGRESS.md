@@ -803,3 +803,40 @@ reviewer-permission assertion. No failing permission assertion was removed.
 
 Primary independent-scene/densification measurements have not started at this gate.
 Protocols, source/config/data seals and immutable failure handling precede them.
+
+### Sealed execution and workstation presentation (2026-10-31)
+
+Primary study frozen at1c2782b and started after the recorded preflight gate.
+It is currently in progress; this entry claims no completed matrix or test
+improvement. Experimental source/configuration/specification bytes remain fixed
+while frontend-only work continues, as explicitly allowed by the sealed policy.
+Actual per-artifact commit and dirty metadata are retained.
+
+Added read-only reconstruction progress/configuration tables and a separate
+Recapture view. Snapshot publication withholds scores until all frozen jobs and
+artifact-bound analysis finish, then checks the analysis file hashes. A Node
+regression exercises incomplete-stage gating and altered seal/analysis rejection.
+Six frontend unit tests and the presentation regression pass. A corrected browser
+run passed11 tests; a first invocation failed before launch because its configured
+browser-cache environment variable was omitted. That failure is preserved in
+.cache/improvement-ui-browser-v3.log and is not counted as execution evidence.
+
+Inspected actual real-TUM saved-view, validation, experiments, navigation and
+review screenshots at desktop/mobile sizes. Iterating readable scope notes,
+compact metric strip, per-study filtering and mobile scenario/review controls.
+The fresh screenshot registry is separate from historical experiments. No human
+annotation approvals or ground-truth detection results have been produced.
+
+Mid-run verification passed: frozen experimental source/specification, input
+records and historical output hashes still match. The first additional capture's
+nine training/evaluation pairs completed before the second capture began.
+No target test score was read to alter any policy. The post-run diagnostic
+selection rules were recorded separately in IMPROVEMENT_DIAGNOSTIC_EXPORT.md.
+
+Stable interface acceptance: final built frontend passed all11 browser tests
+in1.1minutes, including preserved editor/reviewer assertions. Six frontend unit
+tests, TypeScript/Vite build, formatting and the presentation-integrity test
+passed. Browser log and real-TUM screenshot capture metadata are in
+evidence/workstation-redesign/. Published screenshot figures are actual saved
+baseline views, not outputs from the still-running new matrix. Experimental
+source bytes remain sealed and historical output bytes unchanged.

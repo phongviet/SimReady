@@ -1,0 +1,6 @@
+
+> simready-shell@0.0.1 format:check
+> prettier --check src browser-tests scripts *.ts
+
+Checking formatting...
+All matched files use Prettier code style!

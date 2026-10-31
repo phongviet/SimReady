@@ -32,6 +32,8 @@ export function SavedView({
       style={{ aspectRatio: `${camera.width}/${camera.height}` }}
     >
       <img
+        width={camera.width}
+        height={camera.height}
         src={assetUrl(scene, `${camera.frame_id}.png`)}
         alt={`Saved Gaussian render ${camera.frame_id}`}
       />

@@ -277,6 +277,8 @@ export function EvaluationExplorer({
                     ].map(([key, title]) => (
                       <figure key={title}>
                         <img
+                          width={320}
+                          height={240}
                           src={asset(view.assets[key])}
                           alt={`${view.frame_id} ${title}`}
                         />
@@ -290,6 +292,8 @@ export function EvaluationExplorer({
                   <div className="comparison-images depth-comparison">
                     <figure>
                       <img
+                        width={320}
+                        height={240}
                         src={asset(view.assets.depth_error)}
                         alt="Depth discrepancy"
                       />
@@ -299,6 +303,8 @@ export function EvaluationExplorer({
                     </figure>
                     <figure>
                       <img
+                        width={320}
+                        height={240}
                         src={asset(view.assets.depth_mask)}
                         alt="Evaluated depth mask"
                       />

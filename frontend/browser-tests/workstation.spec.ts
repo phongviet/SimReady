@@ -102,7 +102,7 @@ test("view URLs restore history and object deletion can be undone", async ({
 }) => {
   await page.goto("/?view=research");
   await expect(
-    page.getByRole("region", { name: "Research dashboard" }),
+    page.getByRole("region", { name: "Reconstruction study" }),
   ).toBeVisible();
   await expect(page.locator(".inspector")).toBeHidden();
   await page.getByRole("button", { name: "3D scene", exact: true }).click();

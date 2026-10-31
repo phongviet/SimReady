@@ -6,6 +6,7 @@ test("measured research dashboard shows negative results, provenance and working
 }) => {
   await page.goto("/");
   await page.getByRole("button", { name: "Research", exact: true }).click();
+  await page.getByRole("button", { name: "Recapture", exact: true }).click();
   const panel = page.getByRole("region", { name: "Research dashboard" });
   await expect(
     panel.getByText("PRECOMPUTED MEASURED SNAPSHOT", { exact: false }),

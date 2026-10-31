@@ -1,0 +1,24 @@
+
+> simready-shell@0.0.1 test:browser
+> playwright test
+
+[WebServer] INFO:     Started server process [61564]
+[WebServer] INFO:     Waiting for application startup.
+[WebServer] INFO:     Application startup complete.
+[WebServer] INFO:     Uvicorn running on http://127.0.0.1:8001 (Press CTRL+C to quit)
+
+Running 11 tests using 1 worker
+
+  ✓   1 browser-tests/annotation-review.spec.ts:8:1 › annotation review keeps drafts separate and resets review on changes (3.4s)
+  ✓   2 browser-tests/editor.spec.ts:12:1 › actual splat loading, inserted transform, save/reload and deletion (16.6s)
+  ✓   3 browser-tests/editor.spec.ts:140:1 › stale browser preserves local edits and shows version conflict (7.8s)
+  ✓   4 browser-tests/editor.spec.ts:171:1 › saved-camera fallback supports persistent numeric editing (4.2s)
+  ✓   5 browser-tests/evaluation.spec.ts:3:1 › measured explorer loads paired images, failure ranking and verified exports (1.5s)
+  ✓   6 browser-tests/library.spec.ts:3:1 › library displays saved evidence and reference path uses calibrated world centers (1.7s)
+  ✓   7 browser-tests/navigation.spec.ts:3:1 › scenario save, actual metric navigation, 3D replay and hidden collider failure (9.2s)
+  ✓   8 browser-tests/research.spec.ts:3:1 › measured research dashboard shows negative results, provenance and working exports (2.4s)
+  ✓   9 browser-tests/review.spec.ts:3:1 › independent local reviewer approves scoped evidence, exports and preserves old approval after edits (8.9s)
+  ✓  10 browser-tests/workstation.spec.ts:3:1 › workstation navigation collapses without losing scene and supports mobile (3.0s)
+  ✓  11 browser-tests/workstation.spec.ts:100:1 › view URLs restore history and object deletion can be undone (1.4s)
+
+  11 passed (1.1m)

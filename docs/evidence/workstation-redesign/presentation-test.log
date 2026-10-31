@@ -1,0 +1,19 @@
+
+> simready-shell@0.0.1 test:presentation
+> node --test scripts/publish_reconstruction.test.mjs
+
+TAP version 13
+# Subtest: presentation export withholds incomplete test results and rejects tampered analysis
+ok 1 - presentation export withholds incomplete test results and rejects tampered analysis
+  ---
+  duration_ms: 29.940402
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 93.120607
