@@ -1,0 +1,39 @@
+{
+  "frozen_from_study": "reconstruction-quality-1",
+  "protocol_sha256": "45ba49fe76058b0a4051e02b2cbbf2728444f4334d5bec10582e2626814bf5fb",
+  "replicate_seeds": [
+    42,
+    43,
+    44
+  ],
+  "scope": "Freeze previous validation-selected policy before new-scene evaluation; no new test observations used.",
+  "selected_config": {
+    "checkpoint_steps": [
+      1200,
+      2400,
+      3600
+    ],
+    "depth_loss_weight": 0.05,
+    "depth_mask": "alpha",
+    "depth_supervision": "l1",
+    "initial_stride": 4,
+    "iterations": 3600,
+    "log_every": 10,
+    "max_gaussians": 40000,
+    "max_initial_gaussians": 10000,
+    "memory_limit_bytes": 4500000000,
+    "photometric_loss": "l1_ssim",
+    "preset": "local_6gb",
+    "refine_every": 100,
+    "refine_start": 100,
+    "refine_stop": 900,
+    "schema_version": "1.0",
+    "seed": 42,
+    "sh_degree": 1,
+    "ssim_weight": 0.2,
+    "width": 320
+  },
+  "selected_config_sha256": "5fa8840bc316f3b88c7c7c74728bf4ccbd7b3405d8181f502b09e1e230644f7c",
+  "selection_sha256": "d9de9b0a01a677a3fe8b8e99f856daa90f1b38e289e6c11bb26fb867db3af114",
+  "source_commit": "15d783b702003037a17fc638a1dd9c899e6f1684"
+}

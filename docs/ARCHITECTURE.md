@@ -28,7 +28,8 @@ Pydantic validates versioned contracts. World coordinates are metric, right-hand
 Y-up; poses explicitly map OpenCV cameras into that world. SHA-256 binds source
 records, immutable splits, model content and reports. Atomic staging protects
 outputs. Storage accounting runs without third-party packages and includes local
-environments, caches, Git and generated assets under a30GB decimal limit.
+environments, caches, Git and generated assets. Acquisition uses bounded preflight
+checks; deployment-specific resource policy remains in developer configuration.
 
 The CPU package does not import torch. A separate Python3.10 `.venv-gpu` runs
 pinned gsplat/torch kernels through JSON requests and safe NPZ tensors. Saved

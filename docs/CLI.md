@@ -7,7 +7,7 @@ paths must be new. Configs are JSON rather than the illustrative YAML in PLAN.md
 
 | Command | Main arguments / behavior |
 |---|---|
-|`storage`|`--root` optional; conservative 30 GB budget check|
+|`storage`|`--root` optional; resource accounting and configured acquisition preflight|
 |`data synthetic`|`--out`; eight analytic posed RGB-D frames with frozen splits|
 |`data fetch`|`--out`; pinned official synthetic Redwood sample, bounded acquisition|
 |`data import`|`--source --format tum_rgbd\|open3d_redwood_sample --out`; TUM `--max-frames` default 100|

@@ -56,7 +56,7 @@ acceptance records. Historical evidence will not be silently rewritten.
    do not publish AP claims from the authored fixture or unreviewed predictions.
 
 Compute: reuse the validated isolated GTX1660Ti6GB environment, with fresh kernel
-witness, serial GPU lock and the existing allocator guard. Initial matrix27
+witness, serial GPU lock and the existing allocator guard. Initial matrix18
 cross-sequence runs plus9 densification runs; estimate1–3 GPU/host hours including
 full evaluation, not measured execution. Acquisition/output reserves must pass
 existing storage checks before downloading or training. No environment rebuild

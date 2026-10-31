@@ -295,3 +295,12 @@ No simulation/frontend additions; implement/test before any new training.
   post-run logs. Retain the audit's WARN, same-family/provisional classification.
 - Publish curated metrics, source/config/data pins and scientific plots; keep
   raw RGB-D, models and complete image evaluations in ignored local outputs.
+
+### Improvement UI/documentation slice (2026-10-31)
+
+Keep React/Vite, scene persistence, scientific rendering and existing workflows.
+Adopt sidebar-07 structure with Radix primitives, Tailwind utilities without a
+preflight reset, and a small shadcn-style button variant boundary. Bundle heavy
+workflow panels separately; report actual bundle increase rather than claiming
+an unmeasured speedup. Preserve the original personal resource guard in developer
+configuration; remove its presentation as a public product requirement.

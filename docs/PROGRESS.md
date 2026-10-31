@@ -744,3 +744,27 @@ post-run JUnit/logs captured 189 CPU passes (four GPU skips), four actual CUDA
 passes, lint/formatting, frontend 5 tests/build and CLI smoke. Hosted implementation
 CI 41049601408 passed all four jobs. Curated evidence excludes dataset imagery and
 learned scene parameters; full local reports/montages remain Git-ignored.
+
+### Improvement workstream intake (2026-10-31)
+
+Read the supplied research/UI/documentation brief, reviewed the existing plan,
+frontend, experiment/configuration inventory and resource accounting. Created
+IMPROVEMENT_PLAN.md before implementation, with independent-scene controls,
+validation-only densification, annotation-access gate, workstation tokens/layout
+and acceptance criteria. Read the mandatory design skill instructions and the
+sidebar-07 reference. README now separates actual capabilities, validation and
+recapture results, demo setup, GPU setup and limitations; personal resource and
+commit-date narrative was removed from its public copy. Functional guards and
+historical scientific records are preserved. Research execution and UI redesign
+remain pending; no new results or screenshots are claimed.
+
+First workstation-shell slice: implemented collapsible workflow/scene navigation,
+shared controls, graphite tokens, local Inter, lazy workflow chunks and corrected
+stale shell text. Stable-build browser regression:9 passed; targeted desktop/mobile
+visual check:1 passed after adding framebuffer-readiness assertions. Inspected both
+screenshots. Five frontend unit tests and build passed. See
+WORKSTATION_DESIGN_REVIEW.md for remaining accessibility/view-specific work and the
+invalid mixed-build baseline failure. Full improvement brief is not complete.
+The previous optimized policy is frozen in evidence/improvement-intake/frozen-policy.json.
+Independent-sequence and extended-densification runs have not been executed.
+Trustworthy annotated-data access or actual human review remains unresolved.

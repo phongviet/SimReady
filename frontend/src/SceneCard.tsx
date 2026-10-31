@@ -48,6 +48,8 @@ export function SceneCard({
           className="scene-thumbnail"
           src={assetUrl(scene, camera.frame_id + ".png")}
           alt={`${scene.name} saved reconstruction thumbnail`}
+          width={camera.width}
+          height={camera.height}
           loading="lazy"
         />
       )}

@@ -1,22 +1,48 @@
+import * as Collapsible from "@radix-ui/react-collapsible";
+import { WorkbenchNav } from "./WorkbenchNav";
+import { Button } from "./components/ui/button";
 import { SceneCard } from "./SceneCard";
 import { AccountBar } from "./AccountBar";
 import type { Principal } from "./auth";
-import { ReviewPanel } from "./ReviewPanel";
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { api, ApiError } from "./api";
 import { spawnPosition } from "./camera";
-import { SimulationPanel } from "./SimulationPanel";
-import { EvaluationExplorer } from "./EvaluationExplorer";
-import { ResearchDashboard } from "./ResearchDashboard";
 import { SavedView } from "./SavedView";
 import type { ProxyObject, SceneState, Vec3 } from "./types";
+
+const ReviewPanel = lazy(() =>
+  import("./ReviewPanel").then((module) => ({ default: module.ReviewPanel })),
+);
+
+const SimulationPanel = lazy(() =>
+  import("./SimulationPanel").then((module) => ({
+    default: module.SimulationPanel,
+  })),
+);
+
+const EvaluationExplorer = lazy(() =>
+  import("./EvaluationExplorer").then((module) => ({
+    default: module.EvaluationExplorer,
+  })),
+);
+
+const ResearchDashboard = lazy(() =>
+  import("./ResearchDashboard").then((module) => ({
+    default: module.ResearchDashboard,
+  })),
+);
 
 const Viewer = lazy(() =>
   import("./Viewer").then((module) => ({ default: module.Viewer })),
 );
 
 export function App() {
+  const [libraryOpen, setLibraryOpen] = useState(
+    () =>
+      typeof window === "undefined" ||
+      window.matchMedia("(min-width: 801px)").matches,
+  );
   const [user, setUser] = useState<Principal | null>(null);
   const canEdit = user?.role === "builder";
   const [libraryFilter, setLibraryFilter] = useState<"all" | "submitted">(
@@ -194,314 +220,316 @@ export function App() {
     </div>
   );
   return (
-    <div className="studio">
+    <div className={`studio ${libraryOpen ? "" : "library-collapsed"}`}>
+      <a className="skip-link" href="#workspace">
+        Skip to workspace
+      </a>
       <header className="topbar">
+        <Button
+          variant="ghost"
+          aria-label="Toggle scene library"
+          aria-expanded={libraryOpen}
+          aria-controls="scene-library-content"
+          onClick={() => setLibraryOpen((v) => !v)}
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path d="M3 4h18v16H3V4Zm5 0v16" />
+          </svg>
+        </Button>
         <div className="brand">
           <span className="brand-mark">S</span>
           <strong>SimReady</strong>
-          <span className="local-badge">LOCAL STUDIO</span>
+          <span className="local-badge">Real2Sim workstation</span>
         </div>
-        <span className="top-caption">Reconstruct. Inspect. Edit.</span>
-        <span className="milestone-badge">
-          Measured scenes · Scoped experiments
-        </span>
       </header>
       <AccountBar user={user} onUser={setUser} />
-      <aside className="library">
-        <div className="section-label">
-          SCENE LIBRARY <span>{scenes.length}</span>
-        </div>
-        <div className="library-filter">
-          <button onClick={() => setLibraryFilter("all")}>All scenes</button>
-          <button
-            onClick={() => {
-              if (dirty) {
-                setError("Save/discard edits before opening the review queue.");
-                return;
-              }
-              void api
-                .list()
-                .then((values) => {
-                  setScenes(values);
-                  setLibraryFilter("submitted");
-                  const next = values.find((s) => s.status === "submitted");
-                  if (next) {
-                    accept(next);
-                    setView("review");
-                  } else setNotice("No scenes are submitted for review.");
-                })
-                .catch((reason) => setError(String(reason)));
-            }}
-          >
-            Review queue
-          </button>
-        </div>
-        {scenes
-          .filter(
-            (value) => libraryFilter === "all" || value.status === "submitted",
-          )
-          .map((value) => (
-            <SceneCard
-              key={value.scene_id}
-              scene={value}
-              active={scene?.scene_id === value.scene_id}
-              onChoose={() => void choose(value.scene_id)}
-            />
-          ))}
-        {!scenes.length && (
-          <p className="empty-copy">
-            Connect to the local API to load a registered scene. The offline
-            analytic demo is available with <code>--demo</code>.
-          </p>
-        )}
-        <div className="library-note">
-          <span className="dot" /> METRIC COORDINATES
-          <p>
-            Right-handed · Y up
-            <br />
-            All dimensions in meters.
-          </p>
-        </div>
-      </aside>
-      <main className="workspace">
-        <div className="workspace-heading">
-          <div>
-            <p className="eyebrow">SCENE WORKSPACE</p>
-            <h1>{scene?.name || "Connect your local studio"}</h1>
-          </div>
-          {scene && (
-            <button className="draft-badge" onClick={() => setView("review")}>
-              {scene.status} · v{scene.version} · review ↗
-            </button>
-          )}
-        </div>
-        {error && (
-          <div className="message error" role="alert">
-            {error}
-          </div>
-        )}
-        {notice && (
-          <div className="message success" role="status">
-            {notice}
-          </div>
-        )}
-        {!scene ? (
-          <div className="connection-panel">
-            <h2>Start with a working scene.</h2>
-            <p>
-              Launch the API with the bundled, genuinely trained synthetic demo.
-              No GPU is needed to inspect it or edit proxy boxes.
-            </p>
-            <pre>simready api serve --demo</pre>
-            <p>
-              Load a registered report to inspect frozen-view validation.
-              Simulation and review are later milestones.
-            </p>
-          </div>
-        ) : (
-          <>
-            <div className="toolbar">
-              <div className="segmented">
-                <button
-                  className={view === "3d" ? "selected" : ""}
-                  onClick={() => setView("3d")}
-                >
-                  3D scene
-                </button>
-                <button
-                  className={view === "saved" ? "selected" : ""}
-                  onClick={() => setView("saved")}
-                >
-                  Saved camera
-                </button>
-              </div>
-              <button
-                className={view === "evaluation" ? "selected" : ""}
-                onClick={() => setView("evaluation")}
-              >
-                Evaluation
-              </button>
-              <button
-                className={view === "simulation" ? "selected" : ""}
-                onClick={() => setView("simulation")}
-              >
-                Navigation
-              </button>
-              <button
-                className={view === "review" ? "selected" : ""}
-                onClick={() => setView("review")}
-              >
-                Readiness / review
-              </button>
-              <button
-                className={view === "research" ? "selected" : ""}
-                onClick={() => setView("research")}
-              >
-                Research
-              </button>
-              <button
-                onClick={() => add("box")}
-                disabled={busy || !canEdit || objects.length >= 128}
-              >
-                ＋ Box
-              </button>
-              <button
-                onClick={() => add("barrier")}
-                disabled={busy || !canEdit || objects.length >= 128}
-              >
-                ＋ Barrier
-              </button>
-              <label
-                className="collision-toggle"
-                title="Frame tested reference camera centers. Connecting segments do not establish coverage."
-              >
-                <input
-                  type="checkbox"
-                  checked={showCameras}
-                  disabled={view !== "3d"}
-                  onChange={(event) => setShowCameras(event.target.checked)}
-                />{" "}
-                Reference camera path
-              </label>
-              <label className="collision-toggle">
-                <input
-                  type="checkbox"
-                  checked={collision}
-                  disabled={view !== "3d"}
-                  onChange={(event) => setCollision(event.target.checked)}
-                />{" "}
-                Collision proxy
-              </label>
+      <Collapsible.Root
+        asChild
+        open={libraryOpen}
+        onOpenChange={setLibraryOpen}
+      >
+        <aside className="library" aria-label="Scene library">
+          <WorkbenchNav
+            view={view}
+            onView={setView}
+            collapsed={!libraryOpen}
+            disabled={!scene}
+          />
+          <Collapsible.Content id="scene-library-content">
+            <div className="section-label">
+              SCENE LIBRARY <span>{scenes.length}</span>
             </div>
-            {view === "research" ? (
-              <ResearchDashboard />
-            ) : view === "review" ? (
-              <ReviewPanel
-                scene={scene}
-                user={user}
-                unsaved={dirty}
-                onScene={(value) => {
-                  accept(value);
-                  setScenes((values) =>
-                    values.map((s) =>
-                      s.scene_id === value.scene_id ? value : s,
-                    ),
-                  );
+            <div className="library-filter">
+              <button onClick={() => setLibraryFilter("all")}>
+                All scenes
+              </button>
+              <button
+                onClick={() => {
+                  if (dirty) {
+                    setError(
+                      "Save/discard edits before opening the review queue.",
+                    );
+                    return;
+                  }
+                  void api
+                    .list()
+                    .then((values) => {
+                      setScenes(values);
+                      setLibraryFilter("submitted");
+                      const next = values.find((s) => s.status === "submitted");
+                      if (next) {
+                        accept(next);
+                        setView("review");
+                      } else setNotice("No scenes are submitted for review.");
+                    })
+                    .catch((reason) => setError(String(reason)));
                 }}
-              />
-            ) : view === "simulation" ? (
-              <SimulationPanel
-                key={scene.scene_id}
-                scene={scene}
-                unsaved={dirty}
-                editable={canEdit}
-                onScene={(value) => {
-                  accept(value);
-                  setScenes((values) =>
-                    values.map((s) =>
-                      s.scene_id === value.scene_id ? value : s,
-                    ),
-                  );
-                }}
-              />
-            ) : view === "evaluation" ? (
-              <EvaluationExplorer
-                key={scene.scene_id}
-                scene={scene}
-                canEvaluate={canEdit}
-              />
-            ) : (
-              <>
-                <div className="preview-banner">
-                  OVERLAY PREVIEW{" "}
-                  <span>
-                    Inserted meshes are not depth-composited with splats.
-                    Unobserved space is unverified.
-                  </span>
-                </div>
-                <div className="viewport-container">
-                  {view === "3d" ? (
-                    <Suspense
-                      fallback={<span role="status">Loading viewer…</span>}
-                    >
-                      <Viewer
+              >
+                Review queue
+              </button>
+            </div>
+            {scenes
+              .filter(
+                (value) =>
+                  libraryFilter === "all" || value.status === "submitted",
+              )
+              .map((value) => (
+                <SceneCard
+                  key={value.scene_id}
+                  scene={value}
+                  active={scene?.scene_id === value.scene_id}
+                  onChoose={() => void choose(value.scene_id)}
+                />
+              ))}
+            {!scenes.length && (
+              <p className="empty-copy">
+                Connect to the local API to load a registered scene. The offline
+                analytic demo is available with <code>--demo</code>.
+              </p>
+            )}
+            <div className="library-note">
+              <span className="dot" /> METRIC COORDINATES
+              <p>
+                Right-handed · Y up
+                <br />
+                All dimensions in meters.
+              </p>
+            </div>
+          </Collapsible.Content>
+        </aside>
+      </Collapsible.Root>
+      <main className="workspace" id="workspace" tabIndex={-1}>
+        <Suspense fallback={<p role="status">Loading workspace…</p>}>
+          <div className="workspace-heading">
+            <div>
+              <p className="eyebrow">
+                Workspace / {view === "3d" ? "Scene" : view}
+              </p>
+              <h1>{scene?.name || "Connect your local studio"}</h1>
+            </div>
+            {scene && (
+              <button className="draft-badge" onClick={() => setView("review")}>
+                {scene.status} · v{scene.version} · review ↗
+              </button>
+            )}
+          </div>
+          {error && (
+            <div className="message error" role="alert">
+              {error}
+            </div>
+          )}
+          {notice && (
+            <div className="message success" role="status">
+              {notice}
+            </div>
+          )}
+          {!scene ? (
+            <div className="connection-panel">
+              <h2>Start with a working scene.</h2>
+              <p>
+                Launch the API with the bundled, genuinely trained synthetic
+                demo. No GPU is needed to inspect it or edit proxy boxes.
+              </p>
+              <pre>simready api serve --demo</pre>
+              <p>
+                Load a registered report to inspect frozen-view validation.
+                Registered scenes support navigation and scoped review.
+              </p>
+            </div>
+          ) : (
+            <>
+              <div className="toolbar">
+                <button
+                  onClick={() => add("box")}
+                  disabled={busy || !canEdit || objects.length >= 128}
+                >
+                  ＋ Box
+                </button>
+                <button
+                  onClick={() => add("barrier")}
+                  disabled={busy || !canEdit || objects.length >= 128}
+                >
+                  ＋ Barrier
+                </button>
+                <label
+                  className="collision-toggle"
+                  title="Frame tested reference camera centers. Connecting segments do not establish coverage."
+                >
+                  <input
+                    type="checkbox"
+                    checked={showCameras}
+                    disabled={view !== "3d"}
+                    onChange={(event) => setShowCameras(event.target.checked)}
+                  />{" "}
+                  Reference camera path
+                </label>
+                <label className="collision-toggle">
+                  <input
+                    type="checkbox"
+                    checked={collision}
+                    disabled={view !== "3d"}
+                    onChange={(event) => setCollision(event.target.checked)}
+                  />{" "}
+                  Collision proxy
+                </label>
+              </div>
+              {view === "research" ? (
+                <ResearchDashboard />
+              ) : view === "review" ? (
+                <ReviewPanel
+                  scene={scene}
+                  user={user}
+                  unsaved={dirty}
+                  onScene={(value) => {
+                    accept(value);
+                    setScenes((values) =>
+                      values.map((s) =>
+                        s.scene_id === value.scene_id ? value : s,
+                      ),
+                    );
+                  }}
+                />
+              ) : view === "simulation" ? (
+                <SimulationPanel
+                  key={scene.scene_id}
+                  scene={scene}
+                  unsaved={dirty}
+                  editable={canEdit}
+                  onScene={(value) => {
+                    accept(value);
+                    setScenes((values) =>
+                      values.map((s) =>
+                        s.scene_id === value.scene_id ? value : s,
+                      ),
+                    );
+                  }}
+                />
+              ) : view === "evaluation" ? (
+                <EvaluationExplorer
+                  key={scene.scene_id}
+                  scene={scene}
+                  canEvaluate={canEdit}
+                />
+              ) : (
+                <>
+                  <div className="preview-banner">
+                    OVERLAY PREVIEW{" "}
+                    <span>
+                      Inserted meshes are not depth-composited with splats.
+                      Unobserved space is unverified.
+                    </span>
+                  </div>
+                  <div className="viewport-container">
+                    {view === "3d" ? (
+                      <Suspense
+                        fallback={<span role="status">Loading viewer…</span>}
+                      >
+                        <Viewer
+                          scene={scene}
+                          objects={objects}
+                          selected={selected}
+                          showCollision={collision}
+                          showCameras={showCameras}
+                          mode={mode}
+                          editable={!busy && canEdit}
+                          cameraIndex={cameraIndex}
+                          onSpawnPosition={(value) => {
+                            placement.current = value;
+                          }}
+                          onSelect={setSelected}
+                          onChange={change}
+                          onUnavailable={(message) => {
+                            setView("saved");
+                            setNotice(message);
+                          }}
+                        />
+                      </Suspense>
+                    ) : (
+                      <SavedView
                         scene={scene}
                         objects={objects}
-                        selected={selected}
-                        showCollision={collision}
-                        showCameras={showCameras}
-                        mode={mode}
-                        editable={!busy && canEdit}
-                        cameraIndex={cameraIndex}
-                        onSpawnPosition={(value) => {
-                          placement.current = value;
-                        }}
-                        onSelect={setSelected}
-                        onChange={change}
-                        onUnavailable={(message) => {
-                          setView("saved");
-                          setNotice(message);
-                        }}
+                        index={cameraIndex}
                       />
-                    </Suspense>
-                  ) : (
-                    <SavedView
-                      scene={scene}
-                      objects={objects}
-                      index={cameraIndex}
-                    />
-                  )}
-                  <div className="viewport-footer">
-                    <span>
-                      {view === "3d"
-                        ? "Orbit · left drag / Pan · right drag / Zoom · scroll"
-                        : `Frozen ${scene.base.cameras[cameraIndex].frame_id} · generated Gaussian view`}
-                    </span>
-                    <span>Y ↑ &nbsp; meters</span>
+                    )}
+                    <div className="viewport-footer">
+                      <span>
+                        {view === "3d"
+                          ? "Orbit · left drag / Pan · right drag / Zoom · scroll"
+                          : `Frozen ${scene.base.cameras[cameraIndex].frame_id} · generated Gaussian view`}
+                      </span>
+                      <span>Y ↑ &nbsp; meters</span>
+                    </div>
                   </div>
-                </div>
-                <div className="below-viewport">
-                  <div>
-                    <strong>Coarse collision geometry</strong>
+                  <div className="below-viewport">
+                    <div>
+                      <strong>Coarse collision geometry</strong>
+                      <p>
+                        Independent TSDF from training RGB-D. Holes and unknown
+                        regions remain unverified.
+                      </p>
+                    </div>
+                    <label>
+                      Reference camera{" "}
+                      <select
+                        aria-label="Reference camera"
+                        value={cameraIndex}
+                        onChange={(event) => {
+                          placement.current = null;
+                          setCameraIndex(Number(event.target.value));
+                        }}
+                      >
+                        {scene.base.cameras.map((camera, index) => (
+                          <option key={camera.frame_id} value={index}>
+                            {camera.frame_id}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                  </div>
+                  <details className="source-details">
+                    <summary>Source and limitations</summary>
                     <p>
-                      Independent TSDF from training RGB-D. Holes and unknown
-                      regions remain unverified.
+                      {scene.base.source.name} · {scene.base.source.license}
                     </p>
-                  </div>
-                  <label>
-                    Reference camera{" "}
-                    <select
-                      aria-label="Reference camera"
-                      value={cameraIndex}
-                      onChange={(event) => {
-                        placement.current = null;
-                        setCameraIndex(Number(event.target.value));
-                      }}
-                    >
-                      {scene.base.cameras.map((camera, index) => (
-                        <option key={camera.frame_id} value={index}>
-                          {camera.frame_id}
-                        </option>
+                    <p>{scene.base.source.attribution}</p>
+                    <ul>
+                      {[...new Set(scene.base.limitations)].map((text) => (
+                        <li key={text}>{text}</li>
                       ))}
-                    </select>
-                  </label>
-                </div>
-                <details className="source-details">
-                  <summary>Source and limitations</summary>
-                  <p>
-                    {scene.base.source.name} · {scene.base.source.license}
-                  </p>
-                  <p>{scene.base.source.attribution}</p>
-                  <ul>
-                    {[...new Set(scene.base.limitations)].map((text) => (
-                      <li key={text}>{text}</li>
-                    ))}
-                  </ul>
-                </details>
-              </>
-            )}
-          </>
-        )}
+                    </ul>
+                  </details>
+                </>
+              )}
+            </>
+          )}
+        </Suspense>
       </main>
       <aside className="inspector">
         <div className="section-label">
